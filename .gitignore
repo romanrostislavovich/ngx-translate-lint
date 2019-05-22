@@ -1,0 +1,7 @@
+/build/
+/dist/
+/node_modules/
+dockerfile
+.nyc_output/
+coverage/
+package-lock.json

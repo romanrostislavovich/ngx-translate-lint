@@ -1,0 +1,89 @@
+{
+    "author": "Raman Lauryniuk <romanrostislavovich@gmail.com>",
+    "name": "ngx-translate-validator",
+    "version": "0.0.0-development",
+    "description": "Simple validator ngx-translate keys",
+    "license": "MIT",
+    "repository": "svoboda-rabstvo/ngx-translate-validator",
+    "bugs": "https://github.com/svoboda-rabstvo/ngx-translate-validator/issues",
+    "bin": {
+        "usage-parser": "dist/bin.js"
+    },
+    "main": "dist/index.js",
+    "scripts": {
+        "markdownlint": "./node_modules/.bin/markdownlint",
+        "tslint": "./node_modules/.bin/tslint",
+        "build": "tsc -p .",
+        "lint:typescript": "tslint -c tslint.json --project . -t codeFrame",
+        "lint:markdown": "markdownlint --config ./config/markdownlint.json --ignore **/node_modules/** ./**/*.md",
+        "test:unit": "nyc mocha -r ts-node/register ./test/unit/*.test.ts",
+        "test:integration": "mocha -r ts-node/register ./test/integration/*.test.ts",
+        "lint": "npm run lint:typescript && npm run lint:markdown",
+        "test": "npm run lint && npm run build && npm run test:unit && npm run test:integration"
+    },
+    "files": [
+        "dist/",
+        "README.md"
+    ],
+    "keywords": [
+        "ngx-translate",
+        "validator",
+        "linting",
+        "cli"
+    ],
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/",
+        "tag": "latest",
+        "access": "public"
+    },
+    "nyc": {
+        "check-coverage": true,
+        "lines": 70,
+        "statements": 70,
+        "functions": 70,
+        "branches": 70,
+        "extension": [
+            ".ts",
+            ".tsx"
+        ],
+        "exclude": [
+            "coverage/**/*",
+            "test/**/*",
+            "dist/**/*",
+            "src/config.ts",
+            "index.ts",
+            "bin.ts"
+        ],
+        "reporter": [
+            "html",
+            "text-summary"
+        ],
+        "all": true,
+        "require": [
+            "ts-node/register"
+        ]
+    },
+    "dependencies": {
+        "commander": "^2.20.0",
+        "glob": "^7.1.4",
+        "lodash": "^4.17.11"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.1.7",
+        "@types/commander": "^2.12.2",
+        "@types/glob": "^7.1.1",
+        "@types/lodash": "^4.14.129",
+        "@types/mocha": "^5.2.6",
+        "@types/node": "^12.0.2",
+        "@types/sinon": "^7.0.11",
+        "chai": "^4.2.0",
+        "husky": "^2.3.0",
+        "markdownlint-cli": "^0.16.0",
+        "mocha": "^6.1.4",
+        "nyc": "^14.1.1",
+        "sinon": "^7.3.2",
+        "ts-node": "^8.1.0",
+        "tslint": "^5.11.0",
+        "typescript": "^3.4.5"
+    }
+}

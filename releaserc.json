@@ -1,0 +1,61 @@
+{
+    "branch": "master",
+    "verifyConditions": [
+        "@semantic-release/changelog",
+        "@semantic-release/npm",
+        "@semantic-release/github",
+        "@semantic-release/git"
+    ],
+    "prepare": [
+        "@semantic-release/npm",
+        "@semantic-release/changelog"
+    ],
+    "analyzeCommits": {
+        "releaseRules": [
+            {
+                "type": "test",
+                "release": "patch"
+            },
+            {
+                "type": "docs",
+                "scope": ".*md",
+                "release": "patch"
+            },
+            {
+                "type": "fix",
+                "release": "patch"
+            },
+            {
+                "type": "perf",
+                "release": "patch"
+            },
+            {
+                "type": "ci",
+                "release": "patch"
+            },
+            {
+                "type": "new",
+                "release": "minor"
+            },
+            {
+                "type": "feat",
+                "release": "minor"
+            },
+            {
+                "type": "breaking",
+                "release": "major"
+            }
+        ],
+        "parserOpts": {
+            "noteKeywords": [
+                "BREAKING CHANGE",
+                "BREAKING CHANGES",
+                "BREAKING"
+            ]
+        }
+    },
+    "publish": [
+        "@semantic-release/npm",
+        "@semantic-release/github"
+    ]
+}
