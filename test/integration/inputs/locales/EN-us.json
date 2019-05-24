@@ -1,0 +1,20 @@
+{
+    "STRING.KEY_FROM_DIRECTIVE_VIEW.EXIST_IN_ALL_LOCALES": "Key from directive",
+
+    "STRING.KEY_FROM_DIRECTIVE_INSIDE_TAG_VIEW.EXIST_IN_ALL_LOCALES": "Key from directive",
+
+    "STRING.KEY_FROM_PIPE_VIEW.EXIST_IN_ALL_LOCALES": "Key from pipe",
+
+    "STRING.KEY_FROM_ENUM.EXIST_IN_ALL_LOCALES": "Key from enum",
+    "OBJECT": {
+        "KEY_FROM_DIRECTIVE_VIEW": {
+            "EXIST_IN_ALL_LOCALES": "Key from directive"
+        },
+        "KEY_FROM_PIPE_VIEW": {
+            "EXIST_IN_ALL_LOCALES": "Key from pipe"
+        },
+        "KEY_FROM_ENUM": {
+            "EXIST_IN_ALL_LOCALES": "Key from enum"
+        }
+    }
+}

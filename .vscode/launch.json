@@ -24,9 +24,9 @@
             "smartStep": true,
             "args": [
                 "-p",
-                "",
+                "D:/coleman/ClientModules/ColemanUI/KE/src/app",
                 "-t",
-                ""
+                "D:/coleman/ClientModules/ColemanUI/KE/src/assets/i18n/shared",
             ],
             "internalConsoleOptions": "openOnSessionStart",
             "outFiles": [

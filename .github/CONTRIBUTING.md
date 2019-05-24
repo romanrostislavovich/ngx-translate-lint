@@ -66,7 +66,7 @@ Follow this process if you want your work to be included in our project:
 
 ### STEP 1: Fork and clone
 
-Fork the [`svoboda-rabstvo/ngx-translate-validator`][github-url] repo and then clone it.
+Fork the [`svoboda-rabstvo/ngx-translate-lint`][github-url] repo and then clone it.
 
 > Note: More information about creating a fork and cloning your fork to local folder read in [`git help`][github-help-fork]
 
@@ -135,10 +135,10 @@ Go to your fork in GitHub and then follow the [GitHub documentation][github-help
 
 - A pull request must contain a description explaining what you did and how the effects can be seen.
 
-[github-url]: https://github.com/svoboda-rabstvo/ngx-translate-validator
-[github-url-issue-bug-reporter]: https://github.com/svoboda-rabstvo/ngx-translate-validator/issues/new?template=Bug_report.md
-[github-url-issue-feature]: https://github.com/svoboda-rabstvo/ngx-translate-validator/issues/new?template=Feature_request.md
-[github-url-issue-custom]: https://github.com/svoboda-rabstvo/ngx-translate-validator/issues/new?template=Custom.md
+[github-url]: https://github.com/svoboda-rabstvo/ngx-translate-lint
+[github-url-issue-bug-reporter]: https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/new?template=Bug_report.md
+[github-url-issue-feature]: https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/new?template=Feature_request.md
+[github-url-issue-custom]: https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/new?template=Custom.md
 [github-help-fork]: https://help.github.com/articles/fork-a-repo/#fork-an-example-repository
 [github-help-pull-request]: https://help.github.com/articles/creating-a-pull-request
-[github-url-commit-message]: https://github.com/svoboda-rabstvo/ngx-translate-validator/blob/develop/docs/git/commit_message.md
+[github-url-commit-message]: https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/develop/docs/git/commit_message.md

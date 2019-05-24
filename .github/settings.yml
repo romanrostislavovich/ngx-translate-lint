@@ -4,7 +4,7 @@ repository:
   description: Simple CLI tools for check ngx-translate keys
 
   # A URL with more information about the repository
-  homepage: https://github.com/svoboda-rabstvo/ngx-translate-validator
+  homepage: https://github.com/svoboda-rabstvo/ngx-translate-lint
 
   # Either `true` to enable issues for this repository, `false` to disable them.
   has_issues: true
