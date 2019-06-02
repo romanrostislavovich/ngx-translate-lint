@@ -1,6 +1,11 @@
-# ngx-translate-validator
+# ngx-translate-lint
 
-> Simple CLI tools for check ngx-translate keys
+> Simple tools for check ngx-translate keys in whole app
+
+[![Build Master](https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint.svg?branch=master)](https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint)
+[![semantic](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![npm](https://img.shields.io/npm/v/ngx-translate-lint.svg)](https://www.npmjs.com/package/ngx-translate-lint)
+[![download npm](https://img.shields.io/npm/dm/ngx-translate-lint.svg)](https://www.npmjs.com/package/ngx-translate-lint)
 
 ## Table of Contents
 
@@ -21,13 +26,7 @@ which should exist in all languages files.
 ### NPM
 
 ```bash
-npm install ngx-translate-validator -g
-```
-
-... or if you use yarn:
-
-```bash
-yarn global add ngx-translate-validator
+npm install ngx-translate-lint -g
 ```
 
 ### GitHub
@@ -39,6 +38,48 @@ at [GitHub Releases][github-release-url] and
 ## Usage
 
 ### CLI
+
+```text
+
+Usage: ngx-translate-lint [options]
+
+Simple CLI tools for check `ngx-translate` keys in app
+
+Options:
+  -p,  --project [glob] (required)
+          The path to project folder
+          Possibale Values: <relative path|absolute path>
+           (default: "./src/app/**/*.{html,ts}")
+  -l,  --languages [glob] (required)
+          The path to languages folder
+          Possibale Values: <relative path|absolute path>
+           (default: "./src/assets/i18n/*.json")
+  -v,  --views [enum]
+          Described how to handle the error of missing keys on view
+          Possibale Values: <disable|warning|error>
+           (default: "error")
+  -z,  --zombies [enum]
+          Described how to handle the error of zombies keys
+          Possibale Values: <disable|warning|error>
+           (default: "warning")
+  -h, --help  output usage information
+
+
+Examples:
+
+    $ ngx-translate-lint -p './src/app/**/*.{html,ts}' -l './src/assets/i18n/*.json'
+    $ ngx-translate-lint -p './src/app/**/*.{html,ts}' -z 'disable' -v 'error'
+```
+
+For `project` and `languages` options need to include file types like on the example.
+
+#### Exit Codes
+
+The CLI process may exit with the following codes:
+
+- `0`: Linting succeeded without errors (warnings may have occurred)
+- `1`: Linting failed with one or more rule violations with severity error
+- `2`: An invalid command line argument or combination thereof was used
 
 ### JavaScript
 
@@ -53,21 +94,21 @@ Please check our [contributing guidelines][contributing].
 [MIT][license-url]
 
 [ngx-translate]: https://github.com/ngx-translate/core
-[travis-shield]: https://img.shields.io/travis/svoboda-rabstvo/ngx-translate-validator/master.svg
-[travis-url]: https://travis-ci.org/svoboda-rabstvo/ngx-translate-validator/branches
+[travis-shield]: https://img.shields.io/travis/svoboda-rabstvo/ngx-translate-lint/master.svg
+[travis-url]: https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint/branches
 [semantic-shield]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-url]: https://github.com/semantic-release/semantic-release
-[npm-shield]: https://img.shields.io/npm/v/svoboda-rabstvo/ngx-translate-validator.svg
-[npm-url]: https://www.npmjs.com/package/ngx-translate-validator
+[npm-shield]: https://img.shields.io/npm/v/svoboda-rabstvo/ngx-translate-lint.svg
+[npm-url]: https://www.npmjs.com/package/ngx-translate-lint
 [npm]: https://www.npmjs.com
 [node-js]: https://nodejs.org
-[github-shield]: https://img.shields.io/github/release/svoboda-rabstvo/ngx-translate-validator.svg?label=github
-[github-url]: https://github.com/svoboda-rabstvo/ngx-translate-validator
-[github-release-url]: https://github.com/svoboda-rabstvo/ngx-translate-validator/releases
-[github-pages-url]: https://github.com/svoboda-rabstvo/ngx-translate-validator/tree/gh-pages
+[github-shield]: https://img.shields.io/github/release/svoboda-rabstvo/ngx-translate-lint.svg?label=github
+[github-url]: https://github.com/svoboda-rabstvo/ngx-translate-lint
+[github-release-url]: https://github.com/svoboda-rabstvo/ngx-translate-lint/releases
+[github-pages-url]: https://svoboda-rabstvo.github.io/ngx-translate-lint/
 [schema-url]: http://json-schema.org/
 [web-url]: https://schema.linterhub.com
-[doc-url]: https://github.com/svoboda-rabstvo/ngx-translate-validator/blob/develop/doc
-[license-url]: https://github.com/svoboda-rabstvo/ngx-translate-validator/blob/develop/LICENSE.md
+[doc-url]: https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/develop/doc
+[license-url]: https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/develop/LICENSE.md
 [meta-url]: https://en.wikipedia.org/wiki/List_of_software_package_management_systems#Meta_package_managers
-[contributing]: https://github.com/svoboda-rabstvo/ngx-translate-validator/blob/develop/.github/CONTRIBUTING.md
+[contributing]: https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/develop/.github/CONTRIBUTING.md
