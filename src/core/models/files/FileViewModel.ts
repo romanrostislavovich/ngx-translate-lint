@@ -2,13 +2,18 @@ import { FileModel } from "./FileModel";
 import { KeyModel } from "./../KeyModel";
 
 class FileViewModel extends FileModel {
-    constructor(path: string, files: string[] = [], keys: KeyModel[] = []) {
-        super(path, files, keys);
+    constructor(
+        path: string,
+        files: string[] = [],
+        keys: KeyModel[] = [],
+        ignore: string = '',
+    ) {
+        super(path, files, keys, ignore);
     }
 
     public getKeys(regExp: RegExp): FileViewModel {
-        this.validatePath();
-        this.setKeys((fileData: string, filePath: string): KeyModel[] => {
+        this.files = this.getNormalizeFiles();
+        this.keys = this.parseKeys((fileData: string, filePath: string): KeyModel[] => {
             const fileKeysNames: string[] = fileData.match(regExp) as string[];
             return !fileKeysNames ? [] : fileKeysNames
                 .filter(x => !!x)

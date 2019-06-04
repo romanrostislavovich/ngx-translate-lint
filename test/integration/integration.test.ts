@@ -9,12 +9,42 @@ import {
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
+import { assertDefaultModel } from './results/default.full';
 import { assertCustomConfig } from './results/custom.config';
 
 describe('Integration', () => {
+    const ignorePath: string = '';
     const relativePathProject: string = './test/integration/inputs/views/*.{html,ts}';
     const relativePathLanguages: string = './test/integration/inputs/locales/*.json';
+    const ignoreRelativeProject: string = './test/integration/inputs/views/pipe.keys.html';
+    const ignoreRelativeLanguage: string = './test/integration/inputs/locales/EN-eu.json';
 
+    describe('Ignore', () => {
+        it('should be relative and absolute and have projects and languages files', () => {
+            // Arrage
+            const ignoreAbsolutePorjectPath: string = path.resolve(__dirname, process.cwd(), ignoreRelativeProject);
+            const ignorePath: string = `${ignoreRelativeLanguage}, ${ignoreAbsolutePorjectPath}`;
+
+            // Act
+            const model: NgxTranslateLint = new NgxTranslateLint(relativePathProject, relativePathLanguages, ignorePath);
+            const result: ResultErrorModel[] = model.lint();
+
+            // Assert
+            assert.deepEqual(assertFullModel, result);
+        });
+
+        it('should be empty or incorrect', () => {
+            // Arrage
+            const ignorePath: string = `null, 0, undefined, '',`;
+
+            // Act
+            const model: NgxTranslateLint = new NgxTranslateLint(relativePathProject, relativePathLanguages, ignorePath);
+            const result: ResultErrorModel[] = model.lint();
+
+            // Assert
+            assert.deepEqual(assertDefaultModel, result);
+        });
+    });
     describe('Path', () => {
         it('should be relative and absolute', () => {
             // Arrange
@@ -25,7 +55,7 @@ describe('Integration', () => {
             const result: ResultErrorModel[] = model.lint();
 
             // Assert
-            assert.deepEqual(assertFullModel, result);
+            assert.deepEqual(assertDefaultModel, result);
         });
 
         it('should be empty and incorect', () => {
@@ -48,7 +78,7 @@ describe('Integration', () => {
             const result:  ResultErrorModel[] = model.lint();
 
             // Assert
-            assert.deepEqual(assertFullModel, result);
+            assert.deepEqual(assertDefaultModel, result);
         });
         it('should be inccorect', () => {
             // Arrage
@@ -57,8 +87,9 @@ describe('Integration', () => {
                 anotherInccorectKey: ErrorTypes.disable
             };
 
+
             // Act
-            const model: NgxTranslateLint = new NgxTranslateLint(relativePathProject, relativePathLanguages, errorConfig as IRulesConfig);
+            const model: NgxTranslateLint = new NgxTranslateLint(relativePathProject, relativePathLanguages, ignorePath, errorConfig as IRulesConfig);
 
             // Assert
             expect(() => { model.lint(); }).to.throw();
@@ -71,7 +102,7 @@ describe('Integration', () => {
             };
 
             // Act
-            const model: NgxTranslateLint = new NgxTranslateLint(relativePathProject, relativePathLanguages, errorConfig);
+            const model: NgxTranslateLint = new NgxTranslateLint(relativePathProject, relativePathLanguages, ignorePath, errorConfig);
             const result:  ResultErrorModel[] = model.lint();
 
             // Assert
@@ -86,10 +117,13 @@ describe('Integration', () => {
             zombieKeys: ErrorTypes.warning,
         };
         const absolutePathProject: string = path.resolve(__dirname, process.cwd(), relativePathProject);
+        const ignoreAbsolutePorjectPath: string = path.resolve(__dirname, process.cwd(), ignoreRelativeProject);
+        const ignorePath: string = `${ignoreRelativeLanguage}, ${ignoreAbsolutePorjectPath}`;
 
         // Act
-        const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, relativePathLanguages, errorConfig);
+        const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, relativePathLanguages, ignorePath, errorConfig);
         const result:  ResultErrorModel[] = model.lint();
+
         // Assert
         assert.deepEqual(assertFullModel, result);
     });

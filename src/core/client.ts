@@ -10,15 +10,18 @@ class NgxTranslateLint {
     public projectPath: string;
     public languagesPath: string;
     public rules: IRulesConfig;
+    public ignore?: string;
 
     constructor (
         projectPath: string = config.defaultValues.projectPath,
         languagesPath: string = config.defaultValues.languagesPath,
+        ignore?: string,
         rulesConfig: IRulesConfig = config.defaultValues.rules,
     ) {
         this.languagesPath = languagesPath;
         this.projectPath = projectPath;
         this.rules = rulesConfig;
+        this.ignore = ignore;
     }
 
     public lint(): ResultErrorModel[] {
@@ -30,10 +33,10 @@ class NgxTranslateLint {
             throw new Error('Error config is incorrect');
         }
 
-        const languagesKeys: FileLanguageModel = new FileLanguageModel(this.languagesPath).getKeys();
+        const languagesKeys: FileLanguageModel = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeys();
         const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
         const viewsRegExp: RegExp = config.findKeysList(languagesKeysNames);
-        const views: FileViewModel = new FileViewModel(this.projectPath).getKeys(viewsRegExp);
+        const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
 
         const result: ResultErrorModel[] = [];
 
