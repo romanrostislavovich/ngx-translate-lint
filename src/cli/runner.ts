@@ -23,13 +23,13 @@ const logger: ILogger = {
     },
 };
 
-function runLint(project: string, languages: string, zombies?: ErrorTypes, views?: ErrorTypes): void {
+function runLint(project: string, languages: string, zombies?: ErrorTypes, views?: ErrorTypes, ignore?: string): void {
     try {
         const errorConfig: IRulesConfig = {
             keysOnViews: views || ErrorTypes.error,
             zombieKeys: zombies || ErrorTypes.warning
         };
-        const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, errorConfig);
+        const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig);
         const validationResult: ResultErrorModel[] = validationModel.lint();
         const hasError: boolean = some<ResultErrorModel[]>(validationResult, { 'errorType': ErrorTypes.error });
         const hasWarning: boolean = some<ResultErrorModel[]>(validationResult, { 'errorType': ErrorTypes.warning });

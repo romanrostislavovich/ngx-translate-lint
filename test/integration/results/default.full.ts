@@ -4,16 +4,11 @@ import {
 
 import { getAbsolutePath, languagesFolder, projectFolder } from '../utils';
 
-const assertFullModel: ResultErrorModel[]= [
+const assertDefaultModel: ResultErrorModel[]= [
     new ResultErrorModel(
-        'STRING.KEY_FROM_PIPE_VIEW.EXIST_IN_ALL_LOCALES',
+        'OBJECT.KEY_FROM_LOCALE.ABSENT_IN_ALL_VIEWS',
         ErrorFlow.zombie, ErrorTypes.warning,
-        getAbsolutePath(languagesFolder, 'EN-us.json'),
-    ),
-    new ResultErrorModel(
-        'OBJECT.KEY_FROM_PIPE_VIEW.EXIST_IN_ALL_LOCALES',
-        ErrorFlow.zombie, ErrorTypes.warning,
-        getAbsolutePath(languagesFolder, 'EN-us.json'),
+        getAbsolutePath(languagesFolder, 'EN-eu.json'),
     ),
     new ResultErrorModel(
         'STRING.KEY_FROM_DIRECTIVE_VIEW.EXIST_IN_ONE_LOCALE',
@@ -28,6 +23,7 @@ const assertFullModel: ResultErrorModel[]= [
         ErrorFlow.views, ErrorTypes.error,
         getAbsolutePath(projectFolder, 'directive.keys.html'),
         [
+            'EN-eu.json',
             'EN-us.json'
         ]
     ),
@@ -44,9 +40,35 @@ const assertFullModel: ResultErrorModel[]= [
         ErrorFlow.views, ErrorTypes.error,
         getAbsolutePath(projectFolder, 'directive.keys.html'),
         [
+            'EN-eu.json',
+            'EN-us.json'
+        ]
+    ),
+    new ResultErrorModel(
+        'STRING.KEY_FROM_ENUM.EXIST_IN_ONE_LOCALE',
+        ErrorFlow.views, ErrorTypes.error,
+        getAbsolutePath(projectFolder, 'enum.keys.ts'),
+        [
+           'EN-us.json'
+        ]
+    ),
+    new ResultErrorModel(
+        'STRING.KEY_FROM_PIPE_VIEW.EXIST_IN_ONE_LOCALE',
+        ErrorFlow.views, ErrorTypes.error,
+        getAbsolutePath(projectFolder, 'pipe.keys.html'),
+        [
+            'EN-us.json'
+        ]
+    ),
+    new ResultErrorModel(
+        'STRING.KEY_FROM_PIPE_VIEW.ABSENT_IN_ALL_LOCALES',
+        ErrorFlow.views, ErrorTypes.error,
+        getAbsolutePath(projectFolder, 'pipe.keys.html'),
+        [
+            'EN-eu.json',
             'EN-us.json'
         ]
     ),
 ];
 
-export { assertFullModel };
+export { assertDefaultModel };

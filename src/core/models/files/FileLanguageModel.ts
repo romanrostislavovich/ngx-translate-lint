@@ -4,13 +4,18 @@ import { KeyModel } from '../KeyModel';
 import { FileModel } from './FileModel';
 
 class FileLanguageModel extends FileModel {
-    constructor(path: string, files: string[] = [], keys: KeyModel[] = []) {
-        super(path, files, keys);
+    constructor(
+        path: string,
+        files: string[] = [],
+        keys: KeyModel[] = [],
+        ignore: string = '',
+    ) {
+        super(path, files, keys, ignore);
     }
 
     public getKeys(): FileLanguageModel {
-        this.validatePath();
-        this.setKeys((fileData: string, filePath: string): KeyModel[] => {
+        this.files =  this.getNormalizeFiles();
+        this.keys = this.parseKeys((fileData: string, filePath: string): KeyModel[] => {
             const fileKeysNames: string[] = this.getLanguageKeys(JSON.parse(fileData));
             return !fileKeysNames ? [] : fileKeysNames
                 .filter(x => !!x)
