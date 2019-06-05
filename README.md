@@ -62,6 +62,10 @@ Options:
           Described how to handle the error of zombies keys
           Possibale Values: <disable|warning|error>
            (default: "warning")
+  -i,  --ignore [glob]
+          Ignore projects and languages files
+          Possibale Values: <relative path|absolute path>
+
   -h, --help  output usage information
 
 
@@ -69,6 +73,7 @@ Examples:
 
     $ ngx-translate-lint -p './src/app/**/*.{html,ts}' -l './src/assets/i18n/*.json'
     $ ngx-translate-lint -p './src/app/**/*.{html,ts}' -z 'disable' -v 'error'
+    $ ngx-translate-lint -p './src/app/**/*.{html,ts}' -i './src/assets/i18n/EN-us.json, ./stc/app/app.*.{html,ts}'
 ```
 
 For `project` and `languages` options need to include file types like on the example.
