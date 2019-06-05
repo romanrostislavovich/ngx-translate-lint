@@ -96,6 +96,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported"><a href="_core_models_files_fileviewmodel_.fileviewmodel.html#files" class="tsd-kind-icon">files</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported"><a href="_core_models_files_fileviewmodel_.fileviewmodel.html#ignore" class="tsd-kind-icon">ignore</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported"><a href="_core_models_files_fileviewmodel_.fileviewmodel.html#keys" class="tsd-kind-icon">keys</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported"><a href="_core_models_files_fileviewmodel_.fileviewmodel.html#path" class="tsd-kind-icon">path</a></li>
 							</ul>
@@ -104,8 +105,8 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external tsd-is-not-exported"><a href="_core_models_files_fileviewmodel_.fileviewmodel.html#getkeys" class="tsd-kind-icon">get<wbr>Keys</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported"><a href="_core_models_files_fileviewmodel_.fileviewmodel.html#setkeys" class="tsd-kind-icon">set<wbr>Keys</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported"><a href="_core_models_files_fileviewmodel_.fileviewmodel.html#validatepath" class="tsd-kind-icon">validate<wbr>Path</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported"><a href="_core_models_files_fileviewmodel_.fileviewmodel.html#getnormalizefiles" class="tsd-kind-icon">get<wbr>Normalize<wbr>Files</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported"><a href="_core_models_files_fileviewmodel_.fileviewmodel.html#parsekeys" class="tsd-kind-icon">parse<wbr>Keys</a></li>
 							</ul>
 						</section>
 					</div>
@@ -117,14 +118,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-external tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>File<wbr>View<wbr>Model<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, files<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, keys<span class="tsd-signature-symbol">?: </span><a href="_core_models_keymodel_.keymodel.html" class="tsd-signature-type">KeyModel</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_core_models_files_fileviewmodel_.fileviewmodel.html" class="tsd-signature-type">FileViewModel</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>File<wbr>View<wbr>Model<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, files<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, keys<span class="tsd-signature-symbol">?: </span><a href="_core_models_keymodel_.keymodel.html" class="tsd-signature-type">KeyModel</a><span class="tsd-signature-symbol">[]</span>, ignore<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_core_models_files_fileviewmodel_.fileviewmodel.html" class="tsd-signature-type">FileViewModel</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_core_models_files_filemodel_.filemodel.html">FileModel</a>.<a href="_core_models_files_filemodel_.filemodel.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/fe36949/src/core/models/files/FileViewModel.ts#L4">core/models/files/FileViewModel.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/b560d09/src/core/models/files/FileViewModel.ts#L4">core/models/files/FileViewModel.ts:4</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -137,6 +138,9 @@
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> keys: <a href="_core_models_keymodel_.keymodel.html" class="tsd-signature-type">KeyModel</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> ignore: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_core_models_files_fileviewmodel_.fileviewmodel.html" class="tsd-signature-type">FileViewModel</a></h4>
@@ -153,7 +157,18 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_core_models_files_filemodel_.filemodel.html">FileModel</a>.<a href="_core_models_files_filemodel_.filemodel.html#files">files</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/fe36949/src/core/models/files/FileModel.ts#L9">core/models/files/FileModel.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/b560d09/src/core/models/files/FileModel.ts#L9">core/models/files/FileModel.ts:9</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported">
+					<a name="ignore" class="tsd-anchor"></a>
+					<h3>ignore</h3>
+					<div class="tsd-signature tsd-kind-icon">ignore<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_core_models_files_filemodel_.filemodel.html">FileModel</a>.<a href="_core_models_files_filemodel_.filemodel.html#ignore">ignore</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/b560d09/src/core/models/files/FileModel.ts#L10">core/models/files/FileModel.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -164,7 +179,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_core_models_files_filemodel_.filemodel.html">FileModel</a>.<a href="_core_models_files_filemodel_.filemodel.html#keys">keys</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/fe36949/src/core/models/files/FileModel.ts#L8">core/models/files/FileModel.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/b560d09/src/core/models/files/FileModel.ts#L8">core/models/files/FileModel.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -175,7 +190,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_core_models_files_filemodel_.filemodel.html">FileModel</a>.<a href="_core_models_files_filemodel_.filemodel.html#path">path</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/fe36949/src/core/models/files/FileModel.ts#L7">core/models/files/FileModel.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/b560d09/src/core/models/files/FileModel.ts#L7">core/models/files/FileModel.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -192,7 +207,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/fe36949/src/core/models/files/FileViewModel.ts#L9">core/models/files/FileViewModel.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/b560d09/src/core/models/files/FileViewModel.ts#L14">core/models/files/FileViewModel.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -206,17 +221,35 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported">
-					<a name="setkeys" class="tsd-anchor"></a>
-					<h3>set<wbr>Keys</h3>
+					<a name="getnormalizefiles" class="tsd-anchor"></a>
+					<h3>get<wbr>Normalize<wbr>Files</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Keys<span class="tsd-signature-symbol">(</span>identity<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Normalize<wbr>Files<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_core_models_files_filemodel_.filemodel.html">FileModel</a>.<a href="_core_models_files_filemodel_.filemodel.html#setkeys">setKeys</a></p>
+								<p>Inherited from <a href="_core_models_files_filemodel_.filemodel.html">FileModel</a>.<a href="_core_models_files_filemodel_.filemodel.html#getnormalizefiles">getNormalizeFiles</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/fe36949/src/core/models/files/FileModel.ts#L30">core/models/files/FileModel.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/b560d09/src/core/models/files/FileModel.ts#L24">core/models/files/FileModel.ts:24</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported">
+					<a name="parsekeys" class="tsd-anchor"></a>
+					<h3>parse<wbr>Keys</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>Keys<span class="tsd-signature-symbol">(</span>identity<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_core_models_keymodel_.keymodel.html" class="tsd-signature-type">KeyModel</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_core_models_files_filemodel_.filemodel.html">FileModel</a>.<a href="_core_models_files_filemodel_.filemodel.html#parsekeys">parseKeys</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/b560d09/src/core/models/files/FileModel.ts#L35">core/models/files/FileModel.ts:35</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -225,25 +258,7 @@
 									<h5>identity: <span class="tsd-signature-type">Function</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported">
-					<a name="validatepath" class="tsd-anchor"></a>
-					<h3>validate<wbr>Path</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">validate<wbr>Path<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="_core_models_files_filemodel_.filemodel.html">FileModel</a>.<a href="_core_models_files_filemodel_.filemodel.html#validatepath">validatePath</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/fe36949/src/core/models/files/FileModel.ts#L21">core/models/files/FileModel.ts:21</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_core_models_keymodel_.keymodel.html" class="tsd-signature-type">KeyModel</a><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -274,6 +289,9 @@
 								<a href="_core_models_files_fileviewmodel_.fileviewmodel.html#files" class="tsd-kind-icon">files</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported">
+								<a href="_core_models_files_fileviewmodel_.fileviewmodel.html#ignore" class="tsd-kind-icon">ignore</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported">
 								<a href="_core_models_files_fileviewmodel_.fileviewmodel.html#keys" class="tsd-kind-icon">keys</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported">
@@ -283,10 +301,10 @@
 								<a href="_core_models_files_fileviewmodel_.fileviewmodel.html#getkeys" class="tsd-kind-icon">get<wbr>Keys</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported">
-								<a href="_core_models_files_fileviewmodel_.fileviewmodel.html#setkeys" class="tsd-kind-icon">set<wbr>Keys</a>
+								<a href="_core_models_files_fileviewmodel_.fileviewmodel.html#getnormalizefiles" class="tsd-kind-icon">get<wbr>Normalize<wbr>Files</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external tsd-is-not-exported">
-								<a href="_core_models_files_fileviewmodel_.fileviewmodel.html#validatepath" class="tsd-kind-icon">validate<wbr>Path</a>
+								<a href="_core_models_files_fileviewmodel_.fileviewmodel.html#parsekeys" class="tsd-kind-icon">parse<wbr>Keys</a>
 							</li>
 						</ul>
 					</li>

@@ -115,13 +115,18 @@ Options:
           Described how to handle the error of zombies keys
           Possibale Values: &lt;disable|warning|error&gt;
            (default: &quot;warning&quot;)
+  -i,  --ignore [glob]
+          Ignore projects and languages files
+          Possibale Values: &lt;relative path|absolute path&gt;
+
   -h, --help  output usage information
 
 
 Examples:
 
     $ ngx-translate-lint -p &#39;./src/app/**/*.{html,ts}&#39; -l &#39;./src/assets/i18n/*.json&#39;
-    $ ngx-translate-lint -p &#39;./src/app/**/*.{html,ts}&#39; -z &#39;disable&#39; -v &#39;error&#39;</code></pre>
+    $ ngx-translate-lint -p &#39;./src/app/**/*.{html,ts}&#39; -z &#39;disable&#39; -v &#39;error&#39;
+    $ ngx-translate-lint -p &#39;./src/app/**/*.{html,ts}&#39; -i &#39;./src/assets/i18n/EN-us.json, ./stc/app/app.*.{html,ts}&#39;</code></pre>
 				<p>For <code>project</code> and <code>languages</code> options need to include file types like on the example.</p>
 				<h4 id="exit-codes">Exit Codes</h4>
 				<p>The CLI process may exit with the following codes:</p>
