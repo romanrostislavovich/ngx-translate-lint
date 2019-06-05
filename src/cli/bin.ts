@@ -65,6 +65,18 @@ const options: OptionModel[] = [
             ErrorTypes.warning,
             ErrorTypes.error
         ]
+    }),
+    new OptionModel({
+        short: 'i',
+        name: 'ignore',
+        required: false,
+        type: OptionsTypes.glob,
+        describe: `Ignore projects and languages files`,
+        description: ``,
+        possibaleValues: [
+            'relative path',
+            'absolute path'
+        ]
     })
 ];
 
@@ -86,6 +98,7 @@ Examples:
 
     $ ${name} -p '${config.defaultValues.projectPath}' -l '${config.defaultValues.languagesPath}'
     $ ${name} -p '${config.defaultValues.projectPath}' -z '${ErrorTypes.disable}' -v '${ErrorTypes.error}'
+    $ ${name} -p '${config.defaultValues.projectPath}' -i './src/assets/i18n/EN-us.json, ./stc/app/app.*.{html,ts}'
 
 `);
     });
@@ -93,7 +106,7 @@ Examples:
 commander.parse(process.argv);
 
 if (commander.project && commander.languages) {
-    runLint(commander.project, commander.languages, commander.zombies, commander.views);
+    runLint(commander.project, commander.languages, commander.zombies, commander.views, commander.ignore);
 } else {
     const requiredOptions: OptionModel[] = options.filter((option: OptionModel) => option.required);
     const missingRequiredOption: boolean = requiredOptions.reduce((acum: boolean, option: OptionModel) => {
