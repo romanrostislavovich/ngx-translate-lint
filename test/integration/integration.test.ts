@@ -15,9 +15,10 @@ import { assertCustomConfig } from './results/custom.config';
 describe('Integration', () => {
     const ignorePath: string = '';
     const relativePathProject: string = './test/integration/inputs/views/*.{html,ts}';
-    const relativePathLanguages: string = './test/integration/inputs/locales/*.json';
+    const relativePathLanguages: string = './test/integration/inputs/locales/EN-*.json';
     const ignoreRelativeProject: string = './test/integration/inputs/views/pipe.keys.html';
     const ignoreRelativeLanguage: string = './test/integration/inputs/locales/EN-eu.json';
+    const incorrectRelativePathLanguages: string = './test/integration/inputs/locales/incorrect.json';
 
     describe('Ignore', () => {
         it('should be relative and absolute and have projects and languages files', () => {
@@ -68,6 +69,19 @@ describe('Integration', () => {
 
             // Assert
             expect(() => { model.lint(); }).to.throw();
+        });
+
+        it('should with parse error', () => {
+            // Arrage
+            const absoluteIncorrectLanguagesPath: string = path.resolve(__dirname, process.cwd(), incorrectRelativePathLanguages);
+            const errorMessage: string = `Can't parse JSON file: ${absoluteIncorrectLanguagesPath}`;
+
+            // Act
+            const model: NgxTranslateLint = new NgxTranslateLint(relativePathProject, incorrectRelativePathLanguages);
+
+            // Assert
+            // model.lint();
+            assert.throws(() => { model.lint(); }, errorMessage);
         });
     });
 

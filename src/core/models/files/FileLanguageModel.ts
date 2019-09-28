@@ -16,12 +16,18 @@ class FileLanguageModel extends FileModel {
     public getKeys(): FileLanguageModel {
         this.files =  this.getNormalizeFiles();
         this.keys = this.parseKeys((fileData: string, filePath: string): KeyModel[] => {
-            const fileKeysNames: string[] = this.getLanguageKeys(JSON.parse(fileData));
-            return !fileKeysNames ? [] : fileKeysNames
-                .filter(x => !!x)
-                .map((key: string) => {
-                    return new KeyModel(key, [], [filePath]);
-                });
+            try {
+                const fileKeysNames: string[] = this.getLanguageKeys(JSON.parse(fileData));
+                return !fileKeysNames ? [] : fileKeysNames
+                    .filter(x => !!x)
+                    .map((key: string) => {
+                        return new KeyModel(key, [], [filePath]);
+                    });
+            } catch (e) {
+                const errorMessage: string = `Can't parse JSON file: ${filePath}`;
+                throw new Error(errorMessage);
+            }
+
         });
        return this;
     }
