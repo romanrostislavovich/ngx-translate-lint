@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [1.1.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.1.0...v1.1.1) (2019-10-08)
+
+
+### Bug Fixes
+
+* handlу JSON parse error ([c8eb8b1](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/c8eb8b1))
+* npm audit ([93b30cf](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/93b30cf))
+* path witout pattern ([7fd6a74](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/7fd6a74))
+
 # [1.1.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.0.0...v1.1.0) (2019-06-05)
 
 
