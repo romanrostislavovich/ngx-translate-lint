@@ -75,8 +75,8 @@
         "lodash": "^4.17.11"
     },
     "devDependencies": {
-        "@semantic-release/changelog": "^3.0.2",
-        "@semantic-release/git": "^7.0.8",
+        "@semantic-release/changelog": "^3.0.4",
+        "@semantic-release/git": "^7.0.16",
         "@types/chai": "^4.1.7",
         "@types/chalk": "^2.2.0",
         "@types/commander": "^2.12.2",
@@ -91,7 +91,7 @@
         "markdownlint-cli": "^0.16.0",
         "mocha": "^6.1.4",
         "nyc": "^14.1.1",
-        "semantic-release": "^15.13.14",
+        "semantic-release": "^15.13.27",
         "sinon": "^7.3.2",
         "ts-node": "^8.1.0",
         "tslint": "^5.11.0",
