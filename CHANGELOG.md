@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.1.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.1.1...v1.1.2) (2019-10-22)
+
+
+### Bug Fixes
+
+* npm audit semantic release ([74262fb](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/74262fb132dedeeb643a6bc48d2cbbe634c8a630))
+
 ## [1.1.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.1.0...v1.1.1) (2019-10-08)
 
 
