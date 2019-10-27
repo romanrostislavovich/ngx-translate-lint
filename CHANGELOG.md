@@ -1,5 +1,12 @@
 # CHANGELOG
 
+# [1.2.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.1.2...v1.2.0) (2019-10-27)
+
+
+### Features
+
+* add max-warning flag ([a95fee8](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/a95fee830b73af92dd7265a8fb7b4973f6376041))
+
 ## [1.1.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.1.1...v1.1.2) (2019-10-22)
 
 
