@@ -2,12 +2,12 @@
 
 import commander from 'commander';
 
-import { runLint } from './runner';
-import { ErrorTypes } from "./../core";
-import { OptionModel } from './models';
-import { StatusCodes, OptionsTypes } from './enums';
+import {runLint} from './runner';
+import {ErrorTypes} from "./../core";
+import {OptionModel} from './models';
+import {OptionsTypes, StatusCodes} from './enums';
 
-import { config } from './../core/config';
+import {config} from './../core/config';
 
 const name: string = 'ngx-translate-lint';
 
@@ -77,6 +77,17 @@ const options: OptionModel[] = [
             'relative path',
             'absolute path'
         ]
+    }),
+    new OptionModel({
+        name: 'maxWarning',
+        required: false,
+        type: OptionsTypes.glob,
+        describe: `Max count of warnings in all files. If this value more that count of warnings, then an error is return`,
+        description: ``,
+        default: '0',
+        possibaleValues: [
+            'number'
+        ]
     })
 ];
 
@@ -106,7 +117,7 @@ Examples:
 commander.parse(process.argv);
 
 if (commander.project && commander.languages) {
-    runLint(commander.project, commander.languages, commander.zombies, commander.views, commander.ignore);
+    runLint(commander.project, commander.languages, commander.zombies, commander.views, commander.ignore, commander.maxWarning);
 } else {
     const requiredOptions: OptionModel[] = options.filter((option: OptionModel) => option.required);
     const missingRequiredOption: boolean = requiredOptions.reduce((acum: boolean, option: OptionModel) => {
