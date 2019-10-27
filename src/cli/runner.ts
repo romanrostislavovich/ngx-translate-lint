@@ -1,16 +1,16 @@
 import chalk from 'chalk';
-import { some, chain } from 'lodash';
+import { chain, some } from 'lodash';
 
 import { StatusCodes } from "./enums";
 import {
     ErrorTypes,
-    ResultModel,
-    IRulesConfig,
-    ResultFileModel,
-    ResultErrorModel,
-    NgxTranslateLint,
     FatalErrorModel,
     ILogger,
+    IRulesConfig,
+    NgxTranslateLint,
+    ResultErrorModel,
+    ResultFileModel,
+    ResultModel,
 } from "./../core";
 
 
@@ -23,7 +23,14 @@ const logger: ILogger = {
     },
 };
 
-function runLint(project: string, languages: string, zombies?: ErrorTypes, views?: ErrorTypes, ignore?: string): void {
+function runLint(
+    project: string,
+    languages: string,
+    zombies?: ErrorTypes,
+    views?: ErrorTypes,
+    ignore?: string,
+    maxWarning?: number,
+): void {
     try {
         const errorConfig: IRulesConfig = {
             keysOnViews: views || ErrorTypes.error,
@@ -33,21 +40,30 @@ function runLint(project: string, languages: string, zombies?: ErrorTypes, views
         const validationResult: ResultErrorModel[] = validationModel.lint();
         const hasError: boolean = some<ResultErrorModel[]>(validationResult, { 'errorType': ErrorTypes.error });
         const hasWarning: boolean = some<ResultErrorModel[]>(validationResult, { 'errorType': ErrorTypes.warning });
+        const countWarning: number = (validationResult.filter((item: ResultErrorModel) => item.errorType === ErrorTypes.warning) || []).length;
+        const isFullOfWarning: boolean = maxWarning ? countWarning >= (maxWarning as number): false;
 
         const resultFiles: ResultFileModel[] = chain<ResultErrorModel>(validationResult)
             .groupBy("currentPath")
             .map((dictionary: ResultErrorModel[], key: string) => {
+                let clearDictionary: ResultErrorModel[] = dictionary;
                 const hasError: boolean = some<ResultErrorModel[]>(dictionary, { 'errorType': ErrorTypes.error });
-                const errorType: ErrorTypes = hasError ? ErrorTypes.error : ErrorTypes.warning;
-                return new ResultFileModel(key, dictionary, errorType);
+                const errorType: ErrorTypes = hasError || isFullOfWarning ? ErrorTypes.error : ErrorTypes.warning;
+                if (isFullOfWarning) {
+                    clearDictionary = dictionary.map((item: ResultErrorModel) => {
+                        item.errorType = ErrorTypes.error;
+                        return item;
+                    });
+                }
+                return new ResultFileModel(key, clearDictionary, errorType);
             })
             .value();
 
-        const result: ResultModel = new ResultModel(resultFiles, hasError, hasWarning, logger);
+        const result: ResultModel = new ResultModel(resultFiles, hasError || isFullOfWarning, hasWarning, logger);
         result.printResult();
 
-        process.exitCode = hasError ? StatusCodes.error : StatusCodes.succefull;
-        if (hasError) {
+        process.exitCode = hasError || isFullOfWarning? StatusCodes.error : StatusCodes.succefull;
+        if (hasError || isFullOfWarning) {
             throw new FatalErrorModel(chalk.red(result.message));
         }
     } catch (error) {

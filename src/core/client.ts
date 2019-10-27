@@ -1,10 +1,10 @@
-import { flatMap } from 'lodash';
+import {flatMap} from 'lodash';
 
-import { config } from './config';
-import { ErrorTypes } from './enums';
-import { IRulesConfig } from './interface';
-import { ZombieRule, AbsentViewKeysRule } from './rules';
-import { ResultErrorModel, FileLanguageModel, KeyModel, FileViewModel } from './models';
+import {config} from './config';
+import {ErrorTypes} from './enums';
+import {IRulesConfig} from './interface';
+import {AbsentViewKeysRule, ZombieRule} from './rules';
+import {FileLanguageModel, FileViewModel, KeyModel, ResultErrorModel} from './models';
 
 class NgxTranslateLint {
     public projectPath: string;
