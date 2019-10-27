@@ -49,22 +49,26 @@ Options:
   -p,  --project [glob] (required)
           The path to project folder
           Possibale Values: <relative path|absolute path>
-           (default: "./src/app/**/*.{html,ts}")
+          (default: "./src/app/**/*.{html,ts}")
   -l,  --languages [glob] (required)
           The path to languages folder
           Possibale Values: <relative path|absolute path>
-           (default: "./src/assets/i18n/*.json")
+          (default: "./src/assets/i18n/*.json")
   -v,  --views [enum]
           Described how to handle the error of missing keys on view
           Possibale Values: <disable|warning|error>
-           (default: "error")
+          (default: "error")
   -z,  --zombies [enum]
           Described how to handle the error of zombies keys
           Possibale Values: <disable|warning|error>
-           (default: "warning")
+          (default: "warning")
   -i,  --ignore [glob]
           Ignore projects and languages files
           Possibale Values: <relative path|absolute path>
+  --maxWarning [number]
+           Max count of warnings in all files. If this value more that count of warnings, then an error is return
+           Possibale Values: <number>
+           (default: "0")
 
   -h, --help  output usage information
 

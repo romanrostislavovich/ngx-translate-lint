@@ -6,6 +6,7 @@ interface IArgv {
     help?: boolean;
     version?: boolean;
     ignore?: string;
+    maxWarning?: number;
 }
 
 export { IArgv };
