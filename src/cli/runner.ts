@@ -10,8 +10,8 @@ import {
     NgxTranslateLint,
     ResultErrorModel,
     ResultFileModel,
-    ResultModel,
 } from "./../core";
+import { ResultModel } from "./models/ResultModel";
 
 
 const logger: ILogger = {
@@ -41,7 +41,7 @@ function runLint(
         const hasError: boolean = some<ResultErrorModel[]>(validationResult, { 'errorType': ErrorTypes.error });
         const hasWarning: boolean = some<ResultErrorModel[]>(validationResult, { 'errorType': ErrorTypes.warning });
         const countWarning: number = (validationResult.filter((item: ResultErrorModel) => item.errorType === ErrorTypes.warning) || []).length;
-        const isFullOfWarning: boolean = maxWarning ? countWarning >= (maxWarning as number): false;
+        const isFullOfWarning: boolean = maxWarning && maxWarning !== 0 && countWarning !== 0 ? countWarning >= (maxWarning as number): false;
 
         const resultFiles: ResultFileModel[] = chain<ResultErrorModel>(validationResult)
             .groupBy("currentPath")
