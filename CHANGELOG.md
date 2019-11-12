@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.2.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.2.0...v1.2.1) (2019-11-12)
+
+
+### Bug Fixes
+
+* Error code is returned when number of warnings is equal to `max-warning` value ([b89439f](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/b89439f6071851c7b5acf35d10dcd711f042edd3)), closes [#28](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/28)
+
 # [1.2.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.1.2...v1.2.0) (2019-10-27)
 
 
