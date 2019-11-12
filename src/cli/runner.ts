@@ -10,8 +10,8 @@ import {
     NgxTranslateLint,
     ResultErrorModel,
     ResultFileModel,
-    ResultModel,
 } from "./../core";
+import { ResultModel } from "./models/ResultModel";
 
 
 const logger: ILogger = {
