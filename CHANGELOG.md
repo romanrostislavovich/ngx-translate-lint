@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.2.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.2.1...v1.2.2) (2019-11-20)
+
+
+### Bug Fixes
+
+* Documentation and code of `max-warning` flag is mismatch both of them ([e5c880e](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/e5c880ede5301e707debc4bb74fd8d1ec3b12b9e))
+
 ## [1.2.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.2.0...v1.2.1) (2019-11-12)
 
 
