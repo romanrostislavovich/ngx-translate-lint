@@ -1,7 +1,7 @@
 import fs from 'fs';
 
-import { KeyModel } from "./../KeyModel";
-import { PathUtils, KeysUtils } from "./../../utils";
+import { KeyModel } from 'src/core/models';
+import { PathUtils, KeysUtils } from 'src/core/utils';
 
 abstract class FileModel {
     public path: string;
@@ -9,7 +9,7 @@ abstract class FileModel {
     public files: string[];
     public ignore: string | undefined;
 
-    constructor(
+    protected constructor(
         path: string,
         files: string[] = [],
         keys: KeyModel[] = [],

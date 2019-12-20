@@ -1,7 +1,6 @@
 import { get } from 'lodash';
 
-import { KeyModel } from '../KeyModel';
-import { FileModel } from './FileModel';
+import { KeyModel, FileModel } from 'src/core/models';
 
 class FileLanguageModel extends FileModel {
     constructor(

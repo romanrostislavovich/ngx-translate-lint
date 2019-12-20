@@ -2,6 +2,12 @@
     "compilerOptions": {
         "experimentalDecorators": true,
         "rootDir": "./",
+        "baseUrl": "./",
+        "paths": {
+            "src/*": [
+                "./src/*"
+            ]
+        },
         "sourceMap": true,
         "target": "ES6",
         "module": "commonjs",

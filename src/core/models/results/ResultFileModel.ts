@@ -1,8 +1,8 @@
-import { ErrorTypes } from "../../enums";
-import { ResultErrorModel } from "./ResultErrorModel";
-import { IValidationMessage } from "./../../interface";
+import { ErrorTypes } from 'src/core/enums';
+import { ResultErrorModel } from './ResultErrorModel';
+import { IValidationMessage } from 'src/core/interface';
 
-class ResultFileModel implements  IValidationMessage {
+class ResultFileModel implements IValidationMessage {
     public value?: string;
     public errors: ResultErrorModel[];
     public errorType: ErrorTypes;
