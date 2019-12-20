@@ -20,9 +20,9 @@
         "lint:markdown": "markdownlint --config ./config/markdownlint.json ./docs/**/*.md",
         "test:unit": "nyc mocha -r ts-node/register ./test/unit/*.test.ts",
         "test:integration": "mocha -r ts-node/register ./test/integration/*.test.ts",
-        "build": "tsc -p .",
+        "build": "tsc -p . && npm run doc",
         "lint": "npm run lint:typescript && npm run lint:markdown",
-        "test": "npm run lint && npm run build && npm run test:integration",
+        "test": "npm run lint && npm run build && npm run test:integration && npm run doc",
         "semantic-release": "semantic-release"
     },
     "files": [
