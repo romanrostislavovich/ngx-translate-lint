@@ -1,6 +1,5 @@
 import chalk from 'chalk';
 
-import { StatusCodes } from "./enums";
 import {
     ErrorTypes,
     FatalErrorModel,
@@ -8,8 +7,9 @@ import {
     NgxTranslateLint,
     ResultErrorModel,
     ResultLintModel,
+    ResultModel,
+    StatusCodes
 } from "./../core";
-import { ResultModel } from "./models/ResultModel";
 
 function runLint(
     project: string,
