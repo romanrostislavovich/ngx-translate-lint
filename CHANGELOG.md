@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [1.2.3](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.2.2...v1.2.3) (2019-12-20)
+
+
+### Reverts
+
+* Revert "refactor: refactors imports" ([02f6b09](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/02f6b09184491a5ee7895c1310786e4693b9e01b))
+* Revert "refactor: fix build" ([786418e](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/786418e115b6b4ec93073a49b13c8aed510cc1b9))
+* Revert "refactor: fix build" ([d185e31](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/d185e3143a6bc729eaee516691c79e2695408a5c))
+
 ## [1.2.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.2.1...v1.2.2) (2019-11-20)
 
 
