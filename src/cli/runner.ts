@@ -27,7 +27,7 @@ function runLint(
         const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig);
         const validationResult: ResultErrorModel[] = validationModel.lint();
         const resultLintModel: ResultLintModel = new ResultLintModel(validationResult, maxWarning);
-        const resultModel: ResultModel = resultLintModel.getResultModel();
+        const resultModel: ResultModel = resultLintModel.getResultModel()
         resultModel.printResult();
 
         process.exitCode = resultLintModel.exitCode;
