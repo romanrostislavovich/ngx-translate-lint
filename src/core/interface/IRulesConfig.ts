@@ -1,4 +1,4 @@
-import { ErrorTypes } from 'src/core/enums';
+import { ErrorTypes } from "./../enums";
 
 interface IRulesConfig {
     keysOnViews: ErrorTypes;

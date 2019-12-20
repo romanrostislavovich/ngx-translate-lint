@@ -1,13 +1,13 @@
 import { isArray } from 'lodash';
 
-import { IValidationMessage } from 'src/core/interface';
-import { ErrorFlow, ErrorTypes } from 'src/core/enums';
+import { IValidationMessage } from "./../../interface";
+import { ErrorFlow, ErrorTypes } from './../../enums';
 
 class ResultErrorModel implements IValidationMessage  {
     public value: string;
     public errorFlow: ErrorFlow;
     public errorType: ErrorTypes;
-    public absentedPath?: string | string[];
+    public abasentedPath?: string | string[];
     public currentPath: string;
 
     constructor(
@@ -21,16 +21,16 @@ class ResultErrorModel implements IValidationMessage  {
         this.errorFlow = errorFlow;
         this.errorType = errorType;
         this.currentPath = currentPath;
-        this.absentedPath = absentedPath;
+        this.abasentedPath = absentedPath;
     }
 
     get message(): string | string[] | null {
         let message: string | string[] | null = null;
         switch (this.errorFlow) {
             case ErrorFlow.views:
-                message = isArray(this.absentedPath)
-                    ? this.absentedPath.map((path: string) => `Key: '${this.value}' doesn't exist in '${path}'`)
-                    : `Key: '${this.value}' doesn't exist in '${this.absentedPath}'`;
+                message = isArray(this.abasentedPath)
+                    ? this.abasentedPath.map((path: string) => `Key: '${this.value}' doesn't exist in '${path}'`)
+                    : `Key: '${this.value}' doesn't exist in '${this.abasentedPath}'`;
                 break;
             case ErrorFlow.zombie:
                 message = `Key: '${this.value}' doesn't exist in project'`;

@@ -1,2 +1,4 @@
-export * from './AbsentViewKeysRule';
-export * from './ZombiesRule';
+import { ZombieRule } from './ZombiesRule';
+import { AbsentViewKeysRule } from './AbsentViewKeysRule';
+
+export { ZombieRule, AbsentViewKeysRule };

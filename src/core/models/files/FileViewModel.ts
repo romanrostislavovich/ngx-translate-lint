@@ -1,4 +1,5 @@
-import { FileModel, KeyModel } from 'src/core/models';
+import { FileModel } from "./FileModel";
+import { KeyModel } from "./../KeyModel";
 
 class FileViewModel extends FileModel {
     constructor(

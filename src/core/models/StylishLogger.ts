@@ -1,7 +1,7 @@
 import chalk from "chalk";
 
-import { ILogger } from 'src/core/interface';
-import { ErrorTypes } from 'src/core/enums';
+import { ILogger } from "./../interface";
+import { ErrorTypes } from "./../enums";
 
 class StylishLogger implements ILogger {
     private logger: ILogger;

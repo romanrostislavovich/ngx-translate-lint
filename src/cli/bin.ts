@@ -2,11 +2,12 @@
 
 import commander from 'commander';
 
-import { config } from 'src/core/config';
-import { runLint } from './runner';
-import { OptionModel } from './models';
-import { OptionsTypes } from './enums';
-import { ErrorTypes, StatusCodes } from 'src/core';
+import {runLint} from './runner';
+import {ErrorTypes} from "./../core";
+import {OptionModel} from './models';
+import {OptionsTypes, StatusCodes} from './enums';
+
+import {config} from './../core/config';
 
 const name: string = 'ngx-translate-lint';
 
@@ -16,10 +17,10 @@ const options: OptionModel[] = [
         name: 'project',
         required: true,
         type: OptionsTypes.glob,
-        descriptionShort: `The path to project folder`,
-        descriptionLong: ``,
+        describe: `The path to project folder`,
+        description: ``,
         default: config.defaultValues.projectPath,
-        possibleValues: [
+        possibaleValues: [
             'relative path',
             'absolute path'
         ]
@@ -29,10 +30,10 @@ const options: OptionModel[] = [
         name: 'languages',
         required: true,
         type: OptionsTypes.glob,
-        descriptionShort: `The path to languages folder`,
-        descriptionLong: ``,
+        describe: `The path to languages folder`,
+        description: ``,
         default: config.defaultValues.languagesPath,
-        possibleValues: [
+        possibaleValues: [
             'relative path',
             'absolute path'
         ]
@@ -42,10 +43,10 @@ const options: OptionModel[] = [
         name: 'views',
         required: false,
         type: OptionsTypes.enum,
-        descriptionShort: `Described how to handle the error of missing keys on view`,
-        descriptionLong: ``,
+        describe: `Described how to handle the error of missing keys on view`,
+        description: ``,
         default: ErrorTypes.error,
-        possibleValues: [
+        possibaleValues: [
             ErrorTypes.disable,
             ErrorTypes.warning,
             ErrorTypes.error
@@ -56,10 +57,10 @@ const options: OptionModel[] = [
         name: 'zombies',
         required: false,
         type: OptionsTypes.enum,
-        descriptionShort: `Described how to handle the error of zombies keys`,
-        descriptionLong: ``,
+        describe: `Described how to handle the error of zombies keys`,
+        description: ``,
         default: ErrorTypes.warning,
-        possibleValues: [
+        possibaleValues: [
             ErrorTypes.disable,
             ErrorTypes.warning,
             ErrorTypes.error
@@ -70,9 +71,9 @@ const options: OptionModel[] = [
         name: 'ignore',
         required: false,
         type: OptionsTypes.glob,
-        descriptionShort: `Ignore projects and languages files`,
-        descriptionLong: ``,
-        possibleValues: [
+        describe: `Ignore projects and languages files`,
+        description: ``,
+        possibaleValues: [
             'relative path',
             'absolute path'
         ]
@@ -81,10 +82,10 @@ const options: OptionModel[] = [
         name: 'maxWarning',
         required: false,
         type: OptionsTypes.glob,
-        descriptionShort: `Max count of warnings in all files. If this value more that count of warnings, then an error is return`,
-        descriptionLong: ``,
+        describe: `Max count of warnings in all files. If this value more that count of warnings, then an error is return`,
+        description: ``,
         default: '0',
-        possibleValues: [
+        possibaleValues: [
             'number'
         ]
     })

@@ -8,9 +8,9 @@ interface IOption {
     type: OptionsTypes;
     required: boolean;
     default?: string | ErrorTypes;
-    descriptionShort: string; // Short, used for usage message
-    descriptionLong?: string; // Long, used for `--help`
-    possibleValues?: string[] | ErrorTypes[];
+    describe: string; // Short, used for usage message
+    description?: string; // Long, used for `--help`
+    possibaleValues?: string[] | ErrorTypes[];
 }
 
 export { IOption };

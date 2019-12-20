@@ -1,6 +1,6 @@
-import { ErrorTypes } from 'src/core';
-import { OptionsTypes } from 'src/cli/enums';
-import { IArgv, IOption } from 'src/cli/interface';
+import { ErrorTypes } from "./../../core";
+import { OptionsTypes } from "./../enums";
+import { IArgv, IOption } from "./../interface";
 
 class OptionModel implements IOption {
     public short?: string;
@@ -8,22 +8,22 @@ class OptionModel implements IOption {
     public type: OptionsTypes;
     public required: boolean = false;
     public default?: string | ErrorTypes;
-    public possibleValues?: string[] | ErrorTypes[];
-    public descriptionLong?: string;
-    public descriptionShort: string;
+    public describe: string; // Short, used for usage message
+    public description?: string; // Long, used for `--help`
+    public possibaleValues?: string[] | ErrorTypes[];
 
     constructor(
         args: IOption
     ) {
         this.name = args.name;
         this.type = args.type;
-        this.descriptionShort = args.descriptionShort;
+        this.describe = args.describe;
 
         this.short = args.short;
         this.required = args.required;
         this.default = args.default;
-        this.descriptionLong = args.descriptionLong;
-        this.possibleValues = args.possibleValues;
+        this.description = args.description;
+        this.possibaleValues = args.possibaleValues;
     }
 
     public getFlag(): string {
@@ -32,8 +32,8 @@ class OptionModel implements IOption {
 
     public getDescription(): string {
         return (`
-        ${this.descriptionShort}
-        ${this.possibleValues ? 'Possible Values: <' + this.possibleValues.join('|') + '>' : '' }
+        ${this.describe}
+        ${this.possibaleValues ? 'Possibale Values: <' + this.possibaleValues.join('|') + '>' : '' }
         `);
     }
 }

@@ -1,3 +1,4 @@
-export * from './keys';
-export * from './path';
-export * from './logger';
+import { KeysUtils } from './keys';
+import { PathUtils } from './path';
+
+export { KeysUtils, PathUtils };
