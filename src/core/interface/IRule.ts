@@ -1,10 +1,11 @@
 import { ErrorFlow, ErrorTypes } from "../enums";
-import { ResultErrorModel, KeyModel } from "./../models";
+import { KeyModel, ResultErrorModel } from "../models";
+
 
 interface IRule {
     flow: ErrorFlow;
     handler: ErrorTypes;
-    check(viewKeys: KeyModel[], langaugesKeys: KeyModel[]): ResultErrorModel[];
+    check(viewKeys: KeyModel[], languagesKeys: KeyModel[]): ResultErrorModel[];
 }
 
 export { IRule };

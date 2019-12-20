@@ -1,10 +1,11 @@
 import { isArray } from 'lodash';
 
-import { ILogger } from "../../interface";
-import { ErrorTypes } from "./../../enums";
-import { StylishLogger } from './../StylishLogger';
-import { ResultFileModel } from "./ResultFileModel";
-import { ResultErrorModel } from "./ResultErrorModel";
+
+import { ResultFileModel } from './ResultFileModel';
+import { ResultErrorModel } from './ResultErrorModel';
+import { ErrorTypes } from '../../enums';
+import { ILogger } from '../../interface';
+import { StylishLogger } from '../StylishLogger';
 
 class ResultModel extends StylishLogger {
     public files: ResultFileModel[];

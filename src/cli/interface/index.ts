@@ -1,4 +1,2 @@
-import { IArgv } from './IArgv';
-import { IOption } from './IOption';
-
-export { IArgv, IOption };
+export * from './IArgv';
+export * from './IOption';

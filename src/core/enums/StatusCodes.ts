@@ -1,7 +1,7 @@
 enum StatusCodes {
-    succefull = 0,
     error = 1,
-    crash = 2
+    crash = 2,
+    successful = 0,
 }
 
 export { StatusCodes };
