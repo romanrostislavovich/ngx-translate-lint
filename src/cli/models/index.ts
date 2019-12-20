@@ -1,3 +1,1 @@
-import { OptionModel } from './Option';
-
-export { OptionModel };
+export * from './Option';
