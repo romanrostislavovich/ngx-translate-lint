@@ -3,9 +3,9 @@
 import commander from 'commander';
 
 import {runLint} from './runner';
-import {ErrorTypes} from "./../core";
+import {ErrorTypes, StatusCodes} from "./../core";
 import {OptionModel} from './models';
-import {OptionsTypes, StatusCodes} from './enums';
+import {OptionsTypes} from './enums';
 
 import {config} from './../core/config';
 
