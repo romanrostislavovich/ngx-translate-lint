@@ -4,7 +4,7 @@ import {config} from './config';
 import {ErrorTypes} from './enums';
 import {IRulesConfig} from './interface';
 import {AbsentViewKeysRule, ZombieRule} from './rules';
-import {FileLanguageModel, FileViewModel, KeyModel, ResultErrorModel} from './models';
+import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel } from './models';
 
 class NgxTranslateLint {
     public projectPath: string;
@@ -24,7 +24,7 @@ class NgxTranslateLint {
         this.ignore = ignore;
     }
 
-    public lint(): ResultErrorModel[] {
+    public lint(maxWarning?: number): ResultCliModel {
         if (!(this.projectPath && this.languagesPath)) {
             throw new Error(`Path to project or languages is incorrect`);
         }
@@ -38,22 +38,22 @@ class NgxTranslateLint {
         const viewsRegExp: RegExp = config.findKeysList(languagesKeysNames);
         const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
 
-        const result: ResultErrorModel[] = [];
+        const errors: ResultErrorModel[] = [];
 
         // TODO: RL: Refactor this
         if (this.rules.zombieKeys !== ErrorTypes.disable) {
             const ruleInstance: ZombieRule = new ZombieRule(this.rules.zombieKeys);
             const ruleResult: ResultErrorModel[] = ruleInstance.check(views.keys, languagesKeys.keys);
-            result.push(...ruleResult);
+            errors.push(...ruleResult);
         }
 
         if (this.rules.keysOnViews !== ErrorTypes.disable) {
             const ruleInstance: AbsentViewKeysRule = new AbsentViewKeysRule(this.rules.keysOnViews, languagesKeys.files);
             const ruleResult: ResultErrorModel[] = ruleInstance.check(views.keys, languagesKeys.keys);
-            result.push(...ruleResult);
+            errors.push(...ruleResult);
         }
-
-        return result;
+        const cliResult: ResultCliModel = new ResultCliModel(errors, maxWarning)
+        return cliResult;
     }
 }
 

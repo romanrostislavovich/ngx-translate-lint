@@ -2,8 +2,6 @@ import { isArray } from 'lodash';
 import { IValidationMessage } from '../../interface';
 import { ErrorFlow, ErrorTypes } from '../../enums';
 
-
-
 class ResultErrorModel implements IValidationMessage  {
     public value: string;
     public errorFlow: ErrorFlow;

@@ -1,6 +1,5 @@
 import { isArray } from 'lodash';
 
-
 import { ResultFileModel } from './ResultFileModel';
 import { ResultErrorModel } from './ResultErrorModel';
 import { ErrorTypes } from '../../enums';
