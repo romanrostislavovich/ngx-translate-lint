@@ -5,7 +5,7 @@ import {assert, expect } from 'chai';
 
 import {
     NgxTranslateLint,
-    IRulesConfig, ErrorTypes, ResultErrorModel
+    IRulesConfig, ErrorTypes, ResultCliModel
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
@@ -24,30 +24,77 @@ describe('Integration', () => {
     const languagesIncorrectFile: string = './test/integration/inputs/locales/incorrect.json';
     const languagesAbsentMaskPath: string = './test/integration/inputs/locales';
 
+    describe('Warnings', () => {
+        it('should be 0 by default', () => {
+            // Arrange
+            const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
+            const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
+
+            // Act
+            const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, languagesWithMaskPath);
+            const result:  ResultCliModel = model.lint();
+
+            // Assert
+            assert.deepEqual(0, result.maxCountWarning);
+        });
+        it('should be error if warnings more thant 2', () => {
+            // Arrange
+            const errorConfig: IRulesConfig = {
+                keysOnViews: ErrorTypes.warning,
+                zombieKeys: ErrorTypes.warning,
+            };
+            const ifFullOfWarning: boolean = true;
+            const maxWarnings: number = 5;
+            const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
+
+            // Act
+            const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, languagesWithMaskPath, '', errorConfig);
+            const result:  ResultCliModel = model.lint(maxWarnings);
+
+            // Assert
+            assert.deepEqual(ifFullOfWarning, result.isFullOfWarning);
+            assert.deepEqual(maxWarnings, result.maxCountWarning);
+        });
+        it('should be warning if warnings less thant 10', () => {
+            // Arrange
+            const ifFullOfWarning: boolean = false;
+            const maxWarnings: number = 20;
+            const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
+            const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
+
+            // Act
+            const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, languagesWithMaskPath);
+            const result: ResultCliModel = model.lint(maxWarnings);
+
+            // Assert
+            assert.deepEqual(ifFullOfWarning, result.isFullOfWarning);
+            assert.deepEqual(maxWarnings, result.maxCountWarning);
+        });
+    });
     describe('Ignore', () => {
         it('should be relative and absolute and have projects and languages files', () => {
-            // Arrage
-            const ignoreAbsolutePorjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
-            const ignorePath: string = `${languagesIgnorePath}, ${ignoreAbsolutePorjectPath}`;
+            // Arrange
+            const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
+            const ignorePath: string = `${languagesIgnorePath}, ${ignoreAbsoluteProjectPath}`;
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath);
-            const result: ResultErrorModel[] = model.lint();
+            const result: ResultCliModel = model.lint();
 
             // Assert
-            assert.deepEqual(assertFullModel, result);
+            assert.deepEqual(assertFullModel, result.errors);
         });
 
         it('should be empty or incorrect', () => {
-            // Arrage
+            // Arrange
             const ignorePath: string = `null, 0, undefined, '',`;
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath);
-            const result: ResultErrorModel[] = model.lint();
+            const result: ResultCliModel = model.lint();
 
             // Assert
-            assert.deepEqual(assertDefaultModel, result);
+            assert.deepEqual(assertDefaultModel, result.errors);
         });
     });
     describe('Path', () => {
@@ -57,37 +104,37 @@ describe('Integration', () => {
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, languagesWithMaskPath);
-            const result: ResultErrorModel[] = model.lint();
+            const result: ResultCliModel = model.lint();
 
             // Assert
-            assert.deepEqual(assertDefaultModel, result);
+            assert.deepEqual(assertDefaultModel, result.errors);
         });
 
         it('should be absent mask', () => {
-            // Arrage
+            // Arrange
             const ignorePath: string = `${languagesIgnorePath}, ${projectIgnorePath}, ${languagesIncorrectFile}`;
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectAbsentMaskPath, languagesAbsentMaskPath, ignorePath);
-            const result: ResultErrorModel[] = model.lint();
+            const result: ResultCliModel = model.lint();
 
             // Assert
-            assert.deepEqual(assertFullModel, result);
+            assert.deepEqual(assertFullModel, result.errors);
         });
-        it('should be empty and incorect', () => {
+        it('should be empty and incorrect', () => {
             // Arrange
             const emptyFolder: string = '';
-            const inccorectFolder: string = '../files';
+            const incorrectFolder: string = '../files';
 
             // Act
-            const model: NgxTranslateLint = new NgxTranslateLint(emptyFolder, inccorectFolder);
+            const model: NgxTranslateLint = new NgxTranslateLint(emptyFolder, incorrectFolder);
 
             // Assert
             expect(() => { model.lint(); }).to.throw();
         });
 
         it('should with parse error', () => {
-            // Arrage
+            // Arrange
             const absoluteIncorrectLanguagesPath: string = path.resolve(__dirname, process.cwd(), languagesIncorrectFile);
             const errorMessage: string = `Can't parse JSON file: ${absoluteIncorrectLanguagesPath}`;
 
@@ -104,16 +151,16 @@ describe('Integration', () => {
         it('should be default', () => {
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
-            const result:  ResultErrorModel[] = model.lint();
+            const result:  ResultCliModel = model.lint();
 
             // Assert
-            assert.deepEqual(assertDefaultModel, result);
+            assert.deepEqual(assertDefaultModel, result.errors);
         });
-        it('should be inccorect', () => {
-            // Arrage
+        it('should be incorrect', () => {
+            // Arrange
             const errorConfig: object = {
-                keysOnViews: 'inccorect',
-                anotherInccorectKey: ErrorTypes.disable
+                keysOnViews: 'incorrect',
+                anotherIncorrectKey: ErrorTypes.disable
             };
 
 
@@ -124,7 +171,7 @@ describe('Integration', () => {
             expect(() => { model.lint(); }).to.throw();
         });
         it('should be custom', () => {
-            // Arrage
+            // Arrange
             const errorConfig: IRulesConfig = {
                 keysOnViews: ErrorTypes.warning,
                 zombieKeys: ErrorTypes.disable,
@@ -132,10 +179,10 @@ describe('Integration', () => {
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath, errorConfig);
-            const result:  ResultErrorModel[] = model.lint();
+            const result: ResultCliModel = model.lint();
 
             // Assert
-            assert.deepEqual(assertCustomConfig, result);
+            assert.deepEqual(assertCustomConfig, result.errors);
         });
     });
 
@@ -146,15 +193,14 @@ describe('Integration', () => {
             zombieKeys: ErrorTypes.warning,
         };
         const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
-        const ignoreAbsolutePorjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
-        const ignorePath: string = `${languagesIgnorePath}, ${ignoreAbsolutePorjectPath}`;
+        const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
+        const ignorePath: string = `${languagesIgnorePath}, ${ignoreAbsoluteProjectPath}`;
 
         // Act
         const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, languagesWithMaskPath, ignorePath, errorConfig);
-        const result:  ResultErrorModel[] = model.lint();
+        const result: ResultCliModel = model.lint();
 
         // Assert
-        assert.deepEqual(assertFullModel, result);
+        assert.deepEqual(assertFullModel, result.errors);
     });
-
 });
