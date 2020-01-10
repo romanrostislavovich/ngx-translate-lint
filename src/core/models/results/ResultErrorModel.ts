@@ -44,7 +44,7 @@ class ResultErrorModel implements IValidationMessage  {
                 }, []);
                 break;
             default:
-                message = 'Unknown error please write to the author'
+                message = 'Unknown error please write to the author';
                 break;
         }
         return message;

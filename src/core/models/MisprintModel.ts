@@ -1,6 +1,7 @@
 import { ErrorTypes } from './../enums';
+import { IMisprint } from '../interface';
 
-class MisprintModel {
+class MisprintModel implements IMisprint {
     public type: ErrorTypes;
     public coefficient: number;
     constructor(
