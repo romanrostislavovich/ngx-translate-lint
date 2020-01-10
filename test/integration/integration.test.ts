@@ -1,16 +1,21 @@
 import 'mocha';
 
 import path from 'path';
-import {assert, expect } from 'chai';
+import { assert, expect } from 'chai';
 
 import {
+    ErrorFlow,
+    ErrorTypes,
+    IRulesConfig,
     NgxTranslateLint,
-    IRulesConfig, ErrorTypes, ResultCliModel
+    ResultCliModel,
+    ResultErrorModel
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
 import { assertDefaultModel } from './results/default.full';
 import { assertCustomConfig } from './results/custom.config';
+import { getAbsolutePath, projectFolder } from './utils';
 
 describe('Integration', () => {
     const ignorePath: string = '';
@@ -24,14 +29,71 @@ describe('Integration', () => {
     const languagesIncorrectFile: string = './test/integration/inputs/locales/incorrect.json';
     const languagesAbsentMaskPath: string = './test/integration/inputs/locales';
 
-    describe('Warnings', () => {
-        it('should be 0 by default', () => {
+    describe('Misprint', () => {
+        it('should be warning by default', () => {
             // Arrange
-            const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
-            const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
+            const hasMisprint: boolean = true;
+            const countMisprint: number = 1;
 
             // Act
-            const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, languagesWithMaskPath);
+            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
+            const result: ResultCliModel = model.lint();
+
+            // Assert
+            assert.deepEqual(hasMisprint, result.hasMisprint);
+            assert.deepEqual(countMisprint, result.countMisprint);
+        });
+        it('should be error', () => {
+            // Arrange
+            const errorConfig: IRulesConfig = {
+                keysOnViews: ErrorTypes.error,
+                zombieKeys: ErrorTypes.warning,
+                misprint: ErrorTypes.error,
+            };
+            const hasMisprint: boolean = true;
+            const countMisprint: number = 1;
+            const correctError: ResultErrorModel = new ResultErrorModel(
+                'STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_ONE_LOCALES',
+                    ErrorFlow.misprint, ErrorTypes.error,
+                    getAbsolutePath(projectFolder, 'pipe.keys.html'),
+                    [
+                        'EN-eu.json',
+                        'EN-us.json'
+                    ],
+                    [
+                        "STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_IN_LOCALES"
+                    ]
+            );
+
+            // Act
+            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath,  '', errorConfig);
+            const result: ResultCliModel = model.lint();
+            const clearErrors: ResultErrorModel[] = result.errors.filter((error: ResultErrorModel) => error.errorFlow === ErrorFlow.misprint);
+
+            // Assert
+            assert.deepEqual(hasMisprint, result.hasMisprint);
+            assert.deepEqual(countMisprint, result.countMisprint);
+            assert.deepEqual(correctError, clearErrors.pop());
+        });
+        it('should be have 2 or more suggestions for one key', () => {
+            // Arrange
+            const hasMisprint: boolean = true;
+            const countMisprint: number = 2;
+            const ignorePath: string = `${languagesIgnorePath}, ${projectIgnorePath}`;
+
+            // Act
+            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath);
+            const result: ResultCliModel = model.lint();
+
+            // Assert
+            assert.deepEqual(hasMisprint, result.hasMisprint);
+            assert.deepEqual(countMisprint, result.countMisprint);
+        });
+    });
+    describe('Warnings', () => {
+        it('should be 0 by default', () => {
+            // Act
+            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
             const result:  ResultCliModel = model.lint();
 
             // Assert
@@ -39,16 +101,17 @@ describe('Integration', () => {
         });
         it('should be error if warnings more thant 2', () => {
             // Arrange
+            const ignorePath: string = '';
+            const maxWarnings: number = 5;
+            const ifFullOfWarning: boolean = true;
             const errorConfig: IRulesConfig = {
                 keysOnViews: ErrorTypes.warning,
                 zombieKeys: ErrorTypes.warning,
+                misprint: ErrorTypes.disable,
             };
-            const ifFullOfWarning: boolean = true;
-            const maxWarnings: number = 5;
-            const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
 
             // Act
-            const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, languagesWithMaskPath, '', errorConfig);
+            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath, errorConfig);
             const result:  ResultCliModel = model.lint(maxWarnings);
 
             // Assert
@@ -57,13 +120,11 @@ describe('Integration', () => {
         });
         it('should be warning if warnings less thant 10', () => {
             // Arrange
-            const ifFullOfWarning: boolean = false;
             const maxWarnings: number = 20;
-            const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
-            const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
+            const ifFullOfWarning: boolean = false;
 
             // Act
-            const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, languagesWithMaskPath);
+            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
             const result: ResultCliModel = model.lint(maxWarnings);
 
             // Assert
@@ -163,7 +224,6 @@ describe('Integration', () => {
                 anotherIncorrectKey: ErrorTypes.disable
             };
 
-
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath, errorConfig as IRulesConfig);
 
@@ -175,6 +235,7 @@ describe('Integration', () => {
             const errorConfig: IRulesConfig = {
                 keysOnViews: ErrorTypes.warning,
                 zombieKeys: ErrorTypes.disable,
+                misprint: ErrorTypes.disable,
             };
 
             // Act
@@ -191,6 +252,7 @@ describe('Integration', () => {
         const errorConfig: IRulesConfig = {
             keysOnViews: ErrorTypes.error,
             zombieKeys: ErrorTypes.warning,
+            misprint: ErrorTypes.warning,
         };
         const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
         const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);

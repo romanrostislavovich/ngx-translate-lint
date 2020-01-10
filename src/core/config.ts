@@ -22,6 +22,7 @@ const config: IAppConfig = {
         rules: {
             keysOnViews: ErrorTypes.error,
             zombieKeys: ErrorTypes.warning,
+            misprint: ErrorTypes.warning,
         },
         projectPath: './src/app/**/*.{html,ts}',
         languagesPath: './src/assets/i18n/*.json'

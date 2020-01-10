@@ -4,6 +4,7 @@ enum OptionsLongNames {
     ignore = 'ignore',
     project = 'project',
     zombies = 'zombies',
+    misprint = 'misprint',
     languages = 'languages',
     maxWarning = 'maxWarning'
 }
@@ -13,6 +14,7 @@ enum OptionsShortNames {
     ignore = 'i',
     project = 'p',
     zombies = 'z',
+    misprint = 'm',
     languages = 'l',
 }
 

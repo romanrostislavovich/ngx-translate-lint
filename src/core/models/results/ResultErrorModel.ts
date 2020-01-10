@@ -8,6 +8,7 @@ class ResultErrorModel implements IValidationMessage  {
     public errorType: ErrorTypes;
     public absentedPath?: string | string[];
     public currentPath: string;
+    public suggestions: string[];
 
     constructor(
         value: string,
@@ -15,12 +16,14 @@ class ResultErrorModel implements IValidationMessage  {
         errorType: ErrorTypes = ErrorTypes.error,
         currentPath: string,
         absentedPath?: string | string[],
+        suggestions: string[] = [],
     ) {
         this.value = value;
         this.errorFlow = errorFlow;
         this.errorType = errorType;
         this.currentPath = currentPath;
         this.absentedPath = absentedPath;
+        this.suggestions = suggestions;
     }
 
     get message(): string | string[] | null {
@@ -34,7 +37,14 @@ class ResultErrorModel implements IValidationMessage  {
             case ErrorFlow.zombie:
                 message = `Key: '${this.value}' doesn't exist in project'`;
                 break;
+            case ErrorFlow.misprint:
+               message = this.suggestions.reduce((accum: string[], item: string) => {
+                   accum.push(`Possible match: ${item} for key ${this.value}`);
+                   return accum;
+                }, []);
+                break;
             default:
+                message = 'Unknown error please write to the author'
                 break;
         }
         return message;

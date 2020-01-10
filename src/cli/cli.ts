@@ -3,11 +3,11 @@ import commander from 'commander';
 
 import { OptionModel } from './models';
 import {
-    ErrorTypes, FatalErrorModel,
+    ErrorTypes,
+    FatalErrorModel,
     IRulesConfig,
     NgxTranslateLint,
     ResultCliModel,
-    ResultErrorModel,
     ResultModel,
     StatusCodes
 } from "./../core";
@@ -68,7 +68,10 @@ class Cli {
 
     public runCli(): void {
         if (this.cliClient.project && this.cliClient.languages) {
-            this.runLint(this.cliClient.project, this.cliClient.languages, this.cliClient.zombies, this.cliClient.views, this.cliClient.ignore, this.cliClient.maxWarning);
+            this.runLint(
+                this.cliClient.project, this.cliClient.languages, this.cliClient.zombies,
+                this.cliClient.views, this.cliClient.ignore, this.cliClient.maxWarning, this.cliClient.misprint
+            );
         } else {
             const cliHasError: boolean = this.validate();
             if (cliHasError) {
@@ -104,11 +107,13 @@ class Cli {
         ignore?: string,
         zombies?: ErrorTypes,
         maxWarning?: number,
+        misprint?: ErrorTypes,
     ): void {
         try {
             const errorConfig: IRulesConfig = {
                 keysOnViews: views || ErrorTypes.error,
-                zombieKeys: zombies || ErrorTypes.warning
+                zombieKeys: zombies || ErrorTypes.warning,
+                misprint: misprint || ErrorTypes.warning,
             };
             const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig);
             const resultCliModel: ResultCliModel = validationModel.lint(maxWarning);

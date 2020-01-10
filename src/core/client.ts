@@ -1,10 +1,11 @@
-import {flatMap} from 'lodash';
+import { flatMap } from 'lodash';
 
-import {config} from './config';
-import {ErrorTypes} from './enums';
-import {IRulesConfig} from './interface';
-import {AbsentViewKeysRule, ZombieRule} from './rules';
+import { config } from './config';
+import { ErrorTypes } from './enums';
+import { IRulesConfig } from './interface';
+import { AbsentViewKeysRule, ZombieRule } from './rules';
 import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel } from './models';
+import { MisprintRule } from './rules/MisprintRule';
 
 class NgxTranslateLint {
     public projectPath: string;
@@ -20,8 +21,8 @@ class NgxTranslateLint {
     ) {
         this.languagesPath = languagesPath;
         this.projectPath = projectPath;
-        this.rules = rulesConfig;
         this.ignore = ignore;
+        this.rules = rulesConfig;
     }
 
     public lint(maxWarning?: number): ResultCliModel {
@@ -52,7 +53,14 @@ class NgxTranslateLint {
             const ruleResult: ResultErrorModel[] = ruleInstance.check(views.keys, languagesKeys.keys);
             errors.push(...ruleResult);
         }
-        const cliResult: ResultCliModel = new ResultCliModel(errors, maxWarning)
+
+        if (this.rules.misprint !== ErrorTypes.disable) {
+            const ruleInstance: MisprintRule = new MisprintRule(this.rules.misprint);
+            const ruleResult: ResultErrorModel[] = ruleInstance.check(errors, languagesKeys.keys);
+            errors.push(...ruleResult);
+        }
+
+        const cliResult: ResultCliModel = new ResultCliModel(errors, maxWarning);
         return cliResult;
     }
 }

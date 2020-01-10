@@ -80,6 +80,20 @@ const cliOptions: OptionModel[] = [
             OptionsTypes.number,
         ]
     }),
+    new OptionModel({
+        name: OptionsLongNames.misprint,
+        short: OptionsShortNames.misprint,
+        required: false,
+        type: OptionsTypes.enum,
+        descriptionShort: `Try to find matches with misprint keys on views and languages keys. Coefficient: 0.9`,
+        descriptionLong: ``,
+        default: ErrorTypes.warning,
+        possibleValues: [
+            ErrorTypes.disable,
+            ErrorTypes.warning,
+            ErrorTypes.error
+        ]
+    }),
 ];
 
 export  { cliOptions };

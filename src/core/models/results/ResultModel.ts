@@ -26,7 +26,6 @@ class ResultModel extends StylishLogger {
 
     public printResult(): void {
         this.printMessage(`${this.message}\n`);
-
         this.files.forEach((file: ResultFileModel) => {
             this.printMessage(`\n\t${file.message}\n`, file.errorType);
             file.errors.forEach((error: ResultErrorModel) => {

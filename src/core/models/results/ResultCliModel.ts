@@ -4,30 +4,49 @@ import { logger } from '../../utils';
 import { ResultModel } from './ResultModel';
 import { ResultFileModel } from './ResultFileModel';
 import { ResultErrorModel } from './ResultErrorModel';
-import { ErrorTypes, StatusCodes } from '../../enums';
+import { ErrorFlow, ErrorTypes, StatusCodes } from '../../enums';
 
 class ResultCliModel {
     public errors: ResultErrorModel[] = [];
 
     public maxCountWarning: number = 0;
-    public get hasErrors(): boolean {
-        const result: boolean = some<ResultErrorModel[]>(this.errors, { 'errorType': ErrorTypes.error }) || this.isFullOfWarning;
+    public get countWarnings(): number {
+        const result: number = (this.errors.filter((item: ResultErrorModel) => item.errorType === ErrorTypes.warning) || []).length;
         return result;
     }
 
     public get hasWarnings(): boolean {
-        const result: boolean = some<ResultErrorModel[]>(this.errors, { 'errorType': ErrorTypes.warning });
+        const result: boolean = this.countWarnings > 0;
         return result;
     }
 
     public get isFullOfWarning(): boolean {
-        const warningsCount: number = (this.errors.filter((item: ResultErrorModel) => item.errorType === ErrorTypes.warning) || []).length;
-        const result: boolean = this.maxCountWarning && this.maxCountWarning !== 0 && warningsCount !== 0 ? warningsCount > this.maxCountWarning : false;
+        const result: boolean = this.maxCountWarning && this.maxCountWarning !== 0 && this.hasWarnings ? this.countWarnings > this.maxCountWarning : false;
+        return result;
+    }
+
+    public get countErrors(): number {
+        const result: number = (this.errors.filter((item: ResultErrorModel) => item.errorType === ErrorTypes.error) || []).length;
+        return result;
+    }
+
+    public get hasErrors(): boolean {
+        const result: boolean =  this.countErrors > 0 || this.isFullOfWarning;
+        return result;
+    }
+
+    public get countMisprint(): number {
+        const misprintCount: number = (this.errors.filter((item: ResultErrorModel) => item.errorFlow === ErrorFlow.misprint) || []).length;
+        return misprintCount;
+    }
+
+    public get hasMisprint(): boolean {
+        const result: boolean = this.countMisprint > 0;
         return result;
     }
 
     public get exitCode(): StatusCodes {
-        return this.hasErrors || this.isFullOfWarning ? StatusCodes.error : StatusCodes.successful;
+        return this.hasErrors ? StatusCodes.error : StatusCodes.successful;
     }
 
     constructor(
