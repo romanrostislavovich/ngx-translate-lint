@@ -54,8 +54,8 @@ class NgxTranslateLint {
             errors.push(...ruleResult);
         }
 
-        if (this.rules.misprint !== ErrorTypes.disable) {
-            const ruleInstance: MisprintRule = new MisprintRule(this.rules.misprint);
+        if (this.rules.misprint.type !== ErrorTypes.disable) {
+            const ruleInstance: MisprintRule = new MisprintRule(this.rules.misprint.type, this.rules.misprint.coefficient);
             const ruleResult: ResultErrorModel[] = ruleInstance.check(errors, languagesKeys.keys);
             errors.push(...ruleResult);
         }

@@ -9,7 +9,8 @@ import {
     IRulesConfig,
     NgxTranslateLint,
     ResultCliModel,
-    ResultErrorModel
+    ResultErrorModel,
+    MisprintModel
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
@@ -48,7 +49,7 @@ describe('Integration', () => {
             const errorConfig: IRulesConfig = {
                 keysOnViews: ErrorTypes.error,
                 zombieKeys: ErrorTypes.warning,
-                misprint: ErrorTypes.error,
+                misprint:  new MisprintModel(ErrorTypes.error),
             };
             const hasMisprint: boolean = true;
             const countMisprint: number = 1;
@@ -107,7 +108,7 @@ describe('Integration', () => {
             const errorConfig: IRulesConfig = {
                 keysOnViews: ErrorTypes.warning,
                 zombieKeys: ErrorTypes.warning,
-                misprint: ErrorTypes.disable,
+                misprint: new MisprintModel(ErrorTypes.disable),
             };
 
             // Act
@@ -235,7 +236,7 @@ describe('Integration', () => {
             const errorConfig: IRulesConfig = {
                 keysOnViews: ErrorTypes.warning,
                 zombieKeys: ErrorTypes.disable,
-                misprint: ErrorTypes.disable,
+                misprint:  new MisprintModel(ErrorTypes.disable),
             };
 
             // Act
@@ -252,7 +253,7 @@ describe('Integration', () => {
         const errorConfig: IRulesConfig = {
             keysOnViews: ErrorTypes.error,
             zombieKeys: ErrorTypes.warning,
-            misprint: ErrorTypes.warning,
+            misprint: new MisprintModel(ErrorTypes.warning),
         };
         const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
         const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);

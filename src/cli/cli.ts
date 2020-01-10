@@ -5,7 +5,7 @@ import { OptionModel } from './models';
 import {
     ErrorTypes,
     FatalErrorModel,
-    IRulesConfig,
+    IRulesConfig, MisprintModel,
     NgxTranslateLint,
     ResultCliModel,
     ResultModel,
@@ -70,7 +70,8 @@ class Cli {
         if (this.cliClient.project && this.cliClient.languages) {
             this.runLint(
                 this.cliClient.project, this.cliClient.languages, this.cliClient.zombies,
-                this.cliClient.views, this.cliClient.ignore, this.cliClient.maxWarning, this.cliClient.misprint
+                this.cliClient.views, this.cliClient.ignore, this.cliClient.maxWarning, this.cliClient.misprint,
+                this.cliClient.misprintCoefficient
             );
         } else {
             const cliHasError: boolean = this.validate();
@@ -108,12 +109,14 @@ class Cli {
         zombies?: ErrorTypes,
         maxWarning?: number,
         misprint?: ErrorTypes,
+        misprintCoefficient?: number,
     ): void {
         try {
+            const misprintModel: MisprintModel = new MisprintModel(misprint, misprintCoefficient);
             const errorConfig: IRulesConfig = {
                 keysOnViews: views || ErrorTypes.error,
                 zombieKeys: zombies || ErrorTypes.warning,
-                misprint: misprint || ErrorTypes.warning,
+                misprint: misprintModel,
             };
             const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig);
             const resultCliModel: ResultCliModel = validationModel.lint(maxWarning);

@@ -94,6 +94,15 @@ const cliOptions: OptionModel[] = [
             ErrorTypes.error
         ]
     }),
+    new OptionModel({
+        name: OptionsLongNames.misprintCoefficient,
+        short: OptionsShortNames.misprintCoefficient,
+        required: false,
+        type: OptionsTypes.number,
+        descriptionShort: `Coefficient for misprint option can be from 0 to 1.0.`,
+        descriptionLong: ``,
+        default: '0.9',
+    }),
 ];
 
 export  { cliOptions };

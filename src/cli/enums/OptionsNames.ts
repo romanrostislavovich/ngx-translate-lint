@@ -6,7 +6,8 @@ enum OptionsLongNames {
     zombies = 'zombies',
     misprint = 'misprint',
     languages = 'languages',
-    maxWarning = 'maxWarning'
+    maxWarning = 'maxWarning',
+    misprintCoefficient = 'misprintCoefficient'
 }
 
 enum OptionsShortNames {
@@ -16,6 +17,7 @@ enum OptionsShortNames {
     zombies = 'z',
     misprint = 'm',
     languages = 'l',
+    misprintCoefficient = 'mc'
 }
 
 export { OptionsLongNames, OptionsShortNames };
