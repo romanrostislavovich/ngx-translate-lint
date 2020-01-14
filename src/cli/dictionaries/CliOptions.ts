@@ -103,6 +103,14 @@ const cliOptions: OptionModel[] = [
         descriptionLong: ``,
         default: '0.9',
     }),
+    new OptionModel({
+        name: OptionsLongNames.config,
+        short: OptionsShortNames.config,
+        required: false,
+        type: OptionsTypes.number,
+        descriptionShort: `Path to config`,
+        descriptionLong: ``,
+    }),
 ];
 
 export  { cliOptions };

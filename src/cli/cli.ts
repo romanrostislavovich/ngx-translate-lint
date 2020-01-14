@@ -15,6 +15,7 @@ import {
 import { config } from './../core/config';
 import { OptionsLongNames } from './enums';
 import chalk from 'chalk';
+import * as fs from 'fs';
 
 const name: string = 'ngx-translate-lint';
 // tslint:disable-next-line:no-any
@@ -67,19 +68,30 @@ class Cli {
     }
 
     public runCli(): void {
-        if (this.cliClient.project && this.cliClient.languages) {
-            this.runLint(
-                this.cliClient.project, this.cliClient.languages, this.cliClient.zombies,
-                this.cliClient.views, this.cliClient.ignore, this.cliClient.maxWarning, this.cliClient.misprint,
-                this.cliClient.misprintCoefficient
-            );
-        } else {
-            const cliHasError: boolean = this.validate();
-            if (cliHasError) {
-                process.exit(StatusCodes.crash);
+        try {
+            if (this.cliClient.config) {
+                this.runLintWithConfig(this.cliClient.config);
+            } else if (this.cliClient.project && this.cliClient.languages) {
+                this.cliClient.options
+                this.runLint(
+                    this.cliClient.project, this.cliClient.languages, this.cliClient.zombies,
+                    this.cliClient.views, this.cliClient.ignore, this.cliClient.maxWarning, this.cliClient.misprint,
+                    this.cliClient.misprintCoefficient
+                );
             } else {
-                this.cliClient.help();
+                const cliHasError: boolean = this.validate();
+                if (cliHasError) {
+                    process.exit(StatusCodes.crash);
+                } else {
+                    this.cliClient.help();
+                }
             }
+        } catch (error) {
+            // tslint:disable-next-line: no-console
+            console.error(error);
+            process.exitCode =  StatusCodes.crash;
+        } finally {
+            process.exit();
         }
     }
 
@@ -101,6 +113,14 @@ class Cli {
         return missingRequiredOption;
     }
 
+    private runLintWithConfig(configPath: string): void {
+        if (!fs.existsSync(configPath)) {
+            throw new FatalErrorModel(chalk.red(`Config file doesn't exists by path ${configPath}`));
+        }
+        const configFile: Buffer = fs.readFileSync(configPath);
+        console.log(JSON.parse(configFile.toString()));
+    }
+
     private runLint(
         project: string,
         languages: string,
@@ -111,7 +131,7 @@ class Cli {
         misprint?: ErrorTypes,
         misprintCoefficient?: number,
     ): void {
-        try {
+
             const misprintModel: MisprintModel = new MisprintModel(misprint, misprintCoefficient);
             const errorConfig: IRulesConfig = {
                 keysOnViews: views || ErrorTypes.error,
@@ -127,13 +147,6 @@ class Cli {
             if (resultModel.hasError) {
                 throw new FatalErrorModel(chalk.red(resultModel.message));
             }
-        } catch (error) {
-            // tslint:disable-next-line: no-console
-            console.error(error);
-            process.exitCode =  StatusCodes.crash;
-        } finally {
-            process.exit();
-        }
     }
 }
 
