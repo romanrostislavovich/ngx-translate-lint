@@ -5,7 +5,7 @@ import { KeyModel, ResultErrorModel } from "../models";
 interface IRule {
     flow: ErrorFlow;
     handler: ErrorTypes;
-    check(viewKeys: KeyModel[], languagesKeys: KeyModel[]): ResultErrorModel[];
+    check(viewKeys: KeyModel[] | ResultErrorModel[], languagesKeys: KeyModel[] | ResultErrorModel[]): ResultErrorModel[];
 }
 
 export { IRule };

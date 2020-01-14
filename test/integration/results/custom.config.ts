@@ -1,7 +1,5 @@
-import {
-    ErrorTypes, ErrorFlow, ResultErrorModel
-} from "../../../src/core";
-import { getAbsolutePath, languagesFolder, projectFolder } from '../utils';
+import { ErrorFlow, ErrorTypes, ResultErrorModel } from "../../../src/core";
+import { getAbsolutePath, projectFolder } from '../utils';
 
 const assertCustomConfig: ResultErrorModel[] = [
     new ResultErrorModel(
@@ -61,6 +59,15 @@ const assertCustomConfig: ResultErrorModel[] = [
         [
            'EN-eu.json',
            'EN-us.json'
+        ]
+    ),
+    new ResultErrorModel(
+        'STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_ONE_LOCALES',
+        ErrorFlow.views, ErrorTypes.warning,
+        getAbsolutePath(projectFolder, 'pipe.keys.html'),
+        [
+            'EN-eu.json',
+            'EN-us.json'
         ]
     ),
 ];

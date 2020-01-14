@@ -1,10 +1,11 @@
-import {flatMap} from 'lodash';
+import { flatMap } from 'lodash';
 
-import {config} from './config';
-import {ErrorTypes} from './enums';
-import {IRulesConfig} from './interface';
-import {AbsentViewKeysRule, ZombieRule} from './rules';
-import {FileLanguageModel, FileViewModel, KeyModel, ResultErrorModel} from './models';
+import { config } from './config';
+import { ErrorTypes } from './enums';
+import { IRulesConfig } from './interface';
+import { AbsentViewKeysRule, ZombieRule } from './rules';
+import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel } from './models';
+import { MisprintRule } from './rules/MisprintRule';
 
 class NgxTranslateLint {
     public projectPath: string;
@@ -20,11 +21,11 @@ class NgxTranslateLint {
     ) {
         this.languagesPath = languagesPath;
         this.projectPath = projectPath;
-        this.rules = rulesConfig;
         this.ignore = ignore;
+        this.rules = rulesConfig;
     }
 
-    public lint(): ResultErrorModel[] {
+    public lint(maxWarning?: number): ResultCliModel {
         if (!(this.projectPath && this.languagesPath)) {
             throw new Error(`Path to project or languages is incorrect`);
         }
@@ -38,22 +39,29 @@ class NgxTranslateLint {
         const viewsRegExp: RegExp = config.findKeysList(languagesKeysNames);
         const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
 
-        const result: ResultErrorModel[] = [];
+        const errors: ResultErrorModel[] = [];
 
         // TODO: RL: Refactor this
         if (this.rules.zombieKeys !== ErrorTypes.disable) {
             const ruleInstance: ZombieRule = new ZombieRule(this.rules.zombieKeys);
             const ruleResult: ResultErrorModel[] = ruleInstance.check(views.keys, languagesKeys.keys);
-            result.push(...ruleResult);
+            errors.push(...ruleResult);
         }
 
         if (this.rules.keysOnViews !== ErrorTypes.disable) {
             const ruleInstance: AbsentViewKeysRule = new AbsentViewKeysRule(this.rules.keysOnViews, languagesKeys.files);
             const ruleResult: ResultErrorModel[] = ruleInstance.check(views.keys, languagesKeys.keys);
-            result.push(...ruleResult);
+            errors.push(...ruleResult);
         }
 
-        return result;
+        if (this.rules.misprint.type !== ErrorTypes.disable) {
+            const ruleInstance: MisprintRule = new MisprintRule(this.rules.misprint.type, this.rules.misprint.coefficient);
+            const ruleResult: ResultErrorModel[] = ruleInstance.check(errors, languagesKeys.keys);
+            errors.push(...ruleResult);
+        }
+
+        const cliResult: ResultCliModel = new ResultCliModel(errors, maxWarning);
+        return cliResult;
     }
 }
 
