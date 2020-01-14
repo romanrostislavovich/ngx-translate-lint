@@ -1,5 +1,13 @@
 # CHANGELOG
 
+# [1.3.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.2.3...v1.3.0) (2020-01-14)
+
+
+### Features
+
+* add misprint coefficient option ([613857f](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/613857fd0d42a978c7bf28cb9cbc85ec0c38249f))
+* add misprint options ([50baac7](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/50baac754c7a9bd2f5dca665008ea4c2758e81d9))
+
 ## [1.2.3](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.2.2...v1.2.3) (2019-12-20)
 
 

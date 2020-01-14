@@ -81,6 +81,7 @@
 				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
 					<li><a href="../classes/_rules_absentviewkeysrule_.absentviewkeysrule.html" class="tsd-signature-type">AbsentViewKeysRule</a></li>
+					<li><a href="../classes/_rules_misprintrule_.misprintrule.html" class="tsd-signature-type">MisprintRule</a></li>
 					<li><a href="../classes/_rules_zombiesrule_.zombierule.html" class="tsd-signature-type">ZombieRule</a></li>
 				</ul>
 			</section>
@@ -112,7 +113,7 @@
 					<div class="tsd-signature tsd-kind-icon">flow<span class="tsd-signature-symbol">:</span> <a href="../enums/_enums_errorflow_.errorflow.html" class="tsd-signature-type">ErrorFlow</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/089d2de/src/core/interface/IRule.ts#L6">src/core/interface/IRule.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/99083b5/src/core/interface/IRule.ts#L6">src/core/interface/IRule.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -122,7 +123,7 @@
 					<div class="tsd-signature tsd-kind-icon">handler<span class="tsd-signature-symbol">:</span> <a href="../enums/_enums_errortypes_.errortypes.html" class="tsd-signature-type">ErrorTypes</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/089d2de/src/core/interface/IRule.ts#L7">src/core/interface/IRule.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/99083b5/src/core/interface/IRule.ts#L7">src/core/interface/IRule.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -133,22 +134,22 @@
 					<a name="check" class="tsd-anchor"></a>
 					<h3>check</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">check<span class="tsd-signature-symbol">(</span>viewKeys<span class="tsd-signature-symbol">: </span><a href="../classes/_models_keymodel_.keymodel.html" class="tsd-signature-type">KeyModel</a><span class="tsd-signature-symbol">[]</span>, languagesKeys<span class="tsd-signature-symbol">: </span><a href="../classes/_models_keymodel_.keymodel.html" class="tsd-signature-type">KeyModel</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/_models_results_resulterrormodel_.resulterrormodel.html" class="tsd-signature-type">ResultErrorModel</a><span class="tsd-signature-symbol">[]</span></li>
+						<li class="tsd-signature tsd-kind-icon">check<span class="tsd-signature-symbol">(</span>viewKeys<span class="tsd-signature-symbol">: </span><a href="../classes/_models_keymodel_.keymodel.html" class="tsd-signature-type">KeyModel</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../classes/_models_results_resulterrormodel_.resulterrormodel.html" class="tsd-signature-type">ResultErrorModel</a><span class="tsd-signature-symbol">[]</span>, languagesKeys<span class="tsd-signature-symbol">: </span><a href="../classes/_models_keymodel_.keymodel.html" class="tsd-signature-type">KeyModel</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../classes/_models_results_resulterrormodel_.resulterrormodel.html" class="tsd-signature-type">ResultErrorModel</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/_models_results_resulterrormodel_.resulterrormodel.html" class="tsd-signature-type">ResultErrorModel</a><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/089d2de/src/core/interface/IRule.ts#L8">src/core/interface/IRule.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/99083b5/src/core/interface/IRule.ts#L8">src/core/interface/IRule.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>viewKeys: <a href="../classes/_models_keymodel_.keymodel.html" class="tsd-signature-type">KeyModel</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>viewKeys: <a href="../classes/_models_keymodel_.keymodel.html" class="tsd-signature-type">KeyModel</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../classes/_models_results_resulterrormodel_.resulterrormodel.html" class="tsd-signature-type">ResultErrorModel</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
-									<h5>languagesKeys: <a href="../classes/_models_keymodel_.keymodel.html" class="tsd-signature-type">KeyModel</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>languagesKeys: <a href="../classes/_models_keymodel_.keymodel.html" class="tsd-signature-type">KeyModel</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../classes/_models_results_resulterrormodel_.resulterrormodel.html" class="tsd-signature-type">ResultErrorModel</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/_models_results_resulterrormodel_.resulterrormodel.html" class="tsd-signature-type">ResultErrorModel</a><span class="tsd-signature-symbol">[]</span></h4>
