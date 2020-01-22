@@ -69,14 +69,13 @@ class Cli {
 
     public runCli(): void {
         try {
-            if (this.cliClient.config) {
-                this.runLintWithConfig(this.cliClient.config);
-            } else if (this.cliClient.project && this.cliClient.languages) {
-                this.cliClient.options
+            // tslint:disable-next-line:no-any
+            const options: any = this.cliClient.config ? this.parseConfig(this.cliClient.config) : this.cliClient;
+            if (options.project && options.languages) {
                 this.runLint(
-                    this.cliClient.project, this.cliClient.languages, this.cliClient.zombies,
-                    this.cliClient.views, this.cliClient.ignore, this.cliClient.maxWarning, this.cliClient.misprint,
-                    this.cliClient.misprintCoefficient
+                    options.project, options.languages, options.zombies,
+                    options.views, options.ignore, options.maxWarning, options.misprint,
+                    options.misprintCoefficient
                 );
             } else {
                 const cliHasError: boolean = this.validate();
@@ -113,12 +112,15 @@ class Cli {
         return missingRequiredOption;
     }
 
-    private runLintWithConfig(configPath: string): void {
+    // tslint:disable-next-line:no-any
+    private parseConfig(configPath: string): any {
         if (!fs.existsSync(configPath)) {
             throw new FatalErrorModel(chalk.red(`Config file doesn't exists by path ${configPath}`));
         }
         const configFile: Buffer = fs.readFileSync(configPath);
-        console.log(JSON.parse(configFile.toString()));
+        // tslint:disable-next-line:no-any
+        const result: any = JSON.parse(configFile.toString());
+        return result;
     }
 
     private runLint(
@@ -131,7 +133,6 @@ class Cli {
         misprint?: ErrorTypes,
         misprintCoefficient?: number,
     ): void {
-
             const misprintModel: MisprintModel = new MisprintModel(misprint, misprintCoefficient);
             const errorConfig: IRulesConfig = {
                 keysOnViews: views || ErrorTypes.error,
