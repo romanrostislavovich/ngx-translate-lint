@@ -1,5 +1,12 @@
 # CHANGELOG
 
+# [1.4.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.3.0...v1.4.0) (2020-01-22)
+
+
+### Features
+
+* add config option ([2285996](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/228599675de7bb70071e935f7d8500edfcc0b4fe))
+
 # [1.3.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.2.3...v1.3.0) (2020-01-14)
 
 

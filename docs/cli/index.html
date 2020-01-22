@@ -117,26 +117,34 @@ Simple CLI tools for check `ngx-translate` keys in app
 Options:
   -p,  --project [glob] (required)
           The path to project folder
-          Possibale Values: &lt;relative path|absolute path&gt;
+          Possible Values: &lt;relative path|absolute path&gt;
           (default: &quot;./src/app/**/*.{html,ts}&quot;)
   -l,  --languages [glob] (required)
           The path to languages folder
-          Possibale Values: &lt;relative path|absolute path&gt;
+          Possible Values: &lt;relative path|absolute path&gt;
           (default: &quot;./src/assets/i18n/*.json&quot;)
   -v,  --views [enum]
           Described how to handle the error of missing keys on view
-          Possibale Values: &lt;disable|warning|error&gt;
+          Possible Values: &lt;disable|warning|error&gt;
           (default: &quot;error&quot;)
   -z,  --zombies [enum]
           Described how to handle the error of zombies keys
-          Possibale Values: &lt;disable|warning|error&gt;
+          Possible Values: &lt;disable|warning|error&gt;
           (default: &quot;warning&quot;)
   -i,  --ignore [glob]
           Ignore projects and languages files
-          Possibale Values: &lt;relative path|absolute path&gt;
+          Possible Values: &lt;relative path|absolute path&gt;
+  -m,  --misprint [enum]
+          Try to find matches with misprint keys on views and languages keys.
+          Possible Values: &lt;disable|warning|error&gt;
+  -mc, --misprintCoefficient [number]
+          Coefficient for misprint option can be from 0 to 1.0.
+           (default: &quot;0.9&quot;)
+  -c, --config [path]
+          Path to the config file
   --maxWarning [number]
            Max count of warnings in all files. If this value more that count of warnings, then an error is return
-           Possibale Values: &lt;number&gt;
+           Possible Values: &lt;number&gt;
            (default: &quot;0&quot;)
 
   -h, --help  output usage information
@@ -200,16 +208,10 @@ Examples:
 						<a href="modules/_cli_enums_optionspath_.html">&quot;cli/enums/<wbr>Options<wbr>Path&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_cli_enums_optionstypes_.html">&quot;cli/enums/<wbr>Options<wbr>Types&quot;</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="modules/_cli_enums_index_.html">&quot;cli/enums/index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_cli_interface_iargv_.html">&quot;cli/interface/IArgv&quot;</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_cli_interface_ioption_.html">&quot;cli/interface/IOption&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_cli_interface_index_.html">&quot;cli/interface/index&quot;</a>
