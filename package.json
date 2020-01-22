@@ -70,6 +70,7 @@
     "dependencies": {
         "chalk": "^2.4.2",
         "commander": "^2.20.0",
+        "conventional-cli": "^1.0.2",
         "dir-glob": "^3.0.1",
         "glob": "^7.1.4",
         "lodash": "^4.17.11",

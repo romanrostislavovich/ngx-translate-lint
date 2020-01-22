@@ -102,7 +102,7 @@ class Cli {
     private validate(): boolean {
         const requiredOptions: OptionModel[] = this.cliOptions.filter((option: OptionModel) => option.required);
         const missingRequiredOption: boolean = requiredOptions.reduce((accum: boolean, option: OptionModel) => {
-            if (!this.cliClient[option.name]) {
+            if (!this.cliClient[String(option.longName)]) {
                 accum = false;
                 // tslint:disable-next-line: no-console
                 console.error(`Missing required argument: ${option.getFlag()}`);
