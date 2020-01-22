@@ -71,6 +71,8 @@ Options:
   -mc, --misprintCoefficient [number]
           Coefficient for misprint option can be from 0 to 1.0.
            (default: "0.9")
+  -c, --config [path]
+          Path to the config file
   --maxWarning [number]
            Max count of warnings in all files. If this value more that count of warnings, then an error is return
            Possible Values: <number>
