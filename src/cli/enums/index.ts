@@ -1,4 +1,2 @@
-import { StatusCodes } from './StatusCodes';
-import { OptionsTypes } from './OptionsTypes';
-
-export { StatusCodes, OptionsTypes };
+export * from './OptionsPath';
+export * from './OptionsNames';

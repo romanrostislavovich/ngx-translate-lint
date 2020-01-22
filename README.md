@@ -48,23 +48,35 @@ Simple CLI tools for check `ngx-translate` keys in app
 Options:
   -p,  --project [glob] (required)
           The path to project folder
-          Possibale Values: <relative path|absolute path>
-           (default: "./src/app/**/*.{html,ts}")
+          Possible Values: <relative path|absolute path>
+          (default: "./src/app/**/*.{html,ts}")
   -l,  --languages [glob] (required)
           The path to languages folder
-          Possibale Values: <relative path|absolute path>
-           (default: "./src/assets/i18n/*.json")
+          Possible Values: <relative path|absolute path>
+          (default: "./src/assets/i18n/*.json")
   -v,  --views [enum]
           Described how to handle the error of missing keys on view
-          Possibale Values: <disable|warning|error>
-           (default: "error")
+          Possible Values: <disable|warning|error>
+          (default: "error")
   -z,  --zombies [enum]
           Described how to handle the error of zombies keys
-          Possibale Values: <disable|warning|error>
-           (default: "warning")
+          Possible Values: <disable|warning|error>
+          (default: "warning")
   -i,  --ignore [glob]
           Ignore projects and languages files
-          Possibale Values: <relative path|absolute path>
+          Possible Values: <relative path|absolute path>
+  -m,  --misprint [enum]
+          Try to find matches with misprint keys on views and languages keys.
+          Possible Values: <disable|warning|error>
+  -mc, --misprintCoefficient [number]
+          Coefficient for misprint option can be from 0 to 1.0.
+           (default: "0.9")
+  -c, --config [path]
+          Path to the config file
+  --maxWarning [number]
+           Max count of warnings in all files. If this value more that count of warnings, then an error is return
+           Possible Values: <number>
+           (default: "0")
 
   -h, --help  output usage information
 

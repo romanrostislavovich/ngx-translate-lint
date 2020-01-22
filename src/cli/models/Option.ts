@@ -1,39 +1,29 @@
-import { ErrorTypes } from "./../../core";
-import { OptionsTypes } from "./../enums";
-import { IArgv, IOption } from "./../interface";
+import { Argument, IArgument } from 'conventional-cli';
 
-class OptionModel implements IOption {
-    public short?: string;
-    public name: keyof IArgv;
-    public type: OptionsTypes;
-    public required: boolean = false;
-    public default?: string | ErrorTypes;
-    public describe: string; // Short, used for usage message
-    public description?: string; // Long, used for `--help`
-    public possibaleValues?: string[] | ErrorTypes[];
-
+class OptionModel extends Argument {
     constructor(
-        args: IOption
+        args: IArgument
     ) {
-        this.name = args.name;
-        this.type = args.type;
-        this.describe = args.describe;
+        super();
 
-        this.short = args.short;
-        this.required = args.required;
+        this.type = args.type;
+        this.values = args.values;
         this.default = args.default;
+        this.longName = args.longName;
+        this.required = args.required;
+        this.shortName = args.shortName;
         this.description = args.description;
-        this.possibaleValues = args.possibaleValues;
+        this.additionalDescription = args.additionalDescription;
     }
 
     public getFlag(): string {
-        return `${this.short ? '-' + this.short + ', ' : ''} --${this.name} [${this.type}] ${this.required ? '(required)' : ''}`;
+        return `${this.shortName ? '-' + this.shortName + ', ' : ''} --${this.longName} [${this.type}] ${this.required ? '(required)' : ''}`;
     }
 
     public getDescription(): string {
         return (`
-        ${this.describe}
-        ${this.possibaleValues ? 'Possibale Values: <' + this.possibaleValues.join('|') + '>' : '' }
+        ${this.description}
+        ${this.values ? 'Possible Values: <' + this.values.join('|') + '>' : '' }
         `);
     }
 }

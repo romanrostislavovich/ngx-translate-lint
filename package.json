@@ -1,7 +1,7 @@
 {
     "author": "Raman Lauryniuk <romanrostislavovich@gmail.com>",
     "name": "ngx-translate-lint",
-    "version": "0.0.0-development",
+    "version": "1.2.0",
     "description": "Simple tools for check `ngx-translate` keys in app",
     "license": "MIT",
     "repository": "svoboda-rabstvo/ngx-translate-lint",
@@ -68,14 +68,11 @@
         ]
     },
     "dependencies": {
-        "@angular/compiler": "^8.2.13",
         "chalk": "^2.4.2",
         "commander": "^2.20.0",
         "dir-glob": "^3.0.1",
         "glob": "^7.1.4",
-        "lodash": "^4.17.11",
-        "tslint": "^5.11.0",
-        "typescript": "^3.4.5"
+        "lodash": "^4.17.11"
     },
     "devDependencies": {
         "@semantic-release/changelog": "^3.0.2",
@@ -97,6 +94,8 @@
         "semantic-release": "^15.13.14",
         "sinon": "^7.3.2",
         "ts-node": "^8.1.0",
-        "typedoc": "^0.15.0"
+        "tslint": "^5.11.0",
+        "typedoc": "^0.15.0",
+        "typescript": "^3.4.5"
     }
 }

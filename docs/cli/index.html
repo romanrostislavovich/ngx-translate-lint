@@ -1,0 +1,380 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ngx-translate-lint</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">ngx-translate-lint</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> ngx-translate-lint</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#ngx-translate-lint" id="ngx-translate-lint" style="color: inherit; text-decoration: none;">
+					<h1>ngx-translate-lint</h1>
+				</a>
+				<blockquote>
+					<p>Simple tools for check ngx-translate keys in whole app</p>
+				</blockquote>
+				<p><a href="https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint"><img src="https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint.svg?branch=master" alt="Build Master"></a>
+					<a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic"></a>
+					<a href="https://www.npmjs.com/package/ngx-translate-lint"><img src="https://img.shields.io/npm/v/ngx-translate-lint.svg" alt="npm"></a>
+				<a href="https://www.npmjs.com/package/ngx-translate-lint"><img src="https://img.shields.io/npm/dm/ngx-translate-lint.svg" alt="download npm"></a></p>
+				<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+					<h2>Table of Contents</h2>
+				</a>
+				<ul>
+					<li><a href="#background">Background</a></li>
+					<li><a href="#installation">Installation</a></li>
+					<li><a href="#usage">Usage</a></li>
+					<li><a href="#contribute">Contribute</a></li>
+					<li><a href="#license">License</a></li>
+				</ul>
+				<a href="#background" id="background" style="color: inherit; text-decoration: none;">
+					<h2>Background</h2>
+				</a>
+				<p>There are a lot of translation <a href="https://github.com/ngx-translate/core"><code>ngx-translate</code></a> keys in the whole app.
+					This repository contains a proposal to check all translation keys in the whole app
+				which should exist in all languages files.</p>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
+				<a href="#npm" id="npm" style="color: inherit; text-decoration: none;">
+					<h3>NPM</h3>
+				</a>
+				<pre><code class="language-bash">npm install ngx-translate-lint -g</code></pre>
+				<a href="#github" id="github" style="color: inherit; text-decoration: none;">
+					<h3>GitHub</h3>
+				</a>
+				<p>The source code are available for download
+					at <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/releases">GitHub Releases</a> and
+				<a href="https://svoboda-rabstvo.github.io/ngx-translate-lint/">GitHub pages</a> as well.</p>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<a href="#cli" id="cli" style="color: inherit; text-decoration: none;">
+					<h3>CLI</h3>
+				</a>
+				<pre><code class="language-text">
+Usage: ngx-translate-lint [options]
+
+Simple CLI tools for check `ngx-translate` keys in app
+
+Options:
+  -p,  --project [glob] (required)
+          The path to project folder
+          Possibale Values: &lt;relative path|absolute path&gt;
+          (default: &quot;./src/app/**/*.{html,ts}&quot;)
+  -l,  --languages [glob] (required)
+          The path to languages folder
+          Possibale Values: &lt;relative path|absolute path&gt;
+          (default: &quot;./src/assets/i18n/*.json&quot;)
+  -v,  --views [enum]
+          Described how to handle the error of missing keys on view
+          Possibale Values: &lt;disable|warning|error&gt;
+          (default: &quot;error&quot;)
+  -z,  --zombies [enum]
+          Described how to handle the error of zombies keys
+          Possibale Values: &lt;disable|warning|error&gt;
+          (default: &quot;warning&quot;)
+  -i,  --ignore [glob]
+          Ignore projects and languages files
+          Possibale Values: &lt;relative path|absolute path&gt;
+  --maxWarning [number]
+           Max count of warnings in all files. If this value more that count of warnings, then an error is return
+           Possibale Values: &lt;number&gt;
+           (default: &quot;0&quot;)
+
+  -h, --help  output usage information
+
+
+Examples:
+
+    $ ngx-translate-lint -p &#39;./src/app/**/*.{html,ts}&#39; -l &#39;./src/assets/i18n/*.json&#39;
+    $ ngx-translate-lint -p &#39;./src/app/**/*.{html,ts}&#39; -z &#39;disable&#39; -v &#39;error&#39;
+    $ ngx-translate-lint -p &#39;./src/app/**/*.{html,ts}&#39; -i &#39;./src/assets/i18n/EN-us.json, ./stc/app/app.*.{html,ts}&#39;</code></pre>
+				<p>For <code>project</code> and <code>languages</code> options need to include file types like on the example.</p>
+				<a href="#exit-codes" id="exit-codes" style="color: inherit; text-decoration: none;">
+					<h4>Exit Codes</h4>
+				</a>
+				<p>The CLI process may exit with the following codes:</p>
+				<ul>
+					<li><code>0</code>: Linting succeeded without errors (warnings may have occurred)</li>
+					<li><code>1</code>: Linting failed with one or more rule violations with severity error</li>
+					<li><code>2</code>: An invalid command line argument or combination thereof was used</li>
+				</ul>
+				<a href="#javascript" id="javascript" style="color: inherit; text-decoration: none;">
+					<h3>JavaScript</h3>
+				</a>
+				<a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
+					<h2>Contribute</h2>
+				</a>
+				<p>You may contribute in several ways like requesting new features,
+					adding tests, fixing bugs, improving documentation or examples.
+				Please check our <a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/develop/.github/CONTRIBUTING.md">contributing guidelines</a>.</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p><a href="https://github.com/svoboda-rabstvo/ngx-translate-lint/blob/develop/LICENSE.md">MIT</a></p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Internals</span>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_cli_bin_.html">"cli/bin"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_cli_enums_optionstypes_.html">"cli/enums/<wbr>Options<wbr>Types"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_cli_enums_statuscodes_.html">"cli/enums/<wbr>Status<wbr>Codes"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_cli_enums_index_.html">"cli/enums/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_cli_interface_iargv_.html">"cli/interface/IArgv"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_cli_interface_ioption_.html">"cli/interface/IOption"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_cli_interface_index_.html">"cli/interface/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_cli_models_option_.html">"cli/models/<wbr>Option"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_cli_models_index_.html">"cli/models/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_cli_runner_.html">"cli/runner"</a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Externals</span>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_client_.html">"core/client"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_config_.html">"core/config"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_enums_errorflow_.html">"core/enums/<wbr>Error<wbr>Flow"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_enums_errortypes_.html">"core/enums/<wbr>Error<wbr>Types"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_enums_index_.html">"core/enums/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_index_.html">"core/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_interface_iappconfig_.html">"core/interface/IApp<wbr>Config"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_interface_ilogger_.html">"core/interface/ILogger"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_interface_irule_.html">"core/interface/IRule"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_interface_irulesconfig_.html">"core/interface/IRules<wbr>Config"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_interface_ivalidationmessage_.html">"core/interface/IValidation<wbr>Message"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_interface_index_.html">"core/interface/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_models_keymodel_.html">"core/models/<wbr>Key<wbr>Model"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_models_stylishlogger_.html">"core/models/<wbr>Stylish<wbr>Logger"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_models_error_errormodel_.html">"core/models/error/<wbr>Error<wbr>Model"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_models_error_fatalerrormodel_.html">"core/models/error/<wbr>Fatal<wbr>Error<wbr>Model"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_models_files_filelanguagemodel_.html">"core/models/files/<wbr>File<wbr>Language<wbr>Model"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_models_files_filemodel_.html">"core/models/files/<wbr>File<wbr>Model"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_models_files_fileviewmodel_.html">"core/models/files/<wbr>File<wbr>View<wbr>Model"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_models_index_.html">"core/models/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_models_results_resulterrormodel_.html">"core/models/results/<wbr>Result<wbr>Error<wbr>Model"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_models_results_resultfilemodel_.html">"core/models/results/<wbr>Result<wbr>File<wbr>Model"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_models_results_resultmodel_.html">"core/models/results/<wbr>Result<wbr>Model"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_rules_absentviewkeysrule_.html">"core/rules/<wbr>Absent<wbr>View<wbr>Keys<wbr>Rule"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_rules_zombiesrule_.html">"core/rules/<wbr>Zombies<wbr>Rule"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_rules_index_.html">"core/rules/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_utils_index_.html">"core/utils/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_utils_keys_.html">"core/utils/keys"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_core_utils_path_.html">"core/utils/path"</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 import { ErrorTypes } from './enums';
 import { IAppConfig } from './interface';
+import { MisprintModel } from './models';
 
 const config: IAppConfig = {
     findKeysList(keys: string[]): RegExp {
@@ -22,6 +23,7 @@ const config: IAppConfig = {
         rules: {
             keysOnViews: ErrorTypes.error,
             zombieKeys: ErrorTypes.warning,
+            misprint: new MisprintModel(),
         },
         projectPath: './src/app/**/*.{html,ts}',
         languagesPath: './src/assets/i18n/*.json'
