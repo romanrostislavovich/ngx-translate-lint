@@ -8,6 +8,7 @@ interface IArgv {
     ignore?: string;
     maxWarning?: number;
     misprint?: number;
+    config?: object;
     misprintCoefficient?: number;
 }
 

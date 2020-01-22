@@ -15,6 +15,7 @@ import {
 import { config } from './../core/config';
 import { OptionsLongNames } from './enums';
 import chalk from 'chalk';
+import * as fs from 'fs';
 
 const name: string = 'ngx-translate-lint';
 // tslint:disable-next-line:no-any
@@ -67,19 +68,29 @@ class Cli {
     }
 
     public runCli(): void {
-        if (this.cliClient.project && this.cliClient.languages) {
-            this.runLint(
-                this.cliClient.project, this.cliClient.languages, this.cliClient.zombies,
-                this.cliClient.views, this.cliClient.ignore, this.cliClient.maxWarning, this.cliClient.misprint,
-                this.cliClient.misprintCoefficient
-            );
-        } else {
-            const cliHasError: boolean = this.validate();
-            if (cliHasError) {
-                process.exit(StatusCodes.crash);
+        try {
+            // tslint:disable-next-line:no-any
+            const options: any = this.cliClient.config ? this.parseConfig(this.cliClient.config) : this.cliClient;
+            if (options.project && options.languages) {
+                this.runLint(
+                    options.project, options.languages, options.zombies,
+                    options.views, options.ignore, options.maxWarning, options.misprint,
+                    options.misprintCoefficient
+                );
             } else {
-                this.cliClient.help();
+                const cliHasError: boolean = this.validate();
+                if (cliHasError) {
+                    process.exit(StatusCodes.crash);
+                } else {
+                    this.cliClient.help();
+                }
             }
+        } catch (error) {
+            // tslint:disable-next-line: no-console
+            console.error(error);
+            process.exitCode =  StatusCodes.crash;
+        } finally {
+            process.exit();
         }
     }
 
@@ -90,7 +101,7 @@ class Cli {
     private validate(): boolean {
         const requiredOptions: OptionModel[] = this.cliOptions.filter((option: OptionModel) => option.required);
         const missingRequiredOption: boolean = requiredOptions.reduce((accum: boolean, option: OptionModel) => {
-            if (!this.cliClient[option.name]) {
+            if (!this.cliClient[String(option.longName)]) {
                 accum = false;
                 // tslint:disable-next-line: no-console
                 console.error(`Missing required argument: ${option.getFlag()}`);
@@ -99,6 +110,17 @@ class Cli {
         }, false);
 
         return missingRequiredOption;
+    }
+
+    // tslint:disable-next-line:no-any
+    private parseConfig(configPath: string): any {
+        if (!fs.existsSync(configPath)) {
+            throw new FatalErrorModel(chalk.red(`Config file doesn't exists by path ${configPath}`));
+        }
+        const configFile: Buffer = fs.readFileSync(configPath);
+        // tslint:disable-next-line:no-any
+        const result: any = JSON.parse(configFile.toString());
+        return result;
     }
 
     private runLint(
@@ -111,7 +133,6 @@ class Cli {
         misprint?: ErrorTypes,
         misprintCoefficient?: number,
     ): void {
-        try {
             const misprintModel: MisprintModel = new MisprintModel(misprint, misprintCoefficient);
             const errorConfig: IRulesConfig = {
                 keysOnViews: views || ErrorTypes.error,
@@ -127,13 +148,6 @@ class Cli {
             if (resultModel.hasError) {
                 throw new FatalErrorModel(chalk.red(resultModel.message));
             }
-        } catch (error) {
-            // tslint:disable-next-line: no-console
-            console.error(error);
-            process.exitCode =  StatusCodes.crash;
-        } finally {
-            process.exit();
-        }
     }
 }
 

@@ -1,107 +1,116 @@
 import { OptionModel } from './../models';
 import { config, ErrorTypes } from './../../core';
-import { OptionsTypes, OptionsPath, OptionsLongNames, OptionsShortNames } from './../enums';
+import { OptionsPath, OptionsLongNames, OptionsShortNames } from './../enums';
+import { ArgumentTypes } from 'conventional-cli';
 
 const cliOptions: OptionModel[] = [
     new OptionModel({
-        short: OptionsShortNames.project,
-        name: OptionsLongNames.project,
+        shortName: OptionsShortNames.project,
+        longName: OptionsLongNames.project,
         required: true,
-        type: OptionsTypes.glob,
-        descriptionShort: `The path to project folder`,
-        descriptionLong: ``,
+        type: ArgumentTypes.glob,
+        description: `The path to project folder`,
+        additionalDescription: ``,
         default: config.defaultValues.projectPath,
-        possibleValues: [
+        values: [
             OptionsPath.relative,
             OptionsPath.absolute
         ]
     }),
     new OptionModel({
-        short: OptionsShortNames.languages,
-        name: OptionsLongNames.languages,
+        shortName: OptionsShortNames.languages,
+        longName: OptionsLongNames.languages,
         required: true,
-        type: OptionsTypes.glob,
-        descriptionShort: `The path to languages folder`,
-        descriptionLong: ``,
+        type: ArgumentTypes.glob,
+        description: `The path to languages folder`,
+        additionalDescription: ``,
         default: config.defaultValues.languagesPath,
-        possibleValues: [
+        values: [
             OptionsPath.relative,
             OptionsPath.absolute
         ]
     }),
     new OptionModel({
-        short: OptionsShortNames.views,
-        name: OptionsLongNames.views,
+        shortName: OptionsShortNames.views,
+        longName: OptionsLongNames.views,
         required: false,
-        type: OptionsTypes.enum,
-        descriptionShort: `Described how to handle the error of missing keys on view`,
-        descriptionLong: ``,
+        type: ArgumentTypes.enum,
+        description: `Described how to handle the error of missing keys on view`,
+        additionalDescription: ``,
         default: ErrorTypes.error,
-        possibleValues: [
+        values: [
             ErrorTypes.disable,
             ErrorTypes.warning,
             ErrorTypes.error
         ]
     }),
     new OptionModel({
-        short: OptionsShortNames.zombies,
-        name: OptionsLongNames.zombies,
+        shortName: OptionsShortNames.zombies,
+        longName: OptionsLongNames.zombies,
         required: false,
-        type: OptionsTypes.enum,
-        descriptionShort: `Described how to handle the error of zombies keys`,
-        descriptionLong: ``,
+        type: ArgumentTypes.enum,
+        description: `Described how to handle the error of zombies keys`,
+        additionalDescription: ``,
         default: ErrorTypes.warning,
-        possibleValues: [
+        values: [
             ErrorTypes.disable,
             ErrorTypes.warning,
             ErrorTypes.error
         ]
     }),
     new OptionModel({
-        short: OptionsShortNames.ignore,
-        name: OptionsLongNames.ignore,
+        shortName: OptionsShortNames.ignore,
+        longName: OptionsLongNames.ignore,
         required: false,
-        type: OptionsTypes.glob,
-        descriptionShort: `Ignore projects and languages files`,
-        descriptionLong: ``,
-        possibleValues: [
+        type: ArgumentTypes.glob,
+        description: `Ignore projects and languages files`,
+        additionalDescription: ``,
+        values: [
             OptionsPath.relative,
             OptionsPath.absolute
         ]
     }),
     new OptionModel({
-        name: OptionsLongNames.maxWarning,
+        longName: OptionsLongNames.maxWarning,
         required: false,
-        type: OptionsTypes.glob,
-        descriptionShort: `Max count of warnings in all files. If this value more that count of warnings, then an error is return`,
-        descriptionLong: ``,
+        type: ArgumentTypes.glob,
+        description: `Max count of warnings in all files. If this value more that count of warnings, then an error is return`,
+        additionalDescription: ``,
         default: '0',
-        possibleValues: [
-            OptionsTypes.number,
+        values: [
+            ArgumentTypes.number,
         ]
     }),
     new OptionModel({
-        name: OptionsLongNames.misprint,
-        short: OptionsShortNames.misprint,
+        shortName: OptionsShortNames.misprint,
+        longName: OptionsLongNames.misprint,
         required: false,
-        type: OptionsTypes.enum,
-        descriptionShort: `Try to find matches with misprint keys on views and languages keys. Coefficient: 0.9`,
-        descriptionLong: ``,
+        type: ArgumentTypes.enum,
+        description: `Try to find matches with misprint keys on views and languages keys. Coefficient: 0.9`,
+        additionalDescription: ``,
         default: ErrorTypes.warning,
-        possibleValues: [
+        values: [
             ErrorTypes.disable,
             ErrorTypes.warning,
             ErrorTypes.error
         ]
     }),
     new OptionModel({
-        name: OptionsLongNames.misprintCoefficient,
-        short: OptionsShortNames.misprintCoefficient,
+        longName: OptionsLongNames.misprintCoefficient,
+        shortName: OptionsShortNames.misprintCoefficient,
         required: false,
-        type: OptionsTypes.number,
-        descriptionShort: `Coefficient for misprint option can be from 0 to 1.0.`,
-        descriptionLong: ``,
+        type: ArgumentTypes.number,
+        description: `Coefficient for misprint option can be from 0 to 1.0.`,
+        additionalDescription: ``,
         default: '0.9',
+    }),
+    new OptionModel({
+        longName: OptionsLongNames.config,
+        shortName: OptionsShortNames.config,
+        required: false,
+        type: ArgumentTypes.number,
+        description: `Path to config`,
+        additionalDescription: ``,
     }),
 ];
 
