@@ -16,6 +16,9 @@ import { config } from './../core/config';
 import { OptionsLongNames } from './enums';
 import chalk from 'chalk';
 import * as fs from 'fs';
+import { DirectiveSymbol, ProjectSymbols, ResourceResolver } from 'ngast';
+import { CompileNgModuleMetadata, CompileTemplateMetadata, ElementAst, TextAst, ASTWithSource } from '@angular/compiler';
+import { readFileSync } from 'fs';
 
 const name: string = 'ngx-translate-lint';
 // tslint:disable-next-line:no-any
@@ -144,11 +147,146 @@ class Cli {
             const resultModel: ResultModel = resultCliModel.getResultModel();
             resultModel.printResult();
 
+            this.runAst(project);
             process.exitCode = resultCliModel.exitCode;
             if (resultModel.hasError) {
                 throw new FatalErrorModel(chalk.red(resultModel.message));
             }
     }
+
+    public runAst(project: string): void {
+        // tslint:disable-next-line:no-any
+        debugger;
+        let parseError: any = null;
+        const projectSymbols: ProjectSymbols = new ProjectSymbols(
+            project,
+            resourceResolver,
+            (e: any) => (parseError = e)
+        );
+        let allDirectives: DirectiveSymbol[] = projectSymbols.getDirectives();
+        if (!parseError) {
+            allDirectives = allDirectives.filter(
+                el => el.symbol.filePath.indexOf("node_modules") === -1
+            );
+
+            ngxReplacer(allDirectives);
+
+                // switch (config.format) {
+                // case 'i18n':
+                //     i18nTranslate.replacer(allDirectives, config);
+                //     break;
+                // default:
+                //     error('format "' + config.format + '" unsoported, Only: ngx-translate, i18n.');
+                //     process.exit(1);
+                //     break;
+           // }
+        } else {
+            error(parseError);
+        }
+    }
 }
+
+const error: (arg: string) => void = (message: string) => {
+    // tslint:disable-next-line:no-console
+    console.error(chalk.bgRed.white(message));
+};
+
+export function ngxReplacer(allDirectives: DirectiveSymbol[]): void {
+    const jsonResult: any = {};
+    allDirectives.forEach(el => {
+        try {
+            if (el.isComponent()) {
+                // Component
+                const moduleNew: CompileNgModuleMetadata | undefined = el.getModule();
+                const moduleName: string = moduleNew ? moduleNew.toSummary().type.reference.name : undefined;
+                const componentName: string = el.symbol.name;
+                const name: string = moduleName + '.' + componentName;
+                if (!jsonResult[moduleName]) {
+                    jsonResult[moduleName] = {};
+                }
+                jsonResult[moduleName][componentName] = {};
+                const texts: string[] = [];
+                (el.getTemplateAst().templateAst || []).forEach(element => {
+                    texts.push(...getTextAst(element as ElementAst));
+                });
+                const resolverDate: CompileTemplateMetadata | null =  el.getResolvedMetadata();
+                const url: string = (!!resolverDate ? resolverDate.templateUrl : '') || el.symbol.filePath;
+                texts.forEach((text, i) => {
+                    jsonResult[moduleName][componentName][i] = text;
+                    console.log(url);
+                    console.log(text);
+                    // replace({
+                    //     regex: text,
+                    //     replacement: `{{ '${name}.${i}' | translate }}`,
+                    //     paths: [url]
+                    // });
+                });
+            } else {
+                // Directive
+            }
+        } catch (e) {
+            // Component
+            // tslint:disable-next-line:no-console
+            console.error(e);
+            // exception only component
+        }
+    });
+    // saving data
+    // if (!fs.existsSync(config.outPath)) {
+    //     fs.mkdirSync(config.outPath, { recursive: true });
+    // }
+    // const locales: string[] = [config.inLocacte, ...config.outLocacte];
+    // locales.forEach(locale => {
+    //     const outFile: string = path.join(config.outPath, `${locale}.json`);
+    //     fs.writeFile(outFile, JSON.stringify(jsonResult), 'utf8', () => {});
+    // });
+}
+
+export function getTextAst(element: ElementAst): string[] {
+    const texts: string[] = [];
+    if (element && element.children && element.children.length) {
+        element.children.forEach((child: any) => {
+            const name: string = child.constructor.name;
+            const value: TextAst | ASTWithSource | string | any = (child as TextAst).value;
+            if (value) {
+                console.log(name);
+                if (name === 'TextAst' && value.trim() !== '') {
+                    texts.push(child.value);
+                } else {
+                    const source: string | null = (value as ASTWithSource).source;
+                    // if (typeof value === 'object' && source && source.trim() !== '') {
+                    //   texts.push(source);
+                    // }
+                    if(value.constructor.name === 'ASTWithSource'){
+                        texts.push(source || '');
+                    }
+                }
+            } else {
+                const childTexts: string[] = getTextAst(child as ElementAst);
+                childTexts.forEach((el: any) => {
+                    texts.push(el);
+                });
+            }
+        });
+    }
+    return texts;
+}
+
+export const resourceResolver: ResourceResolver = {
+    get(url: string): Promise<string> {
+        return new Promise((resolve, reject) => {
+            fs.readFile(url, 'utf-8', (err, content) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(content);
+                }
+            });
+        });
+    },
+    getSync(url: string): string {
+        return readFileSync(url).toString();
+    }
+};
 
 export { Cli };
