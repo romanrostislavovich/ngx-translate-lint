@@ -1,11 +1,12 @@
 import { flatMap } from 'lodash';
 
 import { config } from './config';
+import { KeysUtils } from './utils';
 import { ErrorTypes } from './enums';
 import { IRulesConfig } from './interface';
+import { MisprintRule } from './rules/MisprintRule';
 import { AbsentViewKeysRule, ZombieRule } from './rules';
 import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel } from './models';
-import { MisprintRule } from './rules/MisprintRule';
 
 class NgxTranslateLint {
     public projectPath: string;
@@ -36,7 +37,7 @@ class NgxTranslateLint {
 
         const languagesKeys: FileLanguageModel = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeys();
         const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
-        const viewsRegExp: RegExp = config.findKeysList(languagesKeysNames);
+        const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames);
         const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
 
         const errors: ResultErrorModel[] = [];
@@ -54,8 +55,8 @@ class NgxTranslateLint {
             errors.push(...ruleResult);
         }
 
-        if (this.rules.misprint.type !== ErrorTypes.disable) {
-            const ruleInstance: MisprintRule = new MisprintRule(this.rules.misprint.type, this.rules.misprint.coefficient);
+        if (this.rules.misprint !== ErrorTypes.disable) {
+            const ruleInstance: MisprintRule = new MisprintRule(this.rules.misprint, this.rules.misprintCoefficient);
             const ruleResult: ResultErrorModel[] = ruleInstance.check(errors, languagesKeys.keys);
             errors.push(...ruleResult);
         }
