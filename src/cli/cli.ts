@@ -5,7 +5,8 @@ import { OptionModel } from './models';
 import {
     ErrorTypes,
     FatalErrorModel,
-    IRulesConfig, MisprintModel,
+    IRulesConfig,
+    MisprintModel,
     NgxTranslateLint,
     ResultCliModel,
     ResultModel,
@@ -132,15 +133,16 @@ class Cli {
         views?: ErrorTypes,
         ignore?: string,
         zombies?: ErrorTypes,
-        maxWarning?: number,
+        maxWarning: number = 1,
         misprint?: ErrorTypes,
-        misprintCoefficient?: number,
+        misprintCoefficient: number = 0.9,
     ): void {
-            const misprintModel: MisprintModel = new MisprintModel(misprint, misprintCoefficient);
             const errorConfig: IRulesConfig = {
                 keysOnViews: views || ErrorTypes.error,
                 zombieKeys: zombies || ErrorTypes.warning,
-                misprint: misprintModel,
+                misprint: misprint || ErrorTypes.warning,
+                maxWarning,
+                misprintCoefficient,
             };
             const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig);
             const resultCliModel: ResultCliModel = validationModel.lint(maxWarning);

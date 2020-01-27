@@ -6,7 +6,6 @@ interface IDefaultValues {
     languagesPath: string;
 }
 interface IAppConfig {
-    findKeysList(keys: string[]): RegExp;
     defaultValues: IDefaultValues;
 }
 
