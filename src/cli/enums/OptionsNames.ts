@@ -1,4 +1,5 @@
 enum OptionsLongNames {
+    ast = 'ast',
     help = 'help',
     views = 'views',
     ignore = 'ignore',
@@ -12,6 +13,7 @@ enum OptionsLongNames {
 }
 
 enum OptionsShortNames {
+    ast = 'a',
     views = 'v',
     ignore = 'i',
     config = 'c',

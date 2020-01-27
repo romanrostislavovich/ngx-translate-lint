@@ -10,6 +10,7 @@ const config: IAppConfig = {
             maxWarning: 0,
             misprintCoefficient: 0.9,
         },
+        ast: './',
         projectPath: './src/app/**/*.{html,ts}',
         languagesPath: './src/assets/i18n/*.json'
     }
@@ -23,6 +24,7 @@ const defaultConfig: object = {
         "maxWarning": "0",
         "misprintCoefficient": "0.9"
     },
+    "ast": './',
     "project": './src/app/**/*.{html,ts}',
     "languages": './src/assets/i18n/*.json',
 };

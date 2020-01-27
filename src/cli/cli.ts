@@ -20,6 +20,7 @@ import * as fs from 'fs';
 import { DirectiveSymbol, ProjectSymbols, ResourceResolver } from 'ngast';
 import { CompileNgModuleMetadata, CompileTemplateMetadata, ElementAst, TextAst, ASTWithSource } from '@angular/compiler';
 import { readFileSync } from 'fs';
+import { isNgxTranslateImportedRule } from './../core/rules/isNgxTranslateImportedRule';
 
 const name: string = 'ngx-translate-lint';
 // tslint:disable-next-line:no-any
@@ -92,7 +93,7 @@ class Cli {
         } catch (error) {
             // tslint:disable-next-line: no-console
             console.error(error);
-            process.exitCode =  StatusCodes.crash;
+            process.exitCode = StatusCodes.crash;
         } finally {
             process.exit();
         }
@@ -127,7 +128,7 @@ class Cli {
         return result;
     }
 
-    private runLint(
+    public runLint(
         project: string,
         languages: string,
         views?: ErrorTypes,
@@ -165,33 +166,17 @@ class Cli {
             resourceResolver,
             (e: any) => (parseError = e)
         );
-        let allDirectives: DirectiveSymbol[] = projectSymbols.getDirectives();
+
         if (!parseError) {
-            allDirectives = allDirectives.filter(
-                el => el.symbol.filePath.indexOf("node_modules") === -1
-            );
-
-            ngxReplacer(allDirectives);
-
-                // switch (config.format) {
-                // case 'i18n':
-                //     i18nTranslate.replacer(allDirectives, config);
-                //     break;
-                // default:
-                //     error('format "' + config.format + '" unsoported, Only: ngx-translate, i18n.');
-                //     process.exit(1);
-                //     break;
-           // }
+            const projectDirectives: DirectiveSymbol[] = projectSymbols.getDirectives().filter(el => el.symbol.filePath.indexOf("node_modules") === -1);
+            const result: boolean = isNgxTranslateImportedRule(projectDirectives);
+            console.log(result);
+            // ngxReplacer(projectDirectives);
         } else {
-            error(parseError);
+            throw new FatalErrorModel(chalk.red(parseError));
         }
     }
 }
-
-const error: (arg: string) => void = (message: string) => {
-    // tslint:disable-next-line:no-console
-    console.error(chalk.bgRed.white(message));
-};
 
 export function ngxReplacer(allDirectives: DirectiveSymbol[]): void {
     const jsonResult: any = {};
@@ -200,7 +185,7 @@ export function ngxReplacer(allDirectives: DirectiveSymbol[]): void {
             if (el.isComponent()) {
                 // Component
                 const moduleNew: CompileNgModuleMetadata | undefined = el.getModule();
-                const moduleName: string = moduleNew ? moduleNew.toSummary().type.reference.name : undefined;
+                const moduleName: string = moduleNew ? moduleNew.type.reference.name : undefined;
                 const componentName: string = el.symbol.name;
                 const name: string = moduleName + '.' + componentName;
                 if (!jsonResult[moduleName]) {

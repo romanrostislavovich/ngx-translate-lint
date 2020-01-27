@@ -17,8 +17,17 @@ import { assertFullModel } from './results/arguments.full';
 import { assertDefaultModel } from './results/default.full';
 import { assertCustomConfig } from './results/custom.config';
 import { getAbsolutePath, projectFolder } from './utils';
+import { Cli } from '../../src/cli/cli';
+import { cliOptions } from '../../src/cli/dictionaries';
 
+describe('CLI', () => {
+    const project: string = 'D:\\github\\svoboda-rabstvo\\repos\\simple-angular';
+    const languages: string = 'D:\\github\\svoboda-rabstvo\\repos\\simple-angular\\src\\assets\\i18n';
 
+    const cli: Cli = new Cli(cliOptions);
+    cli.runLint(project, languages);
+
+});
 describe('Core Integration', () => {
     const ignorePath: string = '';
 
