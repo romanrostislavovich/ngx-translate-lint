@@ -76,7 +76,7 @@ const cliOptions: OptionModel[] = [
         type: ArgumentTypes.glob,
         description: `Max count of warnings in all files. If this value more that count of warnings, then an error is return`,
         additionalDescription: ``,
-        default: '0',
+        default: config.defaultValues.rules.maxWarning.toString(),
         values: [
             ArgumentTypes.number,
         ]
@@ -102,7 +102,7 @@ const cliOptions: OptionModel[] = [
         type: ArgumentTypes.number,
         description: `Coefficient for misprint option can be from 0 to 1.0.`,
         additionalDescription: ``,
-        default: '0.9',
+        default: config.defaultValues.rules.misprintCoefficient.toString(),
     }),
     new OptionModel({
         longName: OptionsLongNames.config,

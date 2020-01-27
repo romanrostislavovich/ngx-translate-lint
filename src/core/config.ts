@@ -1,33 +1,30 @@
 import { ErrorTypes } from './enums';
 import { IAppConfig } from './interface';
-import { MisprintModel } from './models';
 
 const config: IAppConfig = {
-    findKeysList(keys: string[]): RegExp {
-        const keysFromDirectiveInsideTag: string = `(?<=<[\\s*\\w*\\s*]*translate[\\s*\\w*\\s*]*[^>]*>\\s*)([a-zA-Z0-9_.]*)(?=\\s*<\\s*\\/.*\\s*>)`;
-        const keysFromDirectiveInView: string = `(?<=translate=["']{1,2}|\\[translate\\]=["']{1,2})([A-Za-z0-9_.]+)(?=["']{1,2})`;
-        const keysFromPipeInView: string = `(?<=['"])([a-zA-Z0-9_.]*)(?=['"]\\s?\\|\\s?translate|['"](\\s*\\|\\s*\\w*)*translate)`;
-        const keysListRegExp: string = keys.map((key: string) => {
-            const regExpForSingleKey: string = `(?<=[^\\w.-])${key.replace('.', '\\.')}(?=[^\\w.-])`;
-            return regExpForSingleKey;
-        }).join('|');
-        const resultKeysRegExp: string[] = [
-            keysListRegExp,
-            keysFromPipeInView,
-            keysFromDirectiveInView,
-            keysFromDirectiveInsideTag,
-        ];
-        return new RegExp(resultKeysRegExp.join('|'), 'gmi');
-    },
     defaultValues: {
         rules: {
-            keysOnViews: ErrorTypes.error,
+            misprint: ErrorTypes.warning,
             zombieKeys: ErrorTypes.warning,
-            misprint: new MisprintModel(),
+            keysOnViews: ErrorTypes.error,
+            maxWarning: 0,
+            misprintCoefficient: 0.9,
         },
         projectPath: './src/app/**/*.{html,ts}',
         languagesPath: './src/assets/i18n/*.json'
     }
+};
+
+const defaultConfig: object = {
+    "rules": {
+        "keysOnViews": "error",
+        "zombieKeys": "warning",
+        "misprint": "warning",
+        "maxWarning": "0",
+        "misprintCoefficient": "0.9"
+    },
+    "project": './src/app/**/*.{html,ts}',
+    "languages": './src/assets/i18n/*.json',
 };
 
 export { config };
