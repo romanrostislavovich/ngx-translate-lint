@@ -7,7 +7,7 @@ const config: IAppConfig = {
             misprint: ErrorTypes.warning,
             zombieKeys: ErrorTypes.warning,
             keysOnViews: ErrorTypes.error,
-            maxWarning: 1,
+            maxWarning: 0,
             misprintCoefficient: 0.9,
         },
         projectPath: './src/app/**/*.{html,ts}',
@@ -20,8 +20,8 @@ const defaultConfig: object = {
         "keysOnViews": "error",
         "zombieKeys": "warning",
         "misprint": "warning",
-        "maxWarning": 1,
-        "misprintCoefficient": 0.9
+        "maxWarning": "0",
+        "misprintCoefficient": "0.9"
     },
     "project": './src/app/**/*.{html,ts}',
     "languages": './src/assets/i18n/*.json',
