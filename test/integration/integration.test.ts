@@ -10,14 +10,12 @@ import {
     NgxTranslateLint,
     ResultCliModel,
     ResultErrorModel,
-    MisprintModel
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
 import { assertDefaultModel } from './results/default.full';
 import { assertCustomConfig } from './results/custom.config';
 import { getAbsolutePath, projectFolder } from './utils';
-
 
 describe('Core Integration', () => {
     const ignorePath: string = '';

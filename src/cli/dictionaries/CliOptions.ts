@@ -1,6 +1,6 @@
 import { OptionModel } from './../models';
 import { config, ErrorTypes } from './../../core';
-import { OptionsPath, OptionsLongNames, OptionsShortNames } from './../enums';
+import { OptionsLongNames, OptionsPath, OptionsShortNames } from './../enums';
 import { ArgumentTypes } from 'conventional-cli';
 
 const cliOptions: OptionModel[] = [
@@ -112,6 +112,20 @@ const cliOptions: OptionModel[] = [
         description: `Path to config`,
         additionalDescription: ``,
     }),
+    new OptionModel({
+        longName: OptionsLongNames.ast,
+        shortName: OptionsShortNames.ast,
+        required: false,
+        type: ArgumentTypes.string,
+        description: 'The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file. Right now included only one rule: checked if `ngx-translate` imported for your project',
+        beta: true,
+        additionalDescription: '',
+        default: './',
+        values: [
+            OptionsPath.relative,
+            OptionsPath.absolute
+        ]
+    })
 ];
 
 export  { cliOptions };

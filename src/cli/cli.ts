@@ -6,7 +6,6 @@ import {
     ErrorTypes,
     FatalErrorModel,
     IRulesConfig,
-    MisprintModel,
     NgxTranslateLint,
     ResultCliModel,
     ResultModel,
@@ -16,7 +15,7 @@ import {
 import { config } from './../core/config';
 import { OptionsLongNames } from './enums';
 import chalk from 'chalk';
-import * as fs from 'fs';
+import { parseJsonFile } from './utils';
 
 const name: string = 'ngx-translate-lint';
 // tslint:disable-next-line:no-any
@@ -71,12 +70,12 @@ class Cli {
     public runCli(): void {
         try {
             // tslint:disable-next-line:no-any
-            const options: any = this.cliClient.config ? this.parseConfig(this.cliClient.config) : this.cliClient;
+            const options: any = this.cliClient.config ? parseJsonFile(this.cliClient.config) : this.cliClient;
             if (options.project && options.languages) {
                 this.runLint(
                     options.project, options.languages, options.zombies,
                     options.views, options.ignore, options.maxWarning, options.misprint,
-                    options.misprintCoefficient
+                    options.misprintCoefficient, options.ast,
                 );
             } else {
                 const cliHasError: boolean = this.validate();
@@ -89,7 +88,7 @@ class Cli {
         } catch (error) {
             // tslint:disable-next-line: no-console
             console.error(error);
-            process.exitCode =  StatusCodes.crash;
+            process.exitCode = StatusCodes.crash;
         } finally {
             process.exit();
         }
@@ -113,18 +112,7 @@ class Cli {
         return missingRequiredOption;
     }
 
-    // tslint:disable-next-line:no-any
-    private parseConfig(configPath: string): any {
-        if (!fs.existsSync(configPath)) {
-            throw new FatalErrorModel(chalk.red(`Config file doesn't exists by path ${configPath}`));
-        }
-        const configFile: Buffer = fs.readFileSync(configPath);
-        // tslint:disable-next-line:no-any
-        const result: any = JSON.parse(configFile.toString());
-        return result;
-    }
-
-    private runLint(
+    public runLint(
         project: string,
         languages: string,
         views?: ErrorTypes,
@@ -133,6 +121,7 @@ class Cli {
         maxWarning: number = 1,
         misprint?: ErrorTypes,
         misprintCoefficient: number = 0.9,
+        ast?: string,
     ): void {
             const errorConfig: IRulesConfig = {
                 keysOnViews: views || ErrorTypes.error,
@@ -140,6 +129,7 @@ class Cli {
                 misprint: misprint || ErrorTypes.warning,
                 maxWarning,
                 misprintCoefficient,
+                ast,
             };
             const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig);
             const resultCliModel: ResultCliModel = validationModel.lint(maxWarning);
