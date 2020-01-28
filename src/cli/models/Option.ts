@@ -6,6 +6,7 @@ class OptionModel extends Argument {
     ) {
         super();
 
+        this.beta = args.beta;
         this.type = args.type;
         this.values = args.values;
         this.default = args.default;
@@ -17,7 +18,7 @@ class OptionModel extends Argument {
     }
 
     public getFlag(): string {
-        return `${this.shortName ? '-' + this.shortName + ', ' : ''} --${this.longName} [${this.type}] ${this.required ? '(required)' : ''}`;
+        return `${this.shortName ? '-' + this.shortName + ', ' : ''} --${this.longName} [${this.type}] ${this.required ? '(required)' : ''}${this.beta ? '[BETA]' : ''}`;
     }
 
     public getDescription(): string {

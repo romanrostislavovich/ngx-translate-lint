@@ -1,10 +1,12 @@
-import { IMisprint } from './../interface/IMisprint';
 import { ErrorTypes } from './../enums';
 
 interface IRulesConfig {
-    keysOnViews: ErrorTypes;
+    misprint: ErrorTypes;
     zombieKeys: ErrorTypes;
-    misprint: IMisprint;
+    keysOnViews: ErrorTypes;
+    maxWarning: number;
+    misprintCoefficient: number;
+    ast?: string;
 }
 
 export { IRulesConfig };

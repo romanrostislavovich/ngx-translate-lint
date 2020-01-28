@@ -1,6 +1,6 @@
 import { OptionModel } from './../models';
 import { config, ErrorTypes } from './../../core';
-import { OptionsPath, OptionsLongNames, OptionsShortNames } from './../enums';
+import { OptionsLongNames, OptionsPath, OptionsShortNames } from './../enums';
 import { ArgumentTypes } from 'conventional-cli';
 
 const cliOptions: OptionModel[] = [
@@ -76,7 +76,7 @@ const cliOptions: OptionModel[] = [
         type: ArgumentTypes.glob,
         description: `Max count of warnings in all files. If this value more that count of warnings, then an error is return`,
         additionalDescription: ``,
-        default: '0',
+        default: config.defaultValues.rules.maxWarning.toString(),
         values: [
             ArgumentTypes.number,
         ]
@@ -102,7 +102,7 @@ const cliOptions: OptionModel[] = [
         type: ArgumentTypes.number,
         description: `Coefficient for misprint option can be from 0 to 1.0.`,
         additionalDescription: ``,
-        default: '0.9',
+        default: config.defaultValues.rules.misprintCoefficient.toString(),
     }),
     new OptionModel({
         longName: OptionsLongNames.config,
@@ -112,6 +112,20 @@ const cliOptions: OptionModel[] = [
         description: `Path to config`,
         additionalDescription: ``,
     }),
+    new OptionModel({
+        longName: OptionsLongNames.ast,
+        shortName: OptionsShortNames.ast,
+        required: false,
+        type: ArgumentTypes.string,
+        description: 'The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file. Right now included only one rule: checked if `ngx-translate` imported for your project',
+        beta: true,
+        additionalDescription: '',
+        default: './',
+        values: [
+            OptionsPath.relative,
+            OptionsPath.absolute
+        ]
+    })
 ];
 
 export  { cliOptions };

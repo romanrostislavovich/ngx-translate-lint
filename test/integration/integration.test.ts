@@ -10,7 +10,6 @@ import {
     NgxTranslateLint,
     ResultCliModel,
     ResultErrorModel,
-    MisprintModel
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
@@ -18,7 +17,7 @@ import { assertDefaultModel } from './results/default.full';
 import { assertCustomConfig } from './results/custom.config';
 import { getAbsolutePath, projectFolder } from './utils';
 
-describe('Integration', () => {
+describe('Core Integration', () => {
     const ignorePath: string = '';
 
     const projectIgnorePath: string = './test/integration/inputs/views/pipe.keys.html';
@@ -49,7 +48,9 @@ describe('Integration', () => {
             const errorConfig: IRulesConfig = {
                 keysOnViews: ErrorTypes.error,
                 zombieKeys: ErrorTypes.warning,
-                misprint:  new MisprintModel(ErrorTypes.error),
+                misprint:  ErrorTypes.error,
+                maxWarning: 1,
+                misprintCoefficient: 0.9
             };
             const hasMisprint: boolean = true;
             const countMisprint: number = 1;
@@ -108,7 +109,9 @@ describe('Integration', () => {
             const errorConfig: IRulesConfig = {
                 keysOnViews: ErrorTypes.warning,
                 zombieKeys: ErrorTypes.warning,
-                misprint: new MisprintModel(ErrorTypes.disable),
+                maxWarning: 1,
+                misprintCoefficient: 0.9,
+                misprint: ErrorTypes.disable,
             };
 
             // Act
@@ -236,7 +239,9 @@ describe('Integration', () => {
             const errorConfig: IRulesConfig = {
                 keysOnViews: ErrorTypes.warning,
                 zombieKeys: ErrorTypes.disable,
-                misprint:  new MisprintModel(ErrorTypes.disable),
+                maxWarning: 1,
+                misprintCoefficient: 0.9,
+                misprint: ErrorTypes.disable,
             };
 
             // Act
@@ -253,7 +258,9 @@ describe('Integration', () => {
         const errorConfig: IRulesConfig = {
             keysOnViews: ErrorTypes.error,
             zombieKeys: ErrorTypes.warning,
-            misprint: new MisprintModel(ErrorTypes.warning),
+            maxWarning: 1,
+            misprintCoefficient: 0.9,
+            misprint: ErrorTypes.warning,
         };
         const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
         const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
