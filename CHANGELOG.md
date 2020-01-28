@@ -1,5 +1,13 @@
 # CHANGELOG
 
+# [1.5.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.4.0...v1.5.0) (2020-01-28)
+
+
+### Features
+
+* add AST option like BETA ([accff6a](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/accff6a2954d125abe9aef7fc7c495bb37213b27))
+* base rule for i18n ([090622b](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/090622b1d8c21fc76ce16c7ded932283e50cb2c9))
+
 # [1.4.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.3.0...v1.4.0) (2020-01-22)
 
 
