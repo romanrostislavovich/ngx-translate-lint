@@ -6,6 +6,7 @@ interface IRulesConfig {
     keysOnViews: ErrorTypes;
     maxWarning: number;
     misprintCoefficient: number;
+    ast?: string;
 }
 
 export { IRulesConfig };

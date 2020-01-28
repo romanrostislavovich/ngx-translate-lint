@@ -1,11 +1,12 @@
 import { flatMap } from 'lodash';
 
 import { config } from './config';
-import { KeysUtils } from './utils';
-import { ErrorTypes } from './enums';
 import { IRulesConfig } from './interface';
 import { MisprintRule } from './rules/MisprintRule';
-import { AbsentViewKeysRule, ZombieRule } from './rules';
+import { ErrorFlow, ErrorTypes } from './enums';
+import { KeysUtils, resourceResolver } from './utils';
+import { DirectiveSymbol, ErrorReporter, ProjectSymbols } from 'ngast';
+import { AbsentViewKeysRule, isNgxTranslateImportedRule, ZombieRule } from './rules';
 import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel } from './models';
 
 class NgxTranslateLint {
@@ -61,9 +62,37 @@ class NgxTranslateLint {
             errors.push(...ruleResult);
         }
 
+        if (this.rules.ast) {
+            const ruleResult: ResultErrorModel[] =  this.runAst(this.rules.ast);
+            errors.push(...ruleResult);
+        }
+
         const cliResult: ResultCliModel = new ResultCliModel(errors, maxWarning);
         return cliResult;
     }
+
+    public runAst(project: string): ResultErrorModel[] {
+        const resultErrors: ResultErrorModel[] = [];
+        const projectSymbols: ProjectSymbols = new ProjectSymbols(
+            project,
+            resourceResolver,
+            // tslint:disable-next-line:no-any
+            (e: ErrorReporter) => {
+                const error: ResultErrorModel = new ResultErrorModel(e.toString(), ErrorFlow.ngxTranslateNoImported, ErrorTypes.error, project);
+                resultErrors.push(error);
+            }
+        );
+
+        if (resultErrors.length) {
+            const projectDirectives: DirectiveSymbol[] = projectSymbols.getDirectives().filter(el => el.symbol.filePath.indexOf("node_modules") === -1);
+            const ruleResult: boolean = isNgxTranslateImportedRule(projectDirectives);
+            if (ruleResult) {
+
+            }
+        }
+        return resultErrors;
+    }
 }
+
 
 export { NgxTranslateLint };

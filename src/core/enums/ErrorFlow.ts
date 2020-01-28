@@ -1,7 +1,8 @@
 enum ErrorFlow {
     views = 'views',
     zombie = 'zombie',
-    misprint = 'misprint'
+    misprint = 'misprint',
+    ngxTranslateNoImported = 'ngxTranslateNoImported',
 }
 
 export { ErrorFlow };
