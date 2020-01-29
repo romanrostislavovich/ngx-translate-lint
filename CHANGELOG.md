@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.5.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.5.0...v1.5.1) (2020-01-29)
+
+
+### Bug Fixes
+
+* `AST` option doesn't return error ([ad8dbba](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/ad8dbbaca67473ed352b55d2e513db17c9ce6b51)), closes [#47](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/47)
+
 # [1.5.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.4.0...v1.5.0) (2020-01-28)
 
 

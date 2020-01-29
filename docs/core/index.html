@@ -68,7 +68,7 @@
 					<h1>ngx-translate-lint</h1>
 				</a>
 				<blockquote>
-					<p>Simple tools for check ngx-translate keys in whole app</p>
+					<p>Simple tools for check ngx-translate keys in whole app which use regexp and AST (beta).</p>
 				</blockquote>
 				<p><a href="https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint"><img src="https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint.svg?branch=master" alt="Build Master"></a>
 					<a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic"></a>
@@ -141,11 +141,15 @@ Options:
           Coefficient for misprint option can be from 0 to 1.0.
            (default: &quot;0.9&quot;)
   -c, --config [path]
-          Path to the config file
+          Path to the config file.
   --maxWarning [number]
            Max count of warnings in all files. If this value more that count of warnings, then an error is return
            Possible Values: &lt;number&gt;
            (default: &quot;0&quot;)
+  -a, --ast [path] [BETA]
+            The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file. Right now included only one rule: checked if `ngx-translate` imported for your project
+            Possible Values: &lt;relative path|absolute path&gt;
+            (default: &quot;./&quot;)
 
   -h, --help  output usage information
 
@@ -155,7 +159,22 @@ Examples:
     $ ngx-translate-lint -p &#39;./src/app/**/*.{html,ts}&#39; -l &#39;./src/assets/i18n/*.json&#39;
     $ ngx-translate-lint -p &#39;./src/app/**/*.{html,ts}&#39; -z &#39;disable&#39; -v &#39;error&#39;
     $ ngx-translate-lint -p &#39;./src/app/**/*.{html,ts}&#39; -i &#39;./src/assets/i18n/EN-us.json, ./stc/app/app.*.{html,ts}&#39;</code></pre>
-				<p>For <code>project</code> and <code>languages</code> options need to include file types like on the example.</p>
+				<blockquote>
+					<p>NOTE: For <code>project</code> and <code>languages</code> options need to include file types like on the example.</p>
+				</blockquote>
+				<p>Default Config is: </p>
+				<pre><code class="language-json">{
+    <span class="hljs-attr">"rules"</span>: {
+        <span class="hljs-attr">"keysOnViews"</span>: <span class="hljs-string">"error"</span>,
+        <span class="hljs-attr">"zombieKeys"</span>: <span class="hljs-string">"warning"</span>,
+        <span class="hljs-attr">"misprint"</span>: <span class="hljs-string">"warning"</span>,
+        <span class="hljs-attr">"maxWarning"</span>: <span class="hljs-string">"0"</span>,
+        <span class="hljs-attr">"misprintCoefficient"</span>: <span class="hljs-string">"0.9"</span>
+    },
+    <span class="hljs-attr">"ast"</span>: <span class="hljs-string">"./"</span>,
+    <span class="hljs-attr">"project"</span>: <span class="hljs-string">"./src/app/**/*.{html,ts}"</span>,
+    <span class="hljs-attr">"languages"</span>: <span class="hljs-string">"./src/assets/i18n/*.json"</span>
+}</code></pre>
 				<a href="#exit-codes" id="exit-codes" style="color: inherit; text-decoration: none;">
 					<h4>Exit Codes</h4>
 				</a>
