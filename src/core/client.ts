@@ -86,8 +86,9 @@ class NgxTranslateLint {
         if (resultErrors.length) {
             const projectDirectives: DirectiveSymbol[] = projectSymbols.getDirectives().filter(el => el.symbol.filePath.indexOf("node_modules") === -1);
             const ruleResult: boolean = isNgxTranslateImportedRule(projectDirectives);
-            if (ruleResult) {
-
+            if (!ruleResult) {
+                const error: ResultErrorModel = new ResultErrorModel(`'ngx-translate' doesn't imported on your project`, ErrorFlow.ngxTranslateNoImported, ErrorTypes.error, project);
+                resultErrors.push(error);
             }
         }
         return resultErrors;

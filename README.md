@@ -1,6 +1,6 @@
 # ngx-translate-lint
 
-> Simple tools for check ngx-translate keys in whole app
+> Simple tools for check ngx-translate keys in whole app which use regexp and AST (beta).
 
 [![Build Master](https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint.svg?branch=master)](https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint)
 [![semantic](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
@@ -72,11 +72,15 @@ Options:
           Coefficient for misprint option can be from 0 to 1.0.
            (default: "0.9")
   -c, --config [path]
-          Path to the config file
+          Path to the config file.
   --maxWarning [number]
            Max count of warnings in all files. If this value more that count of warnings, then an error is return
            Possible Values: <number>
            (default: "0")
+  -a, --ast [path] [BETA]
+            The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file. Right now included only one rule: checked if `ngx-translate` imported for your project
+            Possible Values: <relative path|absolute path>
+            (default: "./")
 
   -h, --help  output usage information
 
@@ -88,7 +92,23 @@ Examples:
     $ ngx-translate-lint -p './src/app/**/*.{html,ts}' -i './src/assets/i18n/EN-us.json, ./stc/app/app.*.{html,ts}'
 ```
 
-For `project` and `languages` options need to include file types like on the example.
+> NOTE: For `project` and `languages` options need to include file types like on the example.
+
+Default Config is: 
+```json
+{
+    "rules": {
+        "keysOnViews": "error",
+        "zombieKeys": "warning",
+        "misprint": "warning",
+        "maxWarning": "0",
+        "misprintCoefficient": "0.9"
+    },
+    "ast": "./",
+    "project": "./src/app/**/*.{html,ts}",
+    "languages": "./src/assets/i18n/*.json"
+}
+```
 
 #### Exit Codes
 
