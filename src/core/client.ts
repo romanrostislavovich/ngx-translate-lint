@@ -1,12 +1,11 @@
 import { flatMap } from 'lodash';
 
 import { config } from './config';
-import { IRulesConfig } from './interface';
-import { MisprintRule } from './rules/MisprintRule';
 import { ErrorFlow, ErrorTypes } from './enums';
+import { IRuleAst, IRulesConfig } from './interface';
 import { KeysUtils, resourceResolver } from './utils';
 import { DirectiveSymbol, ErrorReporter, ProjectSymbols } from 'ngast';
-import { AbsentViewKeysRule, isNgxTranslateImportedRule, ZombieRule } from './rules';
+import { AbsentViewKeysRule, ZombieRule, AstIsNgxTranslateImportedRule, MisprintRule } from './rules';
 import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel } from './models';
 
 class NgxTranslateLint {
@@ -43,35 +42,55 @@ class NgxTranslateLint {
 
         const errors: ResultErrorModel[] = [];
 
-        // TODO: RL: Refactor this
-        if (this.rules.zombieKeys !== ErrorTypes.disable) {
-            const ruleInstance: ZombieRule = new ZombieRule(this.rules.zombieKeys);
-            const ruleResult: ResultErrorModel[] = ruleInstance.check(views.keys, languagesKeys.keys);
-            errors.push(...ruleResult);
-        }
-
-        if (this.rules.keysOnViews !== ErrorTypes.disable) {
-            const ruleInstance: AbsentViewKeysRule = new AbsentViewKeysRule(this.rules.keysOnViews, languagesKeys.files);
-            const ruleResult: ResultErrorModel[] = ruleInstance.check(views.keys, languagesKeys.keys);
-            errors.push(...ruleResult);
-        }
-
-        if (this.rules.misprint !== ErrorTypes.disable) {
-            const ruleInstance: MisprintRule = new MisprintRule(this.rules.misprint, this.rules.misprintCoefficient);
-            const ruleResult: ResultErrorModel[] = ruleInstance.check(errors, languagesKeys.keys);
-            errors.push(...ruleResult);
+        if (
+            this.rules.zombieKeys !== ErrorTypes.disable ||
+            this.rules.keysOnViews !== ErrorTypes.disable ||
+            this.rules.misprint !== ErrorTypes.disable
+        ) {
+            const regExpResult: ResultErrorModel[] = this.runRegExp(views, languagesKeys);
+            errors.push(...regExpResult);
         }
 
         if (this.rules.ast) {
-            const ruleResult: ResultErrorModel[] =  this.runAst(this.rules.ast);
-            errors.push(...ruleResult);
+            const astResult: ResultErrorModel[] =  this.runAst(this.rules.ast);
+            errors.push(...astResult);
         }
 
         const cliResult: ResultCliModel = new ResultCliModel(errors, maxWarning);
         return cliResult;
     }
 
-    public runAst(project: string): ResultErrorModel[] {
+    private runRegExp(
+        views: FileViewModel,
+        languagesKeys: FileLanguageModel,
+        rules: IRulesConfig = this.rules
+    ): ResultErrorModel[] {
+        const result: ResultErrorModel[] = [];
+        if (rules.zombieKeys !== ErrorTypes.disable) {
+            const ruleInstance: ZombieRule = new ZombieRule(this.rules.zombieKeys);
+            const ruleResult: ResultErrorModel[] = ruleInstance.check(views.keys, languagesKeys.keys);
+            result.push(...ruleResult);
+        }
+
+        if (rules.keysOnViews !== ErrorTypes.disable) {
+            const ruleInstance: AbsentViewKeysRule = new AbsentViewKeysRule(this.rules.keysOnViews, languagesKeys.files);
+            const ruleResult: ResultErrorModel[] = ruleInstance.check(views.keys, languagesKeys.keys);
+            result.push(...ruleResult);
+        }
+
+        if (rules.misprint !== ErrorTypes.disable) {
+            const ruleInstance: MisprintRule = new MisprintRule(this.rules.misprint, this.rules.misprintCoefficient);
+            const ruleResult: ResultErrorModel[] = ruleInstance.check(result, languagesKeys.keys);
+            result.push(...ruleResult);
+        }
+
+        return result;
+    }
+
+    private runAst(
+        project: string,
+        rules: IRulesConfig = this.rules
+    ): ResultErrorModel[] {
         const resultErrors: ResultErrorModel[] = [];
         const projectSymbols: ProjectSymbols = new ProjectSymbols(
             project,
@@ -85,11 +104,11 @@ class NgxTranslateLint {
 
         if (resultErrors.length) {
             const projectDirectives: DirectiveSymbol[] = projectSymbols.getDirectives().filter(el => el.symbol.filePath.indexOf("node_modules") === -1);
-            const ruleResult: boolean = isNgxTranslateImportedRule(projectDirectives);
-            if (!ruleResult) {
-                const error: ResultErrorModel = new ResultErrorModel(`'ngx-translate' doesn't imported on your project`, ErrorFlow.ngxTranslateNoImported, ErrorTypes.error, project);
-                resultErrors.push(error);
-            }
+
+            // RULE: Is `ngx-translate` module imported
+            const ruleInstance: IRuleAst = new AstIsNgxTranslateImportedRule(projectDirectives);
+            const ruleResult: ResultErrorModel[] = ruleInstance.check(project);
+            resultErrors.push(...ruleResult);
         }
         return resultErrors;
     }
