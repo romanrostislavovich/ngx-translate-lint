@@ -18,13 +18,20 @@ class OptionModel extends Argument {
     }
 
     public getFlag(): string {
-        return `${this.shortName ? '-' + this.shortName + ', ' : ''} --${this.longName} [${this.type}] ${this.required ? '(required)' : ''}${this.beta ? '[BETA]' : ''}`;
+        const typeTemplate: string = `[${this.type}] `;
+        const betaTemplate: string = this.beta ? '[BETA] ' : '';
+        const requiredTemplate: string = this.required ? '(required) ' : '';
+        const longNameTemplate: string = `--${this.longName} `;
+        const shortNameTemplate: string = this.shortName ? '-' + this.shortName + ', ' : '';
+        return `${shortNameTemplate}${longNameTemplate}${typeTemplate}${requiredTemplate}${betaTemplate}`;
     }
 
     public getDescription(): string {
+        const descriptionTemplate: string = `${this.description}`;
+        const possibleValuesTemplate: string = this.values ? 'Possible Values: <' + this.values.join('|') + '>' : '';
         return (`
-        ${this.description}
-        ${this.values ? 'Possible Values: <' + this.values.join('|') + '>' : '' }
+        ${descriptionTemplate}
+        ${possibleValuesTemplate}
         `);
     }
 }
