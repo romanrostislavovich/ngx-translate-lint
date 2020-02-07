@@ -9,7 +9,7 @@ import {
     IRulesConfig,
     NgxTranslateLint,
     ResultCliModel,
-    ResultErrorModel,
+    ResultErrorModel, ResultModel,
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
@@ -28,6 +28,42 @@ describe('Core Integration', () => {
     const languagesWithMaskPath: string = './test/integration/inputs/locales/EN-*.json';
     const languagesIncorrectFile: string = './test/integration/inputs/locales/incorrect.json';
     const languagesAbsentMaskPath: string = './test/integration/inputs/locales';
+
+    describe('AST', () => {
+        it('should be default', () => {
+            // Arrange
+            const errorConfig: IRulesConfig = {
+                keysOnViews: ErrorTypes.error,
+                zombieKeys: ErrorTypes.warning,
+                maxWarning: 1,
+                misprintCoefficient: 0.9,
+                misprint: ErrorTypes.warning,
+                ast: {
+                    isNgxTranslateLintImported: ErrorTypes.error,
+                }
+            };
+            const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
+            const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
+            const ignorePath: string = `${languagesIgnorePath}, ${ignoreAbsoluteProjectPath}`;
+
+            // Act
+            const model: NgxTranslateLint = new NgxTranslateLint(
+                'D:\\github\\svoboda-rabstvo\\repos\\simple-angular\\src\\app\\*.{html,ts}',
+                'D:\\github\\svoboda-rabstvo\\repos\\simple-angular\\src\\assets\\i18n\\*.json',
+                ignorePath,
+                errorConfig,
+                'D:\\github\\svoboda-rabstvo\\repos\\simple-angular\\'
+            );
+            const result: ResultCliModel = model.lint();
+
+            // const resultCliModel: ResultCliModel = validationModel.lint(maxWarning);
+            const resultModel: ResultModel = result.getResultModel();
+            resultModel.printResult();
+
+            // Assert
+            assert.deepEqual(assertFullModel, result.errors);
+        });
+    });
 
     describe('Misprint', () => {
         it('should be warning by default', () => {
