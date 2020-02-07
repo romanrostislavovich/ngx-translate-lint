@@ -5,13 +5,21 @@ import { ErrorFlow, ErrorTypes } from './enums';
 import { IRuleAst, IRulesConfig } from './interface';
 import { KeysUtils, resourceResolver } from './utils';
 import { DirectiveSymbol, ErrorReporter, ProjectSymbols } from 'ngast';
-import { AbsentViewKeysRule, ZombieRule, AstIsNgxTranslateImportedRule, MisprintRule } from './rules';
 import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel } from './models';
+import {
+    AbsentViewKeysRule,
+    AstIsNgxTranslateImportedRule,
+    AstTranslateServiceRule,
+    MisprintRule,
+    ZombieRule
+} from './rules';
 
 class NgxTranslateLint {
-    public projectPath: string;
-    public languagesPath: string;
     public rules: IRulesConfig;
+    public projectPath: string;
+    public tsconfigPath: string;
+    public languagesPath: string;
+
     public ignore?: string;
 
     constructor (
@@ -19,7 +27,9 @@ class NgxTranslateLint {
         languagesPath: string = config.defaultValues.languagesPath,
         ignore?: string,
         rulesConfig: IRulesConfig = config.defaultValues.rules,
+        tsconfigPath: string = config.defaultValues.tsconfigPath,
     ) {
+        this.tsconfigPath = tsconfigPath;
         this.languagesPath = languagesPath;
         this.projectPath = projectPath;
         this.ignore = ignore;
@@ -51,8 +61,8 @@ class NgxTranslateLint {
             errors.push(...regExpResult);
         }
 
-        if (this.rules.ast) {
-            const astResult: ResultErrorModel[] =  this.runAst(this.rules.ast);
+        if (this.rules.ast && this.rules.ast.isNgxTranslateLintImported) {
+            const astResult: ResultErrorModel[] =  this.runAst(this.tsconfigPath, languagesKeys, this.rules);
             errors.push(...astResult);
         }
 
@@ -89,6 +99,7 @@ class NgxTranslateLint {
 
     private runAst(
         project: string,
+        languagesKeys: FileLanguageModel,
         rules: IRulesConfig = this.rules
     ): ResultErrorModel[] {
         const resultErrors: ResultErrorModel[] = [];
@@ -102,13 +113,22 @@ class NgxTranslateLint {
             }
         );
 
-        if (resultErrors.length) {
+        if (resultErrors.length === 0) {
             const projectDirectives: DirectiveSymbol[] = projectSymbols.getDirectives().filter(el => el.symbol.filePath.indexOf("node_modules") === -1);
 
             // RULE: Is `ngx-translate` module imported
-            const ruleInstance: IRuleAst = new AstIsNgxTranslateImportedRule(projectDirectives);
-            const ruleResult: ResultErrorModel[] = ruleInstance.check(project);
-            resultErrors.push(...ruleResult);
+            if (!!rules.ast && rules.ast.isNgxTranslateLintImported !== ErrorTypes.disable) {
+                const isNgxTranslateImported: IRuleAst = new AstIsNgxTranslateImportedRule(projectDirectives);
+                const isNgxTranslateResult: ResultErrorModel[] = isNgxTranslateImported.check(project, languagesKeys.keys);
+                resultErrors.push(...isNgxTranslateResult);
+            }
+
+            // RULE: translateService usage
+            // if (rules.ast && rules.ast.isNgxTranslateLintImported !== ErrorTypes.disable) {
+            //     const translateServiceRule: IRuleAst = new AstTranslateServiceRule(projectDirectives);
+            //     const translateServiceResult: ResultErrorModel[] = translateServiceRule.check(project, languagesKeys.keys);
+            //     resultErrors.push(...translateServiceResult);
+            // }
         }
         return resultErrors;
     }
