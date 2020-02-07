@@ -1,16 +1,23 @@
 import { DirectiveSymbol } from 'ngast';
 import { CompileNgModuleMetadata, CompileNgModuleSummary, CompileTypeMetadata } from '@angular/compiler';
 
-import { IRuleAst } from '../interface';
-import { ResultErrorModel } from '../models';
-import { ErrorFlow, ErrorTypes } from '../enums';
+import { config } from '../../config';
+import { IRuleAst } from '../../interface';
+import { ResultErrorModel } from '../../models';
+import { ErrorFlow, ErrorTypes } from '../../enums';
 
 class AstIsNgxTranslateImportedRule implements IRuleAst {
+    public flow: ErrorFlow;
+    public handler: ErrorTypes;
     public directives: DirectiveSymbol[];
 
     constructor(
-        directives: DirectiveSymbol[] = []
+        directives: DirectiveSymbol[] = [],
+        handler: ErrorTypes = config.defaultValues.rules.ast && config.defaultValues.rules.ast.isNgxTranslateLintImported ? config.defaultValues.rules.ast.isNgxTranslateLintImported : ErrorTypes.disable,
+        flow: ErrorFlow = ErrorFlow.ngxTranslateNoImported,
     ) {
+        this.flow = flow;
+        this.handler = handler;
         this.directives = directives;
     }
 
@@ -36,8 +43,9 @@ class AstIsNgxTranslateImportedRule implements IRuleAst {
             }
         });
 
+        debugger;
         if (!isNgxTranslateImported) {
-            const error: ResultErrorModel = new ResultErrorModel('', ErrorFlow.ngxTranslateNoImported, ErrorTypes.error, projectPath);
+            const error: ResultErrorModel = new ResultErrorModel('', this.flow, this.handler, projectPath);
             result.push(error);
         }
         return result;

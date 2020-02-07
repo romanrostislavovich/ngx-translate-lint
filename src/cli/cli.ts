@@ -4,7 +4,7 @@ import commander from 'commander';
 import { OptionModel } from './models';
 import {
     ErrorTypes,
-    FatalErrorModel,
+    FatalErrorModel, IAstRulesConfig,
     IRulesConfig,
     NgxTranslateLint,
     ResultCliModel,
@@ -29,7 +29,7 @@ Examples:
 
     $ ${name} -p '${config.defaultValues.projectPath}' -l '${config.defaultValues.languagesPath}'
     $ ${name} -p '${config.defaultValues.projectPath}' -z '${ErrorTypes.disable}' -v '${ErrorTypes.error}'
-    $ ${name} -p '${config.defaultValues.projectPath}' -i './src/assets/i18n/EN-us.json, ./stc/app/app.*.{html,ts}'
+    $ ${name} -p '${config.defaultValues.projectPath}' -i './src/assets/i18n/EN-us.json, ./src/app/app.*.{json}'
 
 `
 };
@@ -73,7 +73,7 @@ class Cli {
             const options: any = this.cliClient.config ? parseJsonFile(this.cliClient.config) : this.cliClient;
             if (options.project && options.languages) {
                 this.runLint(
-                    options.project, options.languages, options.zombies,
+                    options.tsconfig, options.project, options.languages, options.zombies,
                     options.views, options.ignore, options.maxWarning, options.misprint,
                     options.misprintCoefficient, options.ast,
                 );
@@ -113,6 +113,7 @@ class Cli {
     }
 
     public runLint(
+        tsconfig: string,
         project: string,
         languages: string,
         views?: ErrorTypes,
@@ -121,7 +122,7 @@ class Cli {
         maxWarning: number = 1,
         misprint?: ErrorTypes,
         misprintCoefficient: number = 0.9,
-        ast?: string,
+        ast?: IAstRulesConfig,
     ): void {
             const errorConfig: IRulesConfig = {
                 keysOnViews: views || ErrorTypes.error,
@@ -137,6 +138,7 @@ class Cli {
             resultModel.printResult();
 
             process.exitCode = resultCliModel.exitCode;
+
             if (resultModel.hasError) {
                 throw new FatalErrorModel(chalk.red(resultModel.message));
             }
