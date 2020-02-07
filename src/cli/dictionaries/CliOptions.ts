@@ -1,7 +1,8 @@
+import { ArgumentTypes } from 'conventional-cli';
+
 import { OptionModel } from './../models';
 import { config, ErrorTypes } from './../../core';
 import { OptionsLongNames, OptionsPath, OptionsShortNames } from './../enums';
-import { ArgumentTypes } from 'conventional-cli';
 
 const cliOptions: OptionModel[] = [
     new OptionModel({
@@ -108,22 +109,40 @@ const cliOptions: OptionModel[] = [
         longName: OptionsLongNames.config,
         shortName: OptionsShortNames.config,
         required: false,
-        type: ArgumentTypes.number,
+        type: ArgumentTypes.path,
         description: `Path to config`,
         additionalDescription: ``,
-    }),
-    new OptionModel({
-        longName: OptionsLongNames.ast,
-        shortName: OptionsShortNames.ast,
-        required: false,
-        type: ArgumentTypes.string,
-        description: 'The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file. Right now included only one rule: checked if `ngx-translate` imported for your project',
-        beta: true,
-        additionalDescription: '',
-        default: './',
         values: [
             OptionsPath.relative,
             OptionsPath.absolute
+        ]
+    }),
+    new OptionModel({
+        longName: OptionsLongNames.tsconfig,
+        shortName: OptionsShortNames.tsconfig,
+        required: false,
+        type: ArgumentTypes.path,
+        description: 'The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file. Right now included only one rule: checked if `ngx-translate` imported for your project',
+        beta: true,
+        additionalDescription: '',
+        default: config.defaultValues.tsconfigPath,
+        values: [
+            OptionsPath.relative,
+            OptionsPath.absolute
+        ]
+    }),
+    new OptionModel({
+        longName: OptionsLongNames.isNgxTranslateLintImported,
+        required: false,
+        type: ArgumentTypes.enum,
+        description: 'The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file (tsconfig option). Right now included only one rule: checked if `ngx-translate` imported for your project',
+        beta: true,
+        additionalDescription: '',
+        default: config.defaultValues.rules.ast ? config.defaultValues.rules.ast.isNgxTranslateLintImported : '.',
+        values: [
+            ErrorTypes.disable,
+            ErrorTypes.warning,
+            ErrorTypes.error
         ]
     })
 ];

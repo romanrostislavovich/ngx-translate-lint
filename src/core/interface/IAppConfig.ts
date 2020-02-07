@@ -1,9 +1,9 @@
 import { IRulesConfig } from './IRulesConfig';
 
 interface IDefaultValues {
-    ast: string;
     rules: IRulesConfig;
     projectPath: string;
+    tsconfigPath: string;
     languagesPath: string;
 }
 interface IAppConfig {

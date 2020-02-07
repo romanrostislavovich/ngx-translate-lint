@@ -9,7 +9,7 @@ import {
     IRulesConfig,
     NgxTranslateLint,
     ResultCliModel,
-    ResultErrorModel,
+    ResultErrorModel, ResultModel,
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
@@ -28,7 +28,7 @@ describe('Core Integration', () => {
     const languagesWithMaskPath: string = './test/integration/inputs/locales/EN-*.json';
     const languagesIncorrectFile: string = './test/integration/inputs/locales/incorrect.json';
     const languagesAbsentMaskPath: string = './test/integration/inputs/locales';
-
+    
     describe('Misprint', () => {
         it('should be warning by default', () => {
             // Arrange
