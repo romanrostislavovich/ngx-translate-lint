@@ -43,7 +43,6 @@ class AstIsNgxTranslateImportedRule implements IRuleAst {
             }
         });
 
-        debugger;
         if (!isNgxTranslateImported) {
             const error: ResultErrorModel = new ResultErrorModel('', this.flow, this.handler, projectPath);
             result.push(error);
