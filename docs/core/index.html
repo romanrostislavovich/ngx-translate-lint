@@ -146,10 +146,15 @@ Options:
            Max count of warnings in all files. If this value more that count of warnings, then an error is return
            Possible Values: &lt;number&gt;
            (default: &quot;0&quot;)
-  -a, --ast [path] [BETA]
-            The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file. Right now included only one rule: checked if `ngx-translate` imported for your project
-            Possible Values: &lt;relative path|absolute path&gt;
-            (default: &quot;./&quot;)
+  -t, --tsconfig [path] [BETA]
+          The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file. Right now included only one rule: checked if `ngx-translate` imported for your project
+          Possible Values: &lt;relative path|absolute path&gt;
+           (default: &quot;./&quot;)
+  --isNgxTranslateLintImported [path] [BETA]
+          The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file (tsconfig option). Right now included only one rule: checked if `ngx-translate` imported for your project
+          Possible Values: &lt;relative path|absolute path&gt;
+           (default: &quot;disable&quot;)
+
 
   -h, --help  output usage information
 
@@ -239,6 +244,9 @@ Examples:
 						<a href="modules/_interface_irule_.html">&quot;interface/IRule&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="modules/_interface_iruleast_.html">&quot;interface/IRule<wbr>Ast&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_interface_irulesconfig_.html">&quot;interface/IRules<wbr>Config&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -305,10 +313,16 @@ Examples:
 						<a href="modules/_rules_zombiesrule_.html">&quot;rules/<wbr>Zombies<wbr>Rule&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_rules_index_.html">&quot;rules/index&quot;</a>
+						<a href="modules/_rules_ast_astisngxtranslateimportedrule_.html">&quot;rules/ast/<wbr>Ast<wbr>IsNgx<wbr>Translate<wbr>Imported<wbr>Rule&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_rules_isngxtranslateimportedrule_.html">&quot;rules/is<wbr>Ngx<wbr>Translate<wbr>Imported<wbr>Rule&quot;</a>
+						<a href="modules/_rules_ast_index_.html">&quot;rules/ast/index&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rules_ast_translateserviceinstanterule_.html">&quot;rules/ast/translate<wbr>Service<wbr>Instante<wbr>Rule&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rules_index_.html">&quot;rules/index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_utils_index_.html">&quot;utils/index&quot;</a>

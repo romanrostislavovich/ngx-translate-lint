@@ -1,5 +1,17 @@
 # CHANGELOG
 
+# [1.6.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.5.1...v1.6.0) (2020-02-07)
+
+
+### Bug Fixes
+
+* AST option doesn't work ([1e7d618](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/1e7d618c772c86f49f79e5c48c3c01afe4d78819))
+
+
+### Features
+
+* Enable or disable `AstIsNgxTranslateImportedRule` Rule  [#50](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/50) ([867f32e](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/867f32e02caa39dc20b3cde2972a9e2631fdb7a4))
+
 ## [1.5.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.5.0...v1.5.1) (2020-01-29)
 
 
