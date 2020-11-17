@@ -92,9 +92,8 @@ Options:
 
 Examples:
 
-    $ ngx-translate-lint -p './src/app/**/*.{html,ts}' -l './src/assets/i18n/*.json'
-    $ ngx-translate-lint -p './src/app/**/*.{html,ts}' -z 'disable' -v 'error'
-    $ ngx-translate-lint -p './src/app/**/*.{html,ts}' -i './src/assets/i18n/EN-us.json, ./stc/app/app.*.{html,ts}'
+    $ ngx-translate-lint -p ./src/app/**/*.{html,ts} -l ./src/assets/i18n/*.json'
+    $ ngx-translate-lint -p ./src/app/**/*.{html,ts} -z disable -v error
 ```
 
 > NOTE: For `project` and `languages` options need to include file types like on the example.

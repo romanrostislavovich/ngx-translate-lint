@@ -4,7 +4,7 @@ import { config } from './config';
 import { ErrorFlow, ErrorTypes } from './enums';
 import { IRuleAst, IRulesConfig } from './interface';
 import { KeysUtils, resourceResolver } from './utils';
-import { DirectiveSymbol, ErrorReporter, ProjectSymbols } from 'ngast';
+import { DirectiveSymbol } from 'ngast';
 import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel } from './models';
 import {
     AbsentViewKeysRule,
@@ -62,8 +62,8 @@ class NgxTranslateLint {
         }
 
         if (this.rules.ast && this.rules.ast.isNgxTranslateLintImported) {
-            const astResult: ResultErrorModel[] =  this.runAst(this.tsconfigPath, languagesKeys, this.rules);
-            errors.push(...astResult);
+            // const astResult: ResultErrorModel[] =  this.runAst(this.tsconfigPath, languagesKeys, this.rules);
+            // errors.push(...astResult);
         }
 
         const cliResult: ResultCliModel = new ResultCliModel(errors, maxWarning);
@@ -97,41 +97,42 @@ class NgxTranslateLint {
         return result;
     }
 
-    private runAst(
-        project: string,
-        languagesKeys: FileLanguageModel,
-        rules: IRulesConfig = this.rules
-    ): ResultErrorModel[] {
-        const resultErrors: ResultErrorModel[] = [];
-        const projectSymbols: ProjectSymbols = new ProjectSymbols(
-            project,
-            resourceResolver,
-            // tslint:disable-next-line:no-any
-            (e: ErrorReporter) => {
-                const error: ResultErrorModel = new ResultErrorModel(e.toString(), ErrorFlow.ngxTranslateNoImported, ErrorTypes.error, project);
-                resultErrors.push(error);
-            }
-        );
-
-        if (resultErrors.length === 0) {
-            const projectDirectives: DirectiveSymbol[] = projectSymbols.getDirectives().filter(el => el.symbol.filePath.indexOf("node_modules") === -1);
-
-            // RULE: Is `ngx-translate` module imported
-            if (!!rules.ast && rules.ast.isNgxTranslateLintImported !== ErrorTypes.disable) {
-                const isNgxTranslateImported: IRuleAst = new AstIsNgxTranslateImportedRule(projectDirectives);
-                const isNgxTranslateResult: ResultErrorModel[] = isNgxTranslateImported.check(project, languagesKeys.keys);
-                resultErrors.push(...isNgxTranslateResult);
-            }
-
-            // RULE: translateService usage
-            // if (rules.ast && rules.ast.isNgxTranslateLintImported !== ErrorTypes.disable) {
-            //     const translateServiceRule: IRuleAst = new AstTranslateServiceRule(projectDirectives);
-            //     const translateServiceResult: ResultErrorModel[] = translateServiceRule.check(project, languagesKeys.keys);
-            //     resultErrors.push(...translateServiceResult);
-            // }
-        }
-        return resultErrors;
-    }
+    // private runAst(
+    //     project: string,
+    //     languagesKeys: FileLanguageModel,
+    //     rules: IRulesConfig = this.rules
+    // ): ResultErrorModel[] {
+    //     const resultErrors: ResultErrorModel[] = [];
+        // const projectSymbols: any = new ProjectSymbols(
+        //     project,
+        //     resourceResolver,
+        //     // tslint:disable-next-line:no-any
+        //     (e: any) => {
+        //         const error: ResultErrorModel = new ResultErrorModel(e.toString(), ErrorFlow.ngxTranslateNoImported, ErrorTypes.error, project);
+        //         resultErrors.push(error);
+        //     }
+        // );
+        //
+        // if (resultErrors.length === 0) {
+        //     // tslint:disable-next-line:no-any
+        //     const projectDirectives: DirectiveSymbol[] = projectSymbols.getDirectives().filter((el: any) => el.symbol.filePath.indexOf("node_modules") === -1);
+        //
+        //     // RULE: Is `ngx-translate` module imported
+        //     if (!!rules.ast && rules.ast.isNgxTranslateLintImported !== ErrorTypes.disable) {
+        //         const isNgxTranslateImported: IRuleAst = new AstIsNgxTranslateImportedRule(projectDirectives);
+        //         const isNgxTranslateResult: ResultErrorModel[] = isNgxTranslateImported.check(project, languagesKeys.keys);
+        //         resultErrors.push(...isNgxTranslateResult);
+        //     }
+        //
+        //     // RULE: translateService usage
+        //     // if (rules.ast && rules.ast.isNgxTranslateLintImported !== ErrorTypes.disable) {
+        //     //     const translateServiceRule: IRuleAst = new AstTranslateServiceRule(projectDirectives);
+        //     //     const translateServiceResult: ResultErrorModel[] = translateServiceRule.check(project, languagesKeys.keys);
+        //     //     resultErrors.push(...translateServiceResult);
+        //     // }
+        // }
+        // return resultErrors;
+//    }
 }
 
 
