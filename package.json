@@ -22,7 +22,7 @@
         "test:integration": "mocha -r ts-node/register ./test/integration/*.test.ts",
         "build": "tsc -p .",
         "lint": "npm run lint:typescript && npm run lint:markdown",
-        "test": "npm run lint && npm run build && npm run test:integration && npm run doc",
+        "test": "npm run lint && npm run build && npm run test:integration",
         "semantic-release": "semantic-release"
     },
     "files": [
