@@ -1,6 +1,6 @@
 import { CompileNgModuleMetadata } from '@angular/compiler';
 
-import { DirectiveSymbol, ProviderSymbol } from 'ngast';
+import { DirectiveSymbol } from 'ngast';
 import { config, ErrorFlow, ErrorTypes, IRuleAst, KeyModel, ResultErrorModel } from "../..";
 
 class AstTranslateServiceRule implements IRuleAst {
@@ -21,9 +21,11 @@ class AstTranslateServiceRule implements IRuleAst {
     public check(projectPath: string, languagesKeys: KeyModel[] = []): ResultErrorModel[] {
         const result: ResultErrorModel[] = [];
         this.directives.forEach(directive => {
-            if (directive.isComponent()) {
-                const directiveModule: CompileNgModuleMetadata | undefined =  directive.getModule();
-                const directiveSymbol: ProviderSymbol[] = directive.getViewProviders();
+            if (directive.isAnalysed) {
+                // tslint:disable-next-line:no-any
+                const directiveModule: any | undefined =  directive.getDependencies();
+                // tslint:disable-next-line:no-any
+                const directiveSymbol: any[] = directive.getProviders();
             }
         });
 

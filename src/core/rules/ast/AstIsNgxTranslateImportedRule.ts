@@ -25,8 +25,9 @@ class AstIsNgxTranslateImportedRule implements IRuleAst {
         let isNgxTranslateImported: boolean = false;
         const result: ResultErrorModel[] = [];
         this.directives.forEach(directive => {
-            if (directive.isComponent()) {
-                const directiveModule: CompileNgModuleMetadata | undefined =  directive.getModule();
+            if (directive.isAnalysed) {
+                // tslint:disable-next-line:no-any
+                const directiveModule: any | undefined =  directive.getProviders();
                 if (directiveModule) {
                     directiveModule.importedModules.forEach((importModule: CompileNgModuleSummary) => {
                        if (checkIfReferenceHasNgxTranslate(importModule.type.reference) && !result) {

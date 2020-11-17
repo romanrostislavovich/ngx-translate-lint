@@ -1,7 +1,7 @@
-import { ResourceResolver } from 'ngast';
 import { readFileSync, readFile } from 'fs';
 
-const resourceResolver: ResourceResolver = {
+// tslint:disable-next-line:no-any
+const resourceResolver: any  = {
     get(url: string): Promise<string> {
         return new Promise((resolve, reject) => {
             readFile(url, 'utf-8', (err, content) => {
