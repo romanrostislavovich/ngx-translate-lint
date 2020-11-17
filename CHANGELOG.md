@@ -1,5 +1,18 @@
 # CHANGELOG
 
+# [1.7.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.6.0...v1.7.0) (2020-11-17)
+
+
+### Bug Fixes
+
+* CLI parameters order ([c360574](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/c3605742733cd6bd97760893769afc1bf3338bac))
+* update ast rules ([f816d3a](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/f816d3a2a43e4b1882541d43165ff035f895de83))
+
+
+### Features
+
+* remove beta ast option ([173d227](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/173d22795fa6acbf9a6168eed79b2f778b321569))
+
 # [1.6.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.5.1...v1.6.0) (2020-02-07)
 
 
