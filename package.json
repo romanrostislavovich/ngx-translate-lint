@@ -68,9 +68,9 @@
         ]
     },
     "dependencies": {
-        "@angular/compiler": "^8.2.14",
-        "@angular/compiler-cli": "^8.2.14",
-        "@angular/core": "^8.2.14",
+        "@angular/compiler": "^11.0.0",
+        "@angular/compiler-cli": "^11.0.0",
+        "@angular/core": "^11.0.0",
         "chalk": "^2.4.2",
         "commander": "^2.20.0",
         "conventional-cli": "^1.2.0",
@@ -104,6 +104,6 @@
         "ts-node": "^8.1.0",
         "tslint": "^5.11.0",
         "typedoc": "^0.15.0",
-        "typescript": "^3.9.7"
+        "typescript": "3.9.7"
     }
 }
