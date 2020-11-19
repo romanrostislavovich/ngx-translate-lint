@@ -1,6 +1,6 @@
 language: node_js
 node_js: stable
-install: npm install --force
+install: npm install
 
 jobs:
   include:
