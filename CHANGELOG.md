@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.7.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.7.0...v1.7.1) (2020-11-19)
+
+
+### Bug Fixes
+
+* package depencies ([5f2bcf1](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/5f2bcf1bc3d0cf37e8436ad1a12aa57485774dcf))
+
 # [1.7.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.6.0...v1.7.0) (2020-11-17)
 
 
