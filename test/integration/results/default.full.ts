@@ -83,6 +83,16 @@ const assertDefaultModel: ResultErrorModel[]= [
             'EN-us.json'
         ]
     ),
+    // BUG 61
+    new ResultErrorModel(
+        'carousel.details.title-new',
+        ErrorFlow.views, ErrorTypes.error,
+        getAbsolutePath(projectFolder, 'pipe.keys.html'),
+        [
+            'EN-eu.json',
+            'EN-us.json'
+        ]
+    ),
     new ResultErrorModel(
         'STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_ONE_LOCALES',
         ErrorFlow.misprint, ErrorTypes.warning,

@@ -70,6 +70,16 @@ const assertCustomConfig: ResultErrorModel[] = [
             'EN-us.json'
         ]
     ),
+    // BUG 61
+    new ResultErrorModel(
+        'carousel.details.title-new',
+        ErrorFlow.views, ErrorTypes.warning,
+        getAbsolutePath(projectFolder, 'pipe.keys.html'),
+        [
+            'EN-eu.json',
+            'EN-us.json'
+        ]
+    ),
 ];
 
 export { assertCustomConfig };

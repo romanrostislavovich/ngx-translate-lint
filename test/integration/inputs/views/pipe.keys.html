@@ -5,3 +5,8 @@
     {{ 'STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_ONE_LOCALES' | translate }}
     {{ 'OBJECT.KEY_FROM_PIPE_VIEW.EXIST_IN_ALL_LOCALES' | translate }}
 </div>
+<div>
+    <!-- BUG 61 -->
+    <h1 *ngIf="creatorState === CreatorState.NEW">{{'carousel.details.title-new' | translate}}</h1>
+    <!-- END BUG 61 -->
+</div>
