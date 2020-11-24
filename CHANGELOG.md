@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.7.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.7.1...v1.7.2) (2020-11-24)
+
+
+### Bug Fixes
+
+* parser take enums as keys for ngx-translate [#61](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/61) ([93e0c66](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/93e0c66792265d28a82f98eeaeec1e091f396778))
+
 ## [1.7.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.7.0...v1.7.1) (2020-11-19)
 
 
