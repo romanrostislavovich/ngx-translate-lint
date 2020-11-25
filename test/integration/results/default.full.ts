@@ -94,6 +94,15 @@ const assertDefaultModel: ResultErrorModel[]= [
         ]
     ),
     new ResultErrorModel(
+        'creatorState.NEW',
+        ErrorFlow.views, ErrorTypes.error,
+        getAbsolutePath(projectFolder, 'pipe.keys.html'),
+        [
+            'EN-us.json'
+        ]
+    ),
+    // END BUG 61
+    new ResultErrorModel(
         'STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_ONE_LOCALES',
         ErrorFlow.misprint, ErrorTypes.warning,
         getAbsolutePath(projectFolder, 'pipe.keys.html'),

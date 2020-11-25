@@ -80,6 +80,15 @@ const assertCustomConfig: ResultErrorModel[] = [
             'EN-us.json'
         ]
     ),
+    new ResultErrorModel(
+        'creatorState.NEW',
+        ErrorFlow.views, ErrorTypes.warning,
+        getAbsolutePath(projectFolder, 'pipe.keys.html'),
+        [
+            'EN-us.json',
+        ]
+    ),
+    // END BUG 61
 ];
 
 export { assertCustomConfig };

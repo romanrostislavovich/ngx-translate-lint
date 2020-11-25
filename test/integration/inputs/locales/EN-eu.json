@@ -24,5 +24,6 @@
         "KEY_FROM_ENUM": {
             "EXIST_IN_ALL_LOCALES": "Key from enum"
         }
-    }
+    },
+    "creatorState.NEW": "BUG 61"
 }

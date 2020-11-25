@@ -26,7 +26,7 @@ class KeysUtils {
             keysFromDirectiveInView,
             keysFromDirectiveInsideTag,
         ];
-        return new RegExp(resultKeysRegExp.join('|'), 'gmi');
+        return new RegExp(resultKeysRegExp.join('|'), 'gm');
     }
 }
 
