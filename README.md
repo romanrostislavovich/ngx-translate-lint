@@ -77,14 +77,6 @@ Options:
            Max count of warnings in all files. If this value more that count of warnings, then an error is return
            Possible Values: <number>
            (default: "0")
-  -t, --tsconfig [path] [BETA]
-          The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file. Right now included only one rule: checked if `ngx-translate` imported for your project
-          Possible Values: <relative path|absolute path>
-           (default: "./")
-  --isNgxTranslateLintImported [path] [BETA]
-          The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file (tsconfig option). Right now included only one rule: checked if `ngx-translate` imported for your project
-          Possible Values: <relative path|absolute path>
-           (default: "disable")
 
 
   -h, --help  output usage information
@@ -106,7 +98,8 @@ Default Config is:
         "zombieKeys": "warning",
         "misprint": "warning",
         "maxWarning": "0",
-        "misprintCoefficient": "0.9"
+        "misprintCoefficient": "0.9",
+        "ignoredKeys": []
     },
     "ast": "./",
     "project": "./src/app/**/*.{html,ts}",

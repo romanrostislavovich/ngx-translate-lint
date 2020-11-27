@@ -16,6 +16,11 @@ const assertDefaultModel: ResultErrorModel[]= [
         getAbsolutePath(languagesFolder, 'EN-eu.json'),
     ),
     new ResultErrorModel(
+        'IGNORED.KEY.FLAG',
+        ErrorFlow.zombie, ErrorTypes.warning,
+        getAbsolutePath(languagesFolder, 'EN-eu.json')
+    ),
+    new ResultErrorModel(
         'STRING.KEY_FROM_DIRECTIVE_VIEW.EXIST_IN_ONE_LOCALE',
         ErrorFlow.views, ErrorTypes.error,
         getAbsolutePath(projectFolder, 'directive.keys.html'),

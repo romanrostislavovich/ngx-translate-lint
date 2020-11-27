@@ -5,7 +5,8 @@
     "misprint": {
       "type": "warning",
       "coefficient": 0.9
-    }
+    },
+    "ignoredKeys": []
   },
   "projectPath": "./src/app/**/*.{html,ts}",
   "languagesPath": "./src/assets/i18n/*.json"

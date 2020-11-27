@@ -25,5 +25,6 @@
             "EXIST_IN_ALL_LOCALES": "Key from enum"
         }
     },
-    "creatorState.NEW": "BUG 61"
+    "creatorState.NEW": "BUG 61",
+    "IGNORED.KEY.FLAG": "IGNORED.KEY.FLAG"
 }

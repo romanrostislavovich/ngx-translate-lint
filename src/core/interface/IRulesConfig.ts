@@ -12,6 +12,7 @@ interface IRulesConfig {
     maxWarning: number;
     misprintCoefficient: number;
     ast?: IAstRulesConfig;
+    ignoredKeys: string[];
 }
 
 export { IRulesConfig, IAstRulesConfig };
