@@ -1,5 +1,12 @@
 # CHANGELOG
 
+# [1.8.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.7.3...v1.8.0) (2020-11-27)
+
+
+### Features
+
+* ignored keys flag ([6fb2ac8](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/6fb2ac8bd0e3c159a5c1d3a94264dde7a9cf6d9f))
+
 ## [1.7.3](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.7.2...v1.7.3) (2020-11-25)
 
 
