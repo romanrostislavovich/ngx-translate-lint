@@ -12,7 +12,8 @@ const config: IAppConfig = {
             ast: {
                 ngxTranslateService: ErrorTypes.disable,
                 isNgxTranslateLintImported: ErrorTypes.disable,
-            }
+            },
+            ignoredKeys: []
         },
         projectPath: './src/app/**/*.{html,ts}',
         tsconfigPath: './',
@@ -28,8 +29,10 @@ const defaultConfig: object = {
         "maxWarning": "0",
         "misprintCoefficient": "0.9",
         "ast": {
-            "isNgxTranslateLintImported": "disable"
-        }
+            "isNgxTranslateLintImported": "disable",
+            "ngxTranslateService": "disable"
+        },
+        "ignoredKeys": []
     },
     "project": './src/app/**/*.{html,ts}',
     "tsconfig": './',

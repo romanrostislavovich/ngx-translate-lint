@@ -50,7 +50,7 @@ class NgxTranslateLint {
         const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames);
         const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
 
-        const errors: ResultErrorModel[] = [];
+        let errors: ResultErrorModel[] = [];
 
         if (
             this.rules.zombieKeys !== ErrorTypes.disable ||
@@ -61,9 +61,27 @@ class NgxTranslateLint {
             errors.push(...regExpResult);
         }
 
-        if (this.rules.ast && this.rules.ast.isNgxTranslateLintImported) {
+       // if (this.rules.ast && this.rules.ast.isNgxTranslateLintImported) {
             // const astResult: ResultErrorModel[] =  this.runAst(this.tsconfigPath, languagesKeys, this.rules);
             // errors.push(...astResult);
+        // }
+
+        if(this.rules.ignoredKeys?.length !== 0) {
+            errors = errors.reduce<ResultErrorModel[]>((acum, errorKey) => {
+                const errorKeyValue: string = errorKey.value;
+                if (!this.rules.ignoredKeys.includes(errorKeyValue)) {
+                    const correctError: ResultErrorModel = new ResultErrorModel(
+                        errorKey.value,
+                        errorKey.errorFlow,
+                        errorKey.errorType,
+                        errorKey.currentPath,
+                        errorKey.absentedPath,
+                        errorKey.suggestions,
+                    );
+                    acum.push(correctError);
+                }
+                return acum;
+            }, []);
         }
 
         const cliResult: ResultCliModel = new ResultCliModel(errors, maxWarning);

@@ -28,7 +28,7 @@ describe('Core Integration', () => {
     const languagesWithMaskPath: string = './test/integration/inputs/locales/EN-*.json';
     const languagesIncorrectFile: string = './test/integration/inputs/locales/incorrect.json';
     const languagesAbsentMaskPath: string = './test/integration/inputs/locales';
-    
+
     describe('Misprint', () => {
         it('should be warning by default', () => {
             // Arrange
@@ -50,7 +50,8 @@ describe('Core Integration', () => {
                 zombieKeys: ErrorTypes.warning,
                 misprint:  ErrorTypes.error,
                 maxWarning: 1,
-                misprintCoefficient: 0.9
+                misprintCoefficient: 0.9,
+                ignoredKeys: ["IGNORED.KEY.FLAG"]
             };
             const hasMisprint: boolean = true;
             const countMisprint: number = 1;
@@ -112,6 +113,7 @@ describe('Core Integration', () => {
                 maxWarning: 1,
                 misprintCoefficient: 0.9,
                 misprint: ErrorTypes.disable,
+                ignoredKeys: ["IGNORED.KEY.FLAG"]
             };
 
             // Act
@@ -242,6 +244,7 @@ describe('Core Integration', () => {
                 maxWarning: 1,
                 misprintCoefficient: 0.9,
                 misprint: ErrorTypes.disable,
+                ignoredKeys: ["IGNORED.KEY.FLAG"]
             };
 
             // Act
@@ -261,6 +264,7 @@ describe('Core Integration', () => {
             maxWarning: 1,
             misprintCoefficient: 0.9,
             misprint: ErrorTypes.warning,
+            ignoredKeys: ["IGNORED.KEY.FLAG"]
         };
         const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
         const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
