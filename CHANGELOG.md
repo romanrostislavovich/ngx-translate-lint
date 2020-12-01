@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [1.8.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.8.0...v1.8.1) (2020-12-01)
+
+
+### Bug Fixes
+
+* remove ast ([58aae4f](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/58aae4f80524f7212de7648a3e25cdacd6d43179))
+* Update dependencies of package ([d333f80](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/d333f805ec69a5b33648791e648a44e278a8abc5)), closes [#58](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/58)
+
 # [1.8.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.7.3...v1.8.0) (2020-11-27)
 
 
