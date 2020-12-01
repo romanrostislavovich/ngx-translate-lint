@@ -84,6 +84,7 @@ Options:
 
 Examples:
 
+    $ npx ngx-translate-lint  -p ./src/app/**/*.{html,ts} -l ./src/assets/i18n/*.json'
     $ ngx-translate-lint -p ./src/app/**/*.{html,ts} -l ./src/assets/i18n/*.json'
     $ ngx-translate-lint -p ./src/app/**/*.{html,ts} -z disable -v error
 ```
@@ -101,7 +102,6 @@ Default Config is:
         "misprintCoefficient": "0.9",
         "ignoredKeys": []
     },
-    "ast": "./",
     "project": "./src/app/**/*.{html,ts}",
     "languages": "./src/assets/i18n/*.json"
 }
@@ -116,6 +116,26 @@ The CLI process may exit with the following codes:
 - `2`: An invalid command line argument or combination thereof was used
 
 ### JavaScript
+
+```typescript
+import { NgxTranslateLint, IRuleConfig, ResultCliModel } from 'ngx-translate-lint';
+
+const viewsPath: string = './src/app/**/*.{html,ts}';
+const languagesPath: string = './src/assets/i18n/*.json';
+const ignoredLanguagesPath: string[] = "./src/assets/i18n/ru.json, ./src/assets/i18n/ru-RU.json";
+const ruleConfig: IRuleConfig = {
+        keysOnViews: "error",
+        zombieKeys: "warning",
+        misprint: "warning",
+        maxWarning: 0,
+        misprintCoefficient: 0.9,
+        ignoredKeys: [ 'EXAMPLE.KEY' ]
+};
+
+const ngxTranslateLint = new NgxTranslateLint(viewsPath, languagesPath, ignoredLanguagesPath, ruleConfig)
+const resultLint: ResultCliModel = ngxTranslateLint.lint();
+
+```
 
 ## Contribute
 

@@ -4,7 +4,7 @@ import commander from 'commander';
 import { OptionModel } from './models';
 import {
     ErrorTypes,
-    FatalErrorModel, IAstRulesConfig,
+    FatalErrorModel,
     IRulesConfig,
     NgxTranslateLint,
     ResultCliModel,
