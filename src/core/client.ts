@@ -2,14 +2,11 @@ import { flatMap } from 'lodash';
 
 import { config } from './config';
 import { ErrorFlow, ErrorTypes } from './enums';
-import { IRuleAst, IRulesConfig } from './interface';
+import { IRulesConfig } from './interface';
 import { KeysUtils, resourceResolver } from './utils';
-import { DirectiveSymbol } from 'ngast';
 import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel } from './models';
 import {
     AbsentViewKeysRule,
-    AstIsNgxTranslateImportedRule,
-    AstTranslateServiceRule,
     MisprintRule,
     ZombieRule
 } from './rules';
