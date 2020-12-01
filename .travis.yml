@@ -7,7 +7,7 @@ jobs:
     - stage: tests
       node_js: stable
       script:
-        - npm insatll typescript -g
+        - npm install typescript -g
         - npm run test
     - stage: semantic release
       if: branch = master AND type = push
