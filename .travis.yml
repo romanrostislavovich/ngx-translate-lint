@@ -13,6 +13,7 @@ jobs:
       if: branch = master AND type = push
       node_js: stable
       script:
+        - npm install typescript
         - npm run build
         - npm run semantic-release
       before_deploy: npm run build
