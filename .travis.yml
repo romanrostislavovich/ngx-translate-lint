@@ -1,14 +1,13 @@
 language: node_js
 node_js: stable
-install:
-  - npm install
-  - npm insatll typescript -g
+install: npm install
 
 jobs:
   include:
     - stage: tests
       node_js: stable
       script:
+        - npm insatll typescript -g
         - npm run test
     - stage: semantic release
       if: branch = master AND type = push
