@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## [1.8.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.8.1...v1.8.2) (2020-12-01)
+
 ## [1.8.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.8.0...v1.8.1) (2020-12-01)
 
 
