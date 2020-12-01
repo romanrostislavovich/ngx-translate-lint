@@ -11,6 +11,7 @@
     },
     "main": "dist/src/core/index.js",
     "scripts": {
+        "tsc" : "./node_modules/.bin/tsc",
         "markdownlint": "./node_modules/.bin/markdownlint",
         "tslint": "./node_modules/.bin/tslint",
         "doc:cli": "typedoc --mode modules --excludePrivate --excludeProtected --out ./docs/cli/ ./src/cli/",
