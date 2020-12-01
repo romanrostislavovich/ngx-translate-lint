@@ -11,7 +11,7 @@ const config: IAppConfig = {
             misprintCoefficient: 0.9,
             ignoredKeys: []
         },
-        projectPath: './src/app/**/*.{html,ts}',
+        projectPath: './src/app/**/*.{html,ts,resx}',
         languagesPath: './src/assets/i18n/*.json'
     }
 };
@@ -25,7 +25,7 @@ const defaultConfig: object = {
         "misprintCoefficient": "0.9",
         "ignoredKeys": []
     },
-    "project": './src/app/**/*.{html,ts}',
+    "project": './src/app/**/*.{html,ts,resx}',
     "languages": './src/assets/i18n/*.json',
 };
 

@@ -73,9 +73,9 @@ class Cli {
             const options: any = this.cliClient.config ? parseJsonFile(this.cliClient.config) : this.cliClient;
             if (options.project && options.languages) {
                 this.runLint(
-                    options.tsconfig, options.project, options.languages, options.zombies,
+                    options.project, options.languages, options.zombies,
                     options.views, options.ignore, options.maxWarning, options.misprint,
-                    options.misprintCoefficient, options.ast,
+                    options.misprintCoefficient
                 );
             } else {
                 const cliHasError: boolean = this.validate();
@@ -113,7 +113,6 @@ class Cli {
     }
 
     public runLint(
-        tsconfig: string,
         project: string,
         languages: string,
         zombies?: ErrorTypes,
