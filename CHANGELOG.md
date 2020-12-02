@@ -1,5 +1,12 @@
 # CHANGELOG
 
+# [1.9.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.8.2...v1.9.0) (2020-12-02)
+
+
+### Features
+
+* support resx files ([1def74c](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/1def74cfbd1c88f7c2f9cb9a311d3c4d7569398d)), closes [#40](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/40)
+
 ## [1.8.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.8.1...v1.8.2) (2020-12-01)
 
 ## [1.8.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.8.0...v1.8.1) (2020-12-01)

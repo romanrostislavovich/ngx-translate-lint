@@ -1,7 +1,7 @@
 {
     "author": "Raman Lauryniuk <romanrostislavovich@gmail.com>",
     "name": "ngx-translate-lint",
-    "version": "1.8.2",
+    "version": "1.9.0",
     "description": "Simple tools for check `ngx-translate` keys in app",
     "license": "MIT",
     "repository": "svoboda-rabstvo/ngx-translate-lint",
@@ -11,7 +11,7 @@
     },
     "main": "dist/src/core/index.js",
     "scripts": {
-        "tsc" : "./node_modules/.bin/tsc",
+        "tsc": "./node_modules/.bin/tsc",
         "markdownlint": "./node_modules/.bin/markdownlint",
         "tslint": "./node_modules/.bin/tslint",
         "doc:cli": "typedoc --mode modules --excludePrivate --excludeProtected --out ./docs/cli/ ./src/cli/",
