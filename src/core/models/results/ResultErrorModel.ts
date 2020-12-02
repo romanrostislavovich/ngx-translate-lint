@@ -43,9 +43,6 @@ class ResultErrorModel implements IValidationMessage  {
                    return accum;
                 }, []);
                 break;
-            case ErrorFlow.ngxTranslateNoImported:
-                message = `'ngx-translate' module doesn't imported on your project`;
-                break;
             default:
                 message = 'Unknown error please write to the author';
                 break;

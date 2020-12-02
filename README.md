@@ -12,7 +12,10 @@
 - [Background](#background)
 - [Installation](#installation)
 - [Usage](#usage)
+    - [CLI](#cli)
+    - [TypeScript](#TypeScript)
 - [Contribute](#contribute)
+- [Used By](#UsedBy)
 - [License](#license)
 
 ## Background
@@ -84,6 +87,7 @@ Options:
 
 Examples:
 
+    $ npx ngx-translate-lint  -p ./src/app/**/*.{html,ts} -l ./src/assets/i18n/*.json'
     $ ngx-translate-lint -p ./src/app/**/*.{html,ts} -l ./src/assets/i18n/*.json'
     $ ngx-translate-lint -p ./src/app/**/*.{html,ts} -z disable -v error
 ```
@@ -101,7 +105,6 @@ Default Config is:
         "misprintCoefficient": "0.9",
         "ignoredKeys": []
     },
-    "ast": "./",
     "project": "./src/app/**/*.{html,ts}",
     "languages": "./src/assets/i18n/*.json"
 }
@@ -115,13 +118,39 @@ The CLI process may exit with the following codes:
 - `1`: Linting failed with one or more rule violations with severity error
 - `2`: An invalid command line argument or combination thereof was used
 
-### JavaScript
+### TypeScript
+
+```typescript
+import { NgxTranslateLint, IRuleConfig, ResultCliModel, ErrorTypes} from 'ngx-translate-lint';
+
+const viewsPath: string = './src/app/**/*.{html,ts}';
+const languagesPath: string = './src/assets/i18n/*.json';
+const ignoredLanguagesPath: string[] = "./src/assets/i18n/ru.json, ./src/assets/i18n/ru-RU.json";
+const ruleConfig: IRuleConfig = {
+        keysOnViews: ErrorTypes.error,
+        zombieKeys: ErrorTypes.warning,
+        misprint: ErrorTypes.warning,
+        maxWarning: 0,
+        misprintCoefficient: 0.9,
+        ignoredKeys: [ 'EXAMPLE.KEY' ]
+};
+
+const ngxTranslateLint = new NgxTranslateLint(viewsPath, languagesPath, ignoredLanguagesPath, ruleConfig)
+const resultLint: ResultCliModel = ngxTranslateLint.lint();
+
+```
 
 ## Contribute
 
 You may contribute in several ways like requesting new features,
 adding tests, fixing bugs, improving documentation or examples.
 Please check our [contributing guidelines][contributing].
+
+## Used By
+
+Here can be your extensions:
+
+- [121 Platform](https://github.com/global-121/121-platform) - 121 is an open source platform for Cash based Aid built with Digital Identity & Local/Global Financial service partners.
 
 ## License
 

@@ -9,14 +9,9 @@ const config: IAppConfig = {
             keysOnViews: ErrorTypes.error,
             maxWarning: 0,
             misprintCoefficient: 0.9,
-            ast: {
-                ngxTranslateService: ErrorTypes.disable,
-                isNgxTranslateLintImported: ErrorTypes.disable,
-            },
             ignoredKeys: []
         },
-        projectPath: './src/app/**/*.{html,ts}',
-        tsconfigPath: './',
+        projectPath: './src/app/**/*.{html,ts,resx}',
         languagesPath: './src/assets/i18n/*.json'
     }
 };
@@ -28,14 +23,9 @@ const defaultConfig: object = {
         "misprint": "warning",
         "maxWarning": "0",
         "misprintCoefficient": "0.9",
-        "ast": {
-            "isNgxTranslateLintImported": "disable",
-            "ngxTranslateService": "disable"
-        },
         "ignoredKeys": []
     },
-    "project": './src/app/**/*.{html,ts}',
-    "tsconfig": './',
+    "project": './src/app/**/*.{html,ts,resx}',
     "languages": './src/assets/i18n/*.json',
 };
 

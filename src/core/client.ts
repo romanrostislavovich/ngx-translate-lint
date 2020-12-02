@@ -14,7 +14,6 @@ import {
 class NgxTranslateLint {
     public rules: IRulesConfig;
     public projectPath: string;
-    public tsconfigPath: string;
     public languagesPath: string;
 
     public ignore?: string;
@@ -23,10 +22,8 @@ class NgxTranslateLint {
         projectPath: string = config.defaultValues.projectPath,
         languagesPath: string = config.defaultValues.languagesPath,
         ignore?: string,
-        rulesConfig: IRulesConfig = config.defaultValues.rules,
-        tsconfigPath: string = config.defaultValues.tsconfigPath,
+        rulesConfig: IRulesConfig = config.defaultValues.rules
     ) {
-        this.tsconfigPath = tsconfigPath;
         this.languagesPath = languagesPath;
         this.projectPath = projectPath;
         this.ignore = ignore;
