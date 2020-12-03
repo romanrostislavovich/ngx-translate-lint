@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.9.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.0...v1.9.1) (2020-12-03)
+
+
+### Bug Fixes
+
+* can't resolve path ([81cd1b6](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/81cd1b6d521e9e47e7a7cc8243793389eef2db8b)), closes [#72](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/72)
+
 # [1.9.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.8.2...v1.9.0) (2020-12-02)
 
 
