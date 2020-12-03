@@ -121,12 +121,12 @@ The CLI process may exit with the following codes:
 ### TypeScript
 
 ```typescript
-import { NgxTranslateLint, IRuleConfig, ResultCliModel, ErrorTypes} from 'ngx-translate-lint';
+import { NgxTranslateLint, IRulesConfig, ResultCliModel, ErrorTypes} from 'ngx-translate-lint';
 
 const viewsPath: string = './src/app/**/*.{html,ts}';
 const languagesPath: string = './src/assets/i18n/*.json';
-const ignoredLanguagesPath: string[] = "./src/assets/i18n/ru.json, ./src/assets/i18n/ru-RU.json";
-const ruleConfig: IRuleConfig = {
+const ignoredLanguagesPath: string = "./src/assets/i18n/ru.json, ./src/assets/i18n/ru-RU.json";
+const ruleConfig: IRulesConfig = {
         keysOnViews: ErrorTypes.error,
         zombieKeys: ErrorTypes.warning,
         misprint: ErrorTypes.warning,
