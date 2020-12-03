@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.9.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.1...v1.9.2) (2020-12-03)
+
+
+### Bug Fixes
+
+* fs package ([7f33abe](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/7f33abe2e332620af5e45f6ff871e4a0f5235dc4)), closes [#74](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/74)
+
 ## [1.9.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.0...v1.9.1) (2020-12-03)
 
 
