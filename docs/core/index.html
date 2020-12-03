@@ -68,7 +68,7 @@
 					<h1>ngx-translate-lint</h1>
 				</a>
 				<blockquote>
-					<p>Simple tools for check ngx-translate keys in whole app</p>
+					<p>Simple tools for check ngx-translate keys in whole app which use regexp and AST (beta).</p>
 				</blockquote>
 				<p><a href="https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint"><img src="https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint.svg?branch=master" alt="Build Master"></a>
 					<a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic"></a>
@@ -117,27 +117,44 @@ Simple CLI tools for check `ngx-translate` keys in app
 Options:
   -p,  --project [glob] (required)
           The path to project folder
-          Possibale Values: &lt;relative path|absolute path&gt;
+          Possible Values: &lt;relative path|absolute path&gt;
           (default: &quot;./src/app/**/*.{html,ts}&quot;)
   -l,  --languages [glob] (required)
           The path to languages folder
-          Possibale Values: &lt;relative path|absolute path&gt;
+          Possible Values: &lt;relative path|absolute path&gt;
           (default: &quot;./src/assets/i18n/*.json&quot;)
   -v,  --views [enum]
           Described how to handle the error of missing keys on view
-          Possibale Values: &lt;disable|warning|error&gt;
+          Possible Values: &lt;disable|warning|error&gt;
           (default: &quot;error&quot;)
   -z,  --zombies [enum]
           Described how to handle the error of zombies keys
-          Possibale Values: &lt;disable|warning|error&gt;
+          Possible Values: &lt;disable|warning|error&gt;
           (default: &quot;warning&quot;)
   -i,  --ignore [glob]
           Ignore projects and languages files
-          Possibale Values: &lt;relative path|absolute path&gt;
+          Possible Values: &lt;relative path|absolute path&gt;
+  -m,  --misprint [enum]
+          Try to find matches with misprint keys on views and languages keys.
+          Possible Values: &lt;disable|warning|error&gt;
+  -mc, --misprintCoefficient [number]
+          Coefficient for misprint option can be from 0 to 1.0.
+           (default: &quot;0.9&quot;)
+  -c, --config [path]
+          Path to the config file.
   --maxWarning [number]
            Max count of warnings in all files. If this value more that count of warnings, then an error is return
-           Possibale Values: &lt;number&gt;
+           Possible Values: &lt;number&gt;
            (default: &quot;0&quot;)
+  -t, --tsconfig [path] [BETA]
+          The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file. Right now included only one rule: checked if `ngx-translate` imported for your project
+          Possible Values: &lt;relative path|absolute path&gt;
+           (default: &quot;./&quot;)
+  --isNgxTranslateLintImported [path] [BETA]
+          The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file (tsconfig option). Right now included only one rule: checked if `ngx-translate` imported for your project
+          Possible Values: &lt;relative path|absolute path&gt;
+           (default: &quot;disable&quot;)
+
 
   -h, --help  output usage information
 
@@ -147,7 +164,22 @@ Examples:
     $ ngx-translate-lint -p &#39;./src/app/**/*.{html,ts}&#39; -l &#39;./src/assets/i18n/*.json&#39;
     $ ngx-translate-lint -p &#39;./src/app/**/*.{html,ts}&#39; -z &#39;disable&#39; -v &#39;error&#39;
     $ ngx-translate-lint -p &#39;./src/app/**/*.{html,ts}&#39; -i &#39;./src/assets/i18n/EN-us.json, ./stc/app/app.*.{html,ts}&#39;</code></pre>
-				<p>For <code>project</code> and <code>languages</code> options need to include file types like on the example.</p>
+				<blockquote>
+					<p>NOTE: For <code>project</code> and <code>languages</code> options need to include file types like on the example.</p>
+				</blockquote>
+				<p>Default Config is: </p>
+				<pre><code class="language-json">{
+    <span class="hljs-attr">"rules"</span>: {
+        <span class="hljs-attr">"keysOnViews"</span>: <span class="hljs-string">"error"</span>,
+        <span class="hljs-attr">"zombieKeys"</span>: <span class="hljs-string">"warning"</span>,
+        <span class="hljs-attr">"misprint"</span>: <span class="hljs-string">"warning"</span>,
+        <span class="hljs-attr">"maxWarning"</span>: <span class="hljs-string">"0"</span>,
+        <span class="hljs-attr">"misprintCoefficient"</span>: <span class="hljs-string">"0.9"</span>
+    },
+    <span class="hljs-attr">"ast"</span>: <span class="hljs-string">"./"</span>,
+    <span class="hljs-attr">"project"</span>: <span class="hljs-string">"./src/app/**/*.{html,ts}"</span>,
+    <span class="hljs-attr">"languages"</span>: <span class="hljs-string">"./src/assets/i18n/*.json"</span>
+}</code></pre>
 				<a href="#exit-codes" id="exit-codes" style="color: inherit; text-decoration: none;">
 					<h4>Exit Codes</h4>
 				</a>
@@ -179,91 +211,133 @@ Examples:
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_client_.html">"client"</a>
+						<a href="modules/_client_.html">&quot;client&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_config_.html">"config"</a>
+						<a href="modules/_config_.html">&quot;config&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_enums_errorflow_.html">"enums/<wbr>Error<wbr>Flow"</a>
+						<a href="modules/_enums_errorflow_.html">&quot;enums/<wbr>Error<wbr>Flow&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_enums_errortypes_.html">"enums/<wbr>Error<wbr>Types"</a>
+						<a href="modules/_enums_errortypes_.html">&quot;enums/<wbr>Error<wbr>Types&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_enums_index_.html">"enums/index"</a>
+						<a href="modules/_enums_statuscodes_.html">&quot;enums/<wbr>Status<wbr>Codes&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_index_.html">"index"</a>
+						<a href="modules/_enums_index_.html">&quot;enums/index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_interface_iappconfig_.html">"interface/IApp<wbr>Config"</a>
+						<a href="modules/_index_.html">&quot;index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_interface_ilogger_.html">"interface/ILogger"</a>
+						<a href="modules/_interface_iappconfig_.html">&quot;interface/IApp<wbr>Config&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_interface_irule_.html">"interface/IRule"</a>
+						<a href="modules/_interface_ilogger_.html">&quot;interface/ILogger&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_interface_irulesconfig_.html">"interface/IRules<wbr>Config"</a>
+						<a href="modules/_interface_imisprint_.html">&quot;interface/IMisprint&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_interface_ivalidationmessage_.html">"interface/IValidation<wbr>Message"</a>
+						<a href="modules/_interface_irule_.html">&quot;interface/IRule&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_interface_index_.html">"interface/index"</a>
+						<a href="modules/_interface_iruleast_.html">&quot;interface/IRule<wbr>Ast&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_models_keymodel_.html">"models/<wbr>Key<wbr>Model"</a>
+						<a href="modules/_interface_irulesconfig_.html">&quot;interface/IRules<wbr>Config&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_models_stylishlogger_.html">"models/<wbr>Stylish<wbr>Logger"</a>
+						<a href="modules/_interface_ivalidationmessage_.html">&quot;interface/IValidation<wbr>Message&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_models_error_errormodel_.html">"models/error/<wbr>Error<wbr>Model"</a>
+						<a href="modules/_interface_index_.html">&quot;interface/index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_models_error_fatalerrormodel_.html">"models/error/<wbr>Fatal<wbr>Error<wbr>Model"</a>
+						<a href="modules/_models_keymodel_.html">&quot;models/<wbr>Key<wbr>Model&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_models_files_filelanguagemodel_.html">"models/files/<wbr>File<wbr>Language<wbr>Model"</a>
+						<a href="modules/_models_misprintmodel_.html">&quot;models/<wbr>Misprint<wbr>Model&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_models_files_filemodel_.html">"models/files/<wbr>File<wbr>Model"</a>
+						<a href="modules/_models_stylishlogger_.html">&quot;models/<wbr>Stylish<wbr>Logger&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_models_files_fileviewmodel_.html">"models/files/<wbr>File<wbr>View<wbr>Model"</a>
+						<a href="modules/_models_error_errormodel_.html">&quot;models/error/<wbr>Error<wbr>Model&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_models_index_.html">"models/index"</a>
+						<a href="modules/_models_error_fatalerrormodel_.html">&quot;models/error/<wbr>Fatal<wbr>Error<wbr>Model&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_models_results_resulterrormodel_.html">"models/results/<wbr>Result<wbr>Error<wbr>Model"</a>
+						<a href="modules/_models_error_index_.html">&quot;models/error/index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_models_results_resultfilemodel_.html">"models/results/<wbr>Result<wbr>File<wbr>Model"</a>
+						<a href="modules/_models_files_filelanguagemodel_.html">&quot;models/files/<wbr>File<wbr>Language<wbr>Model&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_models_results_resultmodel_.html">"models/results/<wbr>Result<wbr>Model"</a>
+						<a href="modules/_models_files_filemodel_.html">&quot;models/files/<wbr>File<wbr>Model&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_rules_absentviewkeysrule_.html">"rules/<wbr>Absent<wbr>View<wbr>Keys<wbr>Rule"</a>
+						<a href="modules/_models_files_fileviewmodel_.html">&quot;models/files/<wbr>File<wbr>View<wbr>Model&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_rules_zombiesrule_.html">"rules/<wbr>Zombies<wbr>Rule"</a>
+						<a href="modules/_models_files_index_.html">&quot;models/files/index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_rules_index_.html">"rules/index"</a>
+						<a href="modules/_models_index_.html">&quot;models/index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_utils_index_.html">"utils/index"</a>
+						<a href="modules/_models_results_resultclimodel_.html">&quot;models/results/<wbr>Result<wbr>Cli<wbr>Model&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_utils_keys_.html">"utils/keys"</a>
+						<a href="modules/_models_results_resulterrormodel_.html">&quot;models/results/<wbr>Result<wbr>Error<wbr>Model&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_utils_path_.html">"utils/path"</a>
+						<a href="modules/_models_results_resultfilemodel_.html">&quot;models/results/<wbr>Result<wbr>File<wbr>Model&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_models_results_resultmodel_.html">&quot;models/results/<wbr>Result<wbr>Model&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_models_results_index_.html">&quot;models/results/index&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rules_absentviewkeysrule_.html">&quot;rules/<wbr>Absent<wbr>View<wbr>Keys<wbr>Rule&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rules_misprintrule_.html">&quot;rules/<wbr>Misprint<wbr>Rule&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rules_zombiesrule_.html">&quot;rules/<wbr>Zombies<wbr>Rule&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rules_ast_astisngxtranslateimportedrule_.html">&quot;rules/ast/<wbr>Ast<wbr>IsNgx<wbr>Translate<wbr>Imported<wbr>Rule&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rules_ast_index_.html">&quot;rules/ast/index&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rules_ast_translateserviceinstanterule_.html">&quot;rules/ast/translate<wbr>Service<wbr>Instante<wbr>Rule&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rules_index_.html">&quot;rules/index&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_utils_index_.html">&quot;utils/index&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_utils_keys_.html">&quot;utils/keys&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_utils_logger_.html">&quot;utils/logger&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_utils_path_.html">&quot;utils/path&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_utils_shared_.html">&quot;utils/shared&quot;</a>
 					</li>
 				</ul>
 			</nav>
