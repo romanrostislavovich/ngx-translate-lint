@@ -11,7 +11,7 @@
     },
     "main": "dist/src/core/index.js",
     "scripts": {
-        "tsc" : "./node_modules/.bin/tsc",
+        "tsc": "./node_modules/.bin/tsc",
         "markdownlint": "./node_modules/.bin/markdownlint",
         "tslint": "./node_modules/.bin/tslint",
         "doc:cli": "typedoc --mode modules --excludePrivate --excludeProtected --out ./docs/cli/ ./src/cli/",
@@ -69,13 +69,14 @@
         ]
     },
     "dependencies": {
-        "rxjs": "^6.5.4",
-        "glob": "^7.1.4",
         "chalk": "^2.4.2",
-        "lodash": "^4.17.20",
-        "dir-glob": "^3.0.1",
         "commander": "^2.20.0",
         "conventional-cli": "^1.2.0",
+        "dir-glob": "^3.0.1",
+        "glob": "^7.1.4",
+        "lodash": "^4.17.20",
+        "path": "^0.12.7",
+        "rxjs": "^6.5.4",
         "string-similarity": "^4.0.1"
     },
     "devDependencies": {
