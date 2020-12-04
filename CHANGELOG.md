@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.9.3](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.2...v1.9.3) (2020-12-04)
+
+
+### Bug Fixes
+
+* An accessor cannot be declared in an ambient context. ([24eb9c1](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/24eb9c14ab3e9e28c41c5fa46790dd522e6b7fa3)), closes [#76](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/76)
+
 ## [1.9.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.1...v1.9.2) (2020-12-03)
 
 
