@@ -26,7 +26,7 @@ class ResultErrorModel implements IValidationMessage  {
         this.suggestions = suggestions;
     }
 
-    get message(): string | string[] | null {
+    public message(): string | string[] | null {
         let message: string | string[] | null = null;
         switch (this.errorFlow) {
             case ErrorFlow.views:
