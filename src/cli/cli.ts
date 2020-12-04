@@ -136,7 +136,7 @@ class Cli {
             const resultModel: ResultModel = resultCliModel.getResultModel();
             resultModel.printResult();
 
-            process.exitCode = resultCliModel.exitCode;
+            process.exitCode = resultCliModel.exitCode();
 
             if (resultModel.hasError) {
                 throw new FatalErrorModel(chalk.red(resultModel.message));

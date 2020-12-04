@@ -40,8 +40,8 @@ describe('Core Integration', () => {
             const result: ResultCliModel = model.lint();
 
             // Assert
-            assert.deepEqual(hasMisprint, result.hasMisprint);
-            assert.deepEqual(countMisprint, result.countMisprint);
+            assert.deepEqual(hasMisprint, result.hasMisprint());
+            assert.deepEqual(countMisprint, result.countMisprint());
         });
         it('should be error', () => {
             // Arrange
@@ -74,8 +74,8 @@ describe('Core Integration', () => {
             const clearErrors: ResultErrorModel[] = result.errors.filter((error: ResultErrorModel) => error.errorFlow === ErrorFlow.misprint);
 
             // Assert
-            assert.deepEqual(hasMisprint, result.hasMisprint);
-            assert.deepEqual(countMisprint, result.countMisprint);
+            assert.deepEqual(hasMisprint, result.hasMisprint());
+            assert.deepEqual(countMisprint, result.countMisprint());
             assert.deepEqual(correctError, clearErrors.pop());
         });
         it('should be have 2 or more suggestions for one key', () => {
@@ -89,8 +89,8 @@ describe('Core Integration', () => {
             const result: ResultCliModel = model.lint();
 
             // Assert
-            assert.deepEqual(hasMisprint, result.hasMisprint);
-            assert.deepEqual(countMisprint, result.countMisprint);
+            assert.deepEqual(hasMisprint, result.hasMisprint());
+            assert.deepEqual(countMisprint, result.countMisprint());
         });
     });
     describe('Warnings', () => {
@@ -121,7 +121,7 @@ describe('Core Integration', () => {
             const result:  ResultCliModel = model.lint(maxWarnings);
 
             // Assert
-            assert.deepEqual(ifFullOfWarning, result.isFullOfWarning);
+            assert.deepEqual(ifFullOfWarning, result.isFullOfWarning());
             assert.deepEqual(maxWarnings, result.maxCountWarning);
         });
         it('should be warning if warnings less thant 10', () => {
@@ -134,7 +134,7 @@ describe('Core Integration', () => {
             const result: ResultCliModel = model.lint(maxWarnings);
 
             // Assert
-            assert.deepEqual(ifFullOfWarning, result.isFullOfWarning);
+            assert.deepEqual(ifFullOfWarning, result.isFullOfWarning());
             assert.deepEqual(maxWarnings, result.maxCountWarning);
         });
     });

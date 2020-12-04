@@ -11,7 +11,7 @@ class AbsentViewKeysRule implements IRule {
     public handler: ErrorTypes;
     public languagesPathList: string[];
 
-    get languagesCount(): number {
+    public languagesCount(): number {
         return this.languagesPathList.length;
     }
 
@@ -25,7 +25,7 @@ class AbsentViewKeysRule implements IRule {
 
     public check(viewsKeys: KeyModel[], languagesKeys: KeyModel[]): ResultErrorModel[] {
         const keysList: KeyModel[] = KeysUtils.groupKeysByName([ ...viewsKeys, ...languagesKeys]);
-        const keysListError: KeyModel[] = keysList.filter((key: KeyModel) => !(key.languages.length === this.languagesCount));
+        const keysListError: KeyModel[] = keysList.filter((key: KeyModel) => !(key.languages.length === this.languagesCount()));
         const resultErrorList: ResultErrorModel[] = keysListError.reduce((result: ResultErrorModel[], key: KeyModel) => {
             const resultErrors: ResultErrorModel[] = key.views.map((viewPath: string) => {
                 const absentLanguagePath: string[] = differenceBy(this.languagesPathList, key.languages)
