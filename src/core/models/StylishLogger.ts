@@ -16,11 +16,11 @@ class StylishLogger implements ILogger {
     }
 
     public error(message: string): void {
-        this.logger.error(chalk.red(message));
+        console.error(chalk.red(message));
     }
 
     public log(message: string): void {
-        this.logger.log(chalk.yellow(message));
+        console.log(chalk.yellow(message));
     }
 
     public printMessage(message: string, errorType: ErrorTypes = this.errorType): void {

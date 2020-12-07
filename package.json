@@ -24,7 +24,8 @@
         "build": "tsc -p .",
         "lint": "npm run lint:typescript && npm run lint:markdown",
         "test": "npm run lint && npm run build && npm run test:integration",
-        "semantic-release": "semantic-release"
+        "semantic-release": "semantic-release",
+        "self-lint": "npx ngx-translate-lint -p ./test/integration/inputs/views/*.{html,ts} -l ./test/integration/inputs/locales/*.json -i ./test/integration/inputs/locales/incorrect.json"
     },
     "files": [
         "dist/",
