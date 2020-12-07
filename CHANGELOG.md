@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.9.6](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.5...v1.9.6) (2020-12-07)
+
+
+### Bug Fixes
+
+* Doesn't print error when use `npx` ([0b36e3d](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/0b36e3d34ee99f124691824eb396e8fdc76a5497)), closes [#79](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/79)
+
 ## [1.9.5](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.4...v1.9.5) (2020-12-07)
 
 
