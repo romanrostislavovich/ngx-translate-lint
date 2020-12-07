@@ -39,7 +39,7 @@ class ResultErrorModel implements IValidationMessage  {
                 break;
             case ErrorFlow.misprint:
                message = this.suggestions.reduce((accum: string[], item: string) => {
-                   accum.push(`Possible match: ${item} for key ${this.value}`);
+                   accum.push(`Possible match: '${item}' for key '${this.value}'`);
                    return accum;
                 }, []);
                 break;
