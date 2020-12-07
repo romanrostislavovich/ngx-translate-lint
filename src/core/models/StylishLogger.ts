@@ -13,14 +13,16 @@ class StylishLogger implements ILogger {
     ) {
         this.logger = logger;
         this.errorType = errorType;
-    }
+    } 
 
     public error(message: string): void {
-        this.logger.error(chalk.red(message));
+        // tslint:disable-next-line:no-console
+        console.error(chalk.red(message));
     }
 
     public log(message: string): void {
-        this.logger.log(chalk.yellow(message));
+        // tslint:disable-next-line:no-console
+        console.log(chalk.yellow(message));
     }
 
     public printMessage(message: string, errorType: ErrorTypes = this.errorType): void {

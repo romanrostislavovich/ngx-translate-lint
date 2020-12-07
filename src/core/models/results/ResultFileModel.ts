@@ -18,7 +18,7 @@ class ResultFileModel implements  IValidationMessage {
     }
 
     public message(): string | string[] | null {
-        return this.value ? `Following file ${this.value}' have errors:` : `Founded errors without file`;
+        return this.value ? `Following file ${this.value} have errors:` : `Founded errors without file`;
     }
 }
 
