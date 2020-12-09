@@ -1,5 +1,12 @@
 # CHANGELOG
 
+# [1.10.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.6...v1.10.0) (2020-12-09)
+
+
+### Features
+
+* add ignored misprint keys ([512865d](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/512865d599651e914363781151dc50fd8de8f15a))
+
 ## [1.9.6](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.5...v1.9.6) (2020-12-07)
 
 
