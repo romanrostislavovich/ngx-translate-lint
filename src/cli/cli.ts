@@ -122,6 +122,7 @@ class Cli {
         misprint?: ErrorTypes,
         misprintCoefficient: number = 0.9,
         ignoredKeys: string[] = [],
+        ignoredMisprintKeys: string[] = []
     ): void {
             const errorConfig: IRulesConfig = {
                 keysOnViews: views || ErrorTypes.error,
@@ -130,6 +131,7 @@ class Cli {
                 maxWarning,
                 misprintCoefficient,
                 ignoredKeys,
+                ignoredMisprintKeys,
             };
             const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig);
             const resultCliModel: ResultCliModel = validationModel.lint(maxWarning);
