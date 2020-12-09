@@ -1,5 +1,12 @@
 # CHANGELOG
 
+# [1.11.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.10.0...v1.11.0) (2020-12-09)
+
+
+### Features
+
+* create `getLanguages` method ([d56dbc8](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/d56dbc808f8f85ba841d293bb8935faa7a11d66e)), closes [#84](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/84)
+
 # [1.10.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.6...v1.10.0) (2020-12-09)
 
 
