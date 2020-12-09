@@ -46,6 +46,14 @@ const assertDefaultModel: ResultErrorModel[]= [
         ]
     ),
     new ResultErrorModel(
+        'STRING.KEY_FROM_DIRECTIVE_INSIDE_TAG_VIEW.EXIST_IN_ONE_LOCALE_BUG_86',
+        ErrorFlow.views, ErrorTypes.error,
+        getAbsolutePath(projectFolder, 'directive.keys.html'),
+        [
+            'EN-us.json'
+        ]
+    ),
+    new ResultErrorModel(
         'OBJECT.KEY_FROM_DIRECTIVE_INSIDE_TAG_VIEW.ABSENT_IN_ALL_LOCALES',
         ErrorFlow.views, ErrorTypes.error,
         getAbsolutePath(projectFolder, 'directive.keys.html'),

@@ -149,7 +149,8 @@ If you have error `Can't resolve 'fs' in ...`. Please add next setting to you pr
 ```javascript
 config.externals = {
     ...config.externals,
-    "fs": 'require("fs")'
+    "fs": 'require("fs")',
+    "path": 'require("path")'
 };
 ``` 
  - tsconfig.json
