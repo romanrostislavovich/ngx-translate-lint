@@ -51,7 +51,8 @@ describe('Core Integration', () => {
                 misprint:  ErrorTypes.error,
                 maxWarning: 1,
                 misprintCoefficient: 0.9,
-                ignoredKeys: ["IGNORED.KEY.FLAG"]
+                ignoredKeys: ["IGNORED.KEY.FLAG"],
+                ignoredMisprintKeys: []
             };
             const hasMisprint: boolean = true;
             const countMisprint: number = 1;
@@ -113,7 +114,8 @@ describe('Core Integration', () => {
                 maxWarning: 1,
                 misprintCoefficient: 0.9,
                 misprint: ErrorTypes.disable,
-                ignoredKeys: ["IGNORED.KEY.FLAG"]
+                ignoredKeys: ["IGNORED.KEY.FLAG"],
+                ignoredMisprintKeys: []
             };
 
             // Act
@@ -244,7 +246,8 @@ describe('Core Integration', () => {
                 maxWarning: 1,
                 misprintCoefficient: 0.9,
                 misprint: ErrorTypes.disable,
-                ignoredKeys: ["IGNORED.KEY.FLAG"]
+                ignoredKeys: ["IGNORED.KEY.FLAG"],
+                ignoredMisprintKeys: []
             };
 
             // Act
@@ -264,7 +267,8 @@ describe('Core Integration', () => {
             maxWarning: 1,
             misprintCoefficient: 0.9,
             misprint: ErrorTypes.warning,
-            ignoredKeys: ["IGNORED.KEY.FLAG"]
+            ignoredKeys: ["IGNORED.KEY.FLAG"],
+            ignoredMisprintKeys: []
         };
         const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
         const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);

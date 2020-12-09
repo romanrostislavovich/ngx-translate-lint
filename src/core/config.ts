@@ -9,7 +9,8 @@ const config: IAppConfig = {
             keysOnViews: ErrorTypes.error,
             maxWarning: 0,
             misprintCoefficient: 0.9,
-            ignoredKeys: []
+            ignoredKeys: [],
+            ignoredMisprintKeys: []
         },
         projectPath: './src/app/**/*.{html,ts,resx}',
         languagesPath: './src/assets/i18n/*.json'
@@ -23,7 +24,8 @@ const defaultConfig: object = {
         "misprint": "warning",
         "maxWarning": "0",
         "misprintCoefficient": "0.9",
-        "ignoredKeys": []
+        "ignoredKeys": [],
+        "ignoredMisprintKeys": []
     },
     "project": './src/app/**/*.{html,ts,resx}',
     "languages": './src/assets/i18n/*.json',

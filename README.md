@@ -103,7 +103,8 @@ Default Config is:
         "misprint": "warning",
         "maxWarning": "0",
         "misprintCoefficient": "0.9",
-        "ignoredKeys": []
+        "ignoredKeys": [],
+        "ignoredMisprintKeys": []
     },
     "project": "./src/app/**/*.{html,ts}",
     "languages": "./src/assets/i18n/*.json"
@@ -132,7 +133,8 @@ const ruleConfig: IRulesConfig = {
         misprint: ErrorTypes.warning,
         maxWarning: 0,
         misprintCoefficient: 0.9,
-        ignoredKeys: [ 'EXAMPLE.KEY' ]
+        ignoredKeys: [ 'EXAMPLE.KEY' ],
+        ignoredMisprintKeys: []
 };
 
 const ngxTranslateLint = new NgxTranslateLint(viewsPath, languagesPath, ignoredLanguagesPath, ruleConfig)

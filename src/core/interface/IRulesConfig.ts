@@ -7,6 +7,7 @@ interface IRulesConfig {
     maxWarning: number;
     misprintCoefficient: number;
     ignoredKeys: string[];
+    ignoredMisprintKeys: string[];
 }
 
 export { IRulesConfig };
