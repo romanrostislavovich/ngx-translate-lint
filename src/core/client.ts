@@ -4,12 +4,13 @@ import { config } from './config';
 import { ErrorFlow, ErrorTypes } from './enums';
 import { IRulesConfig } from './interface';
 import { KeysUtils, resourceResolver } from './utils';
-import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel } from './models';
+import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel, LanguagesModel } from './models';
 import {
     AbsentViewKeysRule,
     MisprintRule,
     ZombieRule
 } from './rules';
+import * as path from 'path';
 
 class NgxTranslateLint {
     public rules: IRulesConfig;
@@ -80,6 +81,44 @@ class NgxTranslateLint {
 
         const cliResult: ResultCliModel = new ResultCliModel(errors, maxWarning);
         return cliResult;
+    }
+
+    public getLanguages(): LanguagesModel[] {
+        const result: LanguagesModel[] = [];
+        const languagesKeys: FileLanguageModel = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeys();
+
+        languagesKeys.keys.forEach((key: KeyModel) => {
+           key.languages.forEach((languagePath: string) => {
+               const name: string = path.basename(languagePath);
+               const languageIndex: number = result.findIndex((x) => x.name === name);
+
+               if (languageIndex === -1) {
+                   const language: LanguagesModel = new LanguagesModel(name);
+                   language.path = languagePath;
+                   language.keys.push(key);
+                   result.push(language);
+               } else {
+                   result[languageIndex].keys.push(key);
+               }
+           });
+        });
+
+        if (this.projectPath) {
+            const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
+            const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames);
+            const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
+
+            views.keys.forEach((key: KeyModel) => {
+               result.forEach((language: LanguagesModel) => {
+                   const keyIndex: number = language.keys.findIndex((x) => x.name === key.name);
+                   if (keyIndex !== -1 ){
+                       language.keys[keyIndex].views = key.views;
+                   }
+               });
+            });
+        }
+
+        return result;
     }
 
     private runRegExp(

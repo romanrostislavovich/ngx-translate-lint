@@ -122,7 +122,7 @@ The CLI process may exit with the following codes:
 ### TypeScript
 
 ```typescript
-import { NgxTranslateLint, IRulesConfig, ResultCliModel, ErrorTypes} from 'ngx-translate-lint';
+import { NgxTranslateLint, IRulesConfig, ResultCliModel, ErrorTypes, LanguagesModel} from 'ngx-translate-lint';
 
 const viewsPath: string = './src/app/**/*.{html,ts}';
 const languagesPath: string = './src/assets/i18n/*.json';
@@ -138,7 +138,8 @@ const ruleConfig: IRulesConfig = {
 };
 
 const ngxTranslateLint = new NgxTranslateLint(viewsPath, languagesPath, ignoredLanguagesPath, ruleConfig)
-const resultLint: ResultCliModel = ngxTranslateLint.lint();
+const resultLint: ResultCliModel = ngxTranslateLint.lint(); // Run Lint
+const languages: LanguagesModel[] = ngxTranslateLint.getLanguages()  // Get Languages with all keys and views
 
 ```
 

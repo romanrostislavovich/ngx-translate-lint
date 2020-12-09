@@ -10,6 +10,7 @@ import {
     NgxTranslateLint,
     ResultCliModel,
     ResultErrorModel, ResultModel,
+    LanguagesModel,
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
@@ -258,7 +259,20 @@ describe('Core Integration', () => {
             assert.deepEqual(assertCustomConfig, result.errors);
         });
     });
+    describe('API', () => {
+        describe('getKeys', () => {
+           it('should be correct', () => {
+               // Arrange
+               const countOfLanguage: number = 2;
+               // Act
+               const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
+               const result: LanguagesModel[] = model.getLanguages();
 
+               // Assert
+               assert.equal(result.length, countOfLanguage);
+           });
+        });
+    });
     it('with full arguments', () => {
         // Arrange
         const errorConfig: IRulesConfig = {
