@@ -260,7 +260,7 @@ describe('Core Integration', () => {
         });
     });
     describe('API', () => {
-        describe('getKeys', () => {
+        describe('getLanguages', () => {
            it('should be correct', () => {
                // Arrange
                const countOfLanguage: number = 2;
