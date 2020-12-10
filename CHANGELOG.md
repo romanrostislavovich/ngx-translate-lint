@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.11.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.11.1...v1.11.2) (2020-12-10)
+
+
+### Bug Fixes
+
+* The `translate` directive inside html tags is sometimes not detected by the tool ([262860b](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/262860b10ff54956bcda3c916695c6548aeb3b23))
+
 ## [1.11.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.11.0...v1.11.1) (2020-12-09)
 
 
