@@ -1,5 +1,76 @@
 # CHANGELOG
 
+## [1.11.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.11.1...v1.11.2) (2020-12-10)
+
+
+### Bug Fixes
+
+* The `translate` directive inside html tags is sometimes not detected by the tool ([262860b](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/262860b10ff54956bcda3c916695c6548aeb3b23))
+
+## [1.11.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.11.0...v1.11.1) (2020-12-09)
+
+
+### Bug Fixes
+
+* The `translate` directive inside html tags ([ffce48e](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/ffce48efff775487d38426b0557df24b39e12769)), closes [#86](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/86)
+
+# [1.11.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.10.0...v1.11.0) (2020-12-09)
+
+
+### Features
+
+* create `getLanguages` method ([d56dbc8](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/d56dbc808f8f85ba841d293bb8935faa7a11d66e)), closes [#84](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/84)
+
+# [1.10.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.6...v1.10.0) (2020-12-09)
+
+
+### Features
+
+* add ignored misprint keys ([512865d](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/512865d599651e914363781151dc50fd8de8f15a))
+
+## [1.9.6](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.5...v1.9.6) (2020-12-07)
+
+
+### Bug Fixes
+
+* Doesn't print error when use `npx` ([0b36e3d](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/0b36e3d34ee99f124691824eb396e8fdc76a5497)), closes [#79](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/79)
+
+## [1.9.5](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.4...v1.9.5) (2020-12-07)
+
+
+### Bug Fixes
+
+* console error ([07f38f0](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/07f38f08ec777aaeeec00a76484b5b742ae4be59))
+* Doesn't print error when use `npx` ([ef918fc](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/ef918fcdf33881d65b6d56d23b17e125fc750bfe))
+
+## [1.9.4](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.3...v1.9.4) (2020-12-04)
+
+
+### Bug Fixes
+
+* An accessor cannot be declared in an ambient context ([0df0b09](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/0df0b09cc4f9c2adb1ad126f897911346a603a37)), closes [#76](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/76)
+
+## [1.9.3](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.2...v1.9.3) (2020-12-04)
+
+
+### Bug Fixes
+
+* An accessor cannot be declared in an ambient context. ([24eb9c1](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/24eb9c14ab3e9e28c41c5fa46790dd522e6b7fa3)), closes [#76](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/76)
+
+## [1.9.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.1...v1.9.2) (2020-12-03)
+
+
+### Bug Fixes
+
+* fs package ([7f33abe](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/7f33abe2e332620af5e45f6ff871e4a0f5235dc4)), closes [#74](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/74)
+
+## [1.9.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.9.0...v1.9.1) (2020-12-03)
+
+
+### Bug Fixes
+
+* can't resolve path ([81cd1b6](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/81cd1b6d521e9e47e7a7cc8243793389eef2db8b)), closes [#72](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/72)
+
 # [1.9.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.8.2...v1.9.0) (2020-12-02)
 
 
