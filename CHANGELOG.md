@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.11.3](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.11.2...v1.11.3) (2020-12-12)
+
+
+### Bug Fixes
+
+* linter doesn't exist and return any result ([6182695](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/6182695b33a3a3bcd952560397d90eba489bc571))
+
 ## [1.11.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.11.1...v1.11.2) (2020-12-10)
 
 
