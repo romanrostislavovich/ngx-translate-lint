@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.11.5](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.11.4...v1.11.5) (2020-12-13)
+
+
+### Bug Fixes
+
+* ci ([79dcce3](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/79dcce3ef2b359b89193df69809f0f258c233585))
+
 ## [1.11.4](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.11.3...v1.11.4) (2020-12-13)
 
 
