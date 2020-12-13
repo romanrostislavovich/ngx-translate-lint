@@ -85,7 +85,7 @@ class NgxTranslateLint {
 
     public getLanguages(): LanguagesModel[] {
         const result: LanguagesModel[] = [];
-        const languagesKeys: FileLanguageModel = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeys();
+        const languagesKeys: FileLanguageModel = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeysWithValue();
 
         languagesKeys.keys.forEach((key: KeyModel) => {
            key.languages.forEach((languagePath: string) => {
