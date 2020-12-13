@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.11.4](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.11.3...v1.11.4) (2020-12-13)
+
+
+### Bug Fixes
+
+* impruve getLanguages method ([6c1854e](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/6c1854e9721d5348d1bdd0e32fd15a5cfdddc38d))
+
 ## [1.11.3](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.11.2...v1.11.3) (2020-12-12)
 
 
