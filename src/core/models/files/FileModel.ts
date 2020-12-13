@@ -42,6 +42,16 @@ abstract class FileModel {
         }, []);
         return KeysUtils.groupKeysByName(keysModels);
     }
+
+    public parseKeysWithValues(identity: Function): KeyModel[] {
+        const keysModels: KeyModel[] = this.files.reduce((acum: KeyModel[], filePath: string) => {
+            const fileData: string = fs.readFileSync(filePath).toString();
+            const models: KeyModel[] = identity(fileData, filePath);
+            acum.push(...models);
+            return acum;
+        }, []);
+        return keysModels;
+    }
 }
 
 export { FileModel };
