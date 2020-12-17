@@ -1,5 +1,12 @@
 # CHANGELOG
 
+# [1.12.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.11.5...v1.12.0) (2020-12-17)
+
+
+### Features
+
+* Incorrect behaviour with component mat-icon ([ae22931](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/ae22931ce84f34e2afa430d277637404e09ffa11))
+
 ## [1.11.5](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.11.4...v1.11.5) (2020-12-13)
 
 
