@@ -11,6 +11,7 @@ import {
     ZombieRule
 } from './rules';
 import * as path from 'path';
+import { KeyModelWithLanguages, LanguagesModelWithKey, ViewModelWithKey } from './models/KeyModelWithLanguages';
 
 class NgxTranslateLint {
     public rules: IRulesConfig;
@@ -119,6 +120,35 @@ class NgxTranslateLint {
         }
 
         return result;
+    }
+
+    public getKeys(): KeyModelWithLanguages[] {
+        const result: KeyModelWithLanguages[] = [];
+        const languagesKeys: LanguagesModel[] = this.getLanguages();
+        languagesKeys.forEach((language: LanguagesModel) => {
+           language.keys.forEach((key: KeyModel) => {
+               const isKeyExistIndex: number = result.findIndex(x => x.name === key.name);
+               if (isKeyExistIndex === -1 ) {
+
+                   const viewsModels: ViewModelWithKey[] = key.views.map((x) => {
+                       return new ViewModelWithKey(x);
+                   });
+                   const languagesModel: LanguagesModelWithKey = new LanguagesModelWithKey(language.name, language.path, key.value);
+                   const keyModel: KeyModelWithLanguages = new KeyModelWithLanguages(key.name, [languagesModel], viewsModels);
+                   result.push(keyModel);
+               } else {
+                    const currentKeyModel: KeyModelWithLanguages = result[isKeyExistIndex];
+                    const viewsModels: ViewModelWithKey[] = key.views.map((x) => {
+                       return new ViewModelWithKey(x);
+                    });
+                    const languagesModel: LanguagesModelWithKey = new LanguagesModelWithKey(language.name, language.path, key.value);
+                    currentKeyModel.languages.push(languagesModel);
+                    currentKeyModel.views.push(...viewsModels);
+               }
+           });
+        });
+        return result;
+
     }
 
     private runRegExp(

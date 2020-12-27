@@ -11,6 +11,7 @@ import {
     ResultCliModel,
     ResultErrorModel, ResultModel,
     LanguagesModel,
+    KeyModelWithLanguages,
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
@@ -271,6 +272,18 @@ describe('Core Integration', () => {
                // Assert
                assert.equal(result.length, countOfLanguage);
            });
+        });
+        describe('getKeys', () => {
+            it('should be correct', () => {
+                // Arrange
+                 const countOfKeys: number = 16;
+                // Act
+                const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
+                const result: KeyModelWithLanguages[] = model.getKeys();
+
+                // Assert
+                assert.equal(result.length, countOfKeys);
+            });
         });
     });
     it('with full arguments', () => {
