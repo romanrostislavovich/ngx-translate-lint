@@ -1,5 +1,12 @@
 # CHANGELOG
 
+# [1.13.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.12.0...v1.13.0) (2020-12-27)
+
+
+### Features
+
+* add getKeys API method ([3fd0ec0](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/3fd0ec058653721da76d30e48172f14e960ed732))
+
 # [1.12.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.11.5...v1.12.0) (2020-12-17)
 
 
