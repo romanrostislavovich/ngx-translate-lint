@@ -170,6 +170,7 @@ Please check our [contributing guidelines][contributing].
 
 Here can be your extensions:
 
+- [ngx-translate-editor](https://github.com/svoboda-rabstvo/ngx-translate-editor) - Simple GUI for CRUD translate keys of ngx-translate, which included ngx-translate-lint
 - [121 Platform](https://github.com/global-121/121-platform) - 121 is an open source platform for Cash based Aid built with Digital Identity & Local/Global Financial service partners.
 
 ## License
