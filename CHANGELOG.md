@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.13.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.13.0...v1.13.1) (2021-01-23)
+
+
+### Bug Fixes
+
+* ignoredKeys is not working ([39a4b90](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/39a4b9059fe9f1af02ee8227cb2374cec10858f8))
+
 # [1.13.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.12.0...v1.13.0) (2020-12-27)
 
 
