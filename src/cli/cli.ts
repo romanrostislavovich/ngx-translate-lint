@@ -71,11 +71,22 @@ class Cli {
         try {
             // tslint:disable-next-line:no-any
             const options: any = this.cliClient.config ? parseJsonFile(this.cliClient.config) : this.cliClient;
+            const projectPath: string = options.project;
+            const languagePath: string = options.languages;
+            const optionIgnore: string = options.ignore || options.rules.ignore;
+            const optionMisprint: ErrorTypes = options.misprint || options.rules.misprint;
+            const optionViewsRule: ErrorTypes = options.views || options.rules.views;
+            const optionMaxWarning: number =  options.maxWarning || options.rules.maxWarning;
+            const optionZombiesRule: ErrorTypes = options.zombies || options.rules.zombies;
+            const optionIgnoredKeys: string[] = options.ignoredKeys || options.rules.ignoredKeys;
+            const optionMisprintCoefficient: number = options.misprintCoefficient || options.rules.misprintCoefficient;
+            const optionIgnoredMisprintKeys: string[] = options.ignoredMisprintKeys || options.rules.ignoredMisprintKeys;
+
             if (options.project && options.languages) {
                 this.runLint(
-                    options.project, options.languages, options.zombies,
-                    options.views, options.ignore, options.maxWarning, options.misprint,
-                    options.misprintCoefficient
+                    projectPath, languagePath, optionZombiesRule,
+                    optionViewsRule, optionIgnore, optionMaxWarning, optionMisprint,
+                    optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys
                 );
             } else {
                 const cliHasError: boolean = this.validate();
