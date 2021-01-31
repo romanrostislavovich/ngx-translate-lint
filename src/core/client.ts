@@ -1,8 +1,8 @@
 import { flatMap } from 'lodash';
-
+import { join } from 'path';
 import { config } from './config';
 import { ErrorFlow, ErrorTypes } from './enums';
-import { IRulesConfig } from './interface';
+import { IRuleAst, IRulesConfig } from './interface';
 import { KeysUtils, resourceResolver } from './utils';
 import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel, LanguagesModel } from './models';
 import {
@@ -12,11 +12,19 @@ import {
 } from './rules';
 import * as path from 'path';
 import { KeyModelWithLanguages, LanguagesModelWithKey, ViewModelWithKey } from './models/KeyModelWithLanguages';
+import { DirectiveSymbol, WorkspaceSymbols } from 'ngast';
+import { AstIsNgxTranslateImportedRule } from './rules/ast/IsNgxTranslateImportedAstRule';
+import { NgModuleSymbol } from 'ngast/lib/ngtsc/module.symbol';
+import { PipeSymbol } from 'ngast/lib/ngtsc/pipe.symbol';
+import { InjectableSymbol } from 'ngast/lib/ngtsc/injectable.symbol';
+import { ClassRecord } from '@angular/compiler-cli/src/ngtsc/transform';
+import { ComponentSymbol } from 'ngast/lib/ngtsc/component.symbol';
 
 class NgxTranslateLint {
     public rules: IRulesConfig;
     public projectPath: string;
     public languagesPath: string;
+    public tsConfigPath: string | undefined;
 
     public ignore?: string;
 
@@ -24,12 +32,14 @@ class NgxTranslateLint {
         projectPath: string = config.defaultValues.projectPath,
         languagesPath: string = config.defaultValues.languagesPath,
         ignore?: string,
-        rulesConfig: IRulesConfig = config.defaultValues.rules
+        rulesConfig: IRulesConfig = config.defaultValues.rules,
+        tsConfigPath?: string,
     ) {
         this.languagesPath = languagesPath;
         this.projectPath = projectPath;
         this.ignore = ignore;
         this.rules = rulesConfig;
+        this.tsConfigPath = tsConfigPath;
     }
 
     public lint(maxWarning?: number): ResultCliModel {
@@ -57,10 +67,10 @@ class NgxTranslateLint {
             errors.push(...regExpResult);
         }
 
-       // if (this.rules.ast && this.rules.ast.isNgxTranslateLintImported) {
-            // const astResult: ResultErrorModel[] =  this.runAst(this.tsconfigPath, languagesKeys, this.rules);
-            // errors.push(...astResult);
-        // }
+        if (this.rules.ast && this.rules.ast.isNgxTranslateImported && this.tsConfigPath) {
+            const astResult: ResultErrorModel[] =  this.runAst(this.tsConfigPath, this.rules);
+             errors.push(...astResult);
+        }
 
         if(this.rules.ignoredKeys?.length !== 0) {
             errors = errors.reduce<ResultErrorModel[]>((acum, errorKey) => {
@@ -178,42 +188,26 @@ class NgxTranslateLint {
         return result;
     }
 
-    // private runAst(
-    //     project: string,
-    //     languagesKeys: FileLanguageModel,
-    //     rules: IRulesConfig = this.rules
-    // ): ResultErrorModel[] {
-    //     const resultErrors: ResultErrorModel[] = [];
-        // const projectSymbols: any = new ProjectSymbols(
-        //     project,
-        //     resourceResolver,
-        //     // tslint:disable-next-line:no-any
-        //     (e: any) => {
-        //         const error: ResultErrorModel = new ResultErrorModel(e.toString(), ErrorFlow.ngxTranslateNoImported, ErrorTypes.error, project);
-        //         resultErrors.push(error);
-        //     }
-        // );
-        //
-        // if (resultErrors.length === 0) {
-        //     // tslint:disable-next-line:no-any
-        //     const projectDirectives: DirectiveSymbol[] = projectSymbols.getDirectives().filter((el: any) => el.symbol.filePath.indexOf("node_modules") === -1);
-        //
-        //     // RULE: Is `ngx-translate` module imported
-        //     if (!!rules.ast && rules.ast.isNgxTranslateLintImported !== ErrorTypes.disable) {
-        //         const isNgxTranslateImported: IRuleAst = new AstIsNgxTranslateImportedRule(projectDirectives);
-        //         const isNgxTranslateResult: ResultErrorModel[] = isNgxTranslateImported.check(project, languagesKeys.keys);
-        //         resultErrors.push(...isNgxTranslateResult);
-        //     }
-        //
-        //     // RULE: translateService usage
-        //     // if (rules.ast && rules.ast.isNgxTranslateLintImported !== ErrorTypes.disable) {
-        //     //     const translateServiceRule: IRuleAst = new AstTranslateServiceRule(projectDirectives);
-        //     //     const translateServiceResult: ResultErrorModel[] = translateServiceRule.check(project, languagesKeys.keys);
-        //     //     resultErrors.push(...translateServiceResult);
-        //     // }
-        // }
-        // return resultErrors;
-//    }
+    private runAst(
+        project: string,
+        rules: IRulesConfig = this.rules
+   ): ResultErrorModel[] {
+         const resultErrors: ResultErrorModel[] = [];
+         const configPath: string = join(project, 'tsconfig.json');
+         const projectSymbols: WorkspaceSymbols = new WorkspaceSymbols(configPath);
+
+        const allProjectModules: NgModuleSymbol[] = projectSymbols.getAllModules();
+
+        // RULE: Is `ngx-translate` module imported
+        if (!!rules.ast && rules.ast.isNgxTranslateImported !== ErrorTypes.disable) {
+             const isNgxTranslateImported: AstIsNgxTranslateImportedRule = new AstIsNgxTranslateImportedRule(allProjectModules);
+             const isNgxTranslateResult: ResultErrorModel[] = isNgxTranslateImported.check(project);
+             console.log(isNgxTranslateResult);
+            resultErrors.push(...isNgxTranslateResult);
+        }
+
+         return resultErrors;
+    }
 }
 
 

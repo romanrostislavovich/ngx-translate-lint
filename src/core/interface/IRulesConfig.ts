@@ -1,6 +1,8 @@
 import { ErrorTypes } from './../enums';
+import { IRulesAstConfig } from './IRulesAstConfig';
 
 interface IRulesConfig {
+    ast: IRulesAstConfig;
     misprint: ErrorTypes;
     zombieKeys: ErrorTypes;
     keysOnViews: ErrorTypes;

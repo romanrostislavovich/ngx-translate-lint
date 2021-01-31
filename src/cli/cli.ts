@@ -5,6 +5,7 @@ import { OptionModel } from './models';
 import {
     ErrorTypes,
     FatalErrorModel,
+    IRulesAstConfig,
     IRulesConfig,
     NgxTranslateLint,
     ResultCliModel,
@@ -73,6 +74,7 @@ class Cli {
             const options: any = this.cliClient.config ? parseJsonFile(this.cliClient.config) : this.cliClient;
             const projectPath: string = options.project;
             const languagePath: string = options.languages;
+            const tsConfigPath: string = options.tsConfigPath;
             const optionIgnore: string = options.ignore || options.rules.ignore;
             const optionMisprint: ErrorTypes = options.misprint || options.rules.misprint;
             const optionViewsRule: ErrorTypes = options.views || options.rules.views;
@@ -81,12 +83,13 @@ class Cli {
             const optionIgnoredKeys: string[] = options.ignoredKeys || options.rules.ignoredKeys;
             const optionMisprintCoefficient: number = options.misprintCoefficient || options.rules.misprintCoefficient;
             const optionIgnoredMisprintKeys: string[] = options.ignoredMisprintKeys || options.rules.ignoredMisprintKeys;
+            const optionAstRules: IRulesAstConfig = options.ast || options.rules.ast;
 
             if (options.project && options.languages) {
                 this.runLint(
                     projectPath, languagePath, optionZombiesRule,
                     optionViewsRule, optionIgnore, optionMaxWarning, optionMisprint,
-                    optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys
+                    optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys, optionAstRules, tsConfigPath
                 );
             } else {
                 const cliHasError: boolean = this.validate();
@@ -133,18 +136,23 @@ class Cli {
         misprint?: ErrorTypes,
         misprintCoefficient: number = 0.9,
         ignoredKeys: string[] = [],
-        ignoredMisprintKeys: string[] = []
+        ignoredMisprintKeys: string[] = [],
+        ast: IRulesAstConfig = {
+            isNgxTranslateImported: ErrorTypes.error
+        },
+        tsConfigPath?: string,
     ): void {
             const errorConfig: IRulesConfig = {
-                keysOnViews: views || ErrorTypes.error,
-                zombieKeys: zombies || ErrorTypes.warning,
                 misprint: misprint || ErrorTypes.warning,
+                zombieKeys: zombies || ErrorTypes.warning,
+                keysOnViews: views || ErrorTypes.error,
+                ast,
                 maxWarning,
-                misprintCoefficient,
                 ignoredKeys,
                 ignoredMisprintKeys,
+                misprintCoefficient,
             };
-            const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig);
+            const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig, tsConfigPath);
             const resultCliModel: ResultCliModel = validationModel.lint(maxWarning);
             const resultModel: ResultModel = resultCliModel.getResultModel();
             resultModel.printResult();

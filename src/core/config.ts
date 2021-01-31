@@ -4,6 +4,9 @@ import { IAppConfig } from './interface';
 const config: IAppConfig = {
     defaultValues: {
         rules: {
+            ast: {
+              isNgxTranslateImported: ErrorTypes.error,
+            },
             misprint: ErrorTypes.warning,
             zombieKeys: ErrorTypes.warning,
             keysOnViews: ErrorTypes.error,
@@ -12,6 +15,7 @@ const config: IAppConfig = {
             ignoredKeys: [],
             ignoredMisprintKeys: []
         },
+        tsconfigPath: './',
         projectPath: './src/app/**/*.{html,ts,resx}',
         languagesPath: './src/assets/i18n/*.json'
     }
@@ -19,6 +23,9 @@ const config: IAppConfig = {
 
 const defaultConfig: object = {
     "rules": {
+        "ast": {
+            "isNgxTranslateImported": "error"
+        },
         "keysOnViews": "error",
         "zombieKeys": "warning",
         "misprint": "warning",
@@ -27,6 +34,7 @@ const defaultConfig: object = {
         "ignoredKeys": [],
         "ignoredMisprintKeys": []
     },
+    "tsconfig": './',
     "project": './src/app/**/*.{html,ts,resx}',
     "languages": './src/assets/i18n/*.json',
 };

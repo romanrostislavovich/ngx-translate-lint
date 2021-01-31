@@ -117,6 +117,20 @@ const cliOptions: OptionModel[] = [
             OptionsPath.absolute
         ]
     }),
+    new OptionModel({
+        longName: OptionsLongNames.tsconfig,
+        shortName: OptionsShortNames.tsconfig,
+        required: false,
+        type: ArgumentTypes.path,
+        description: 'The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file. Right now included only one rule: checked if `ngx-translate` imported for your project',
+        beta: true,
+        additionalDescription: '',
+        default: config.defaultValues.tsconfigPath,
+        values: [
+            OptionsPath.relative,
+            OptionsPath.absolute
+        ]
+    }),
 ];
 
 export  { cliOptions };
