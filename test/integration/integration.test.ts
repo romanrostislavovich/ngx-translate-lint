@@ -7,11 +7,11 @@ import {
     ErrorFlow,
     ErrorTypes,
     IRulesConfig,
+    KeyModelWithLanguages,
+    LanguagesModel,
     NgxTranslateLint,
     ResultCliModel,
-    ResultErrorModel, ResultModel,
-    LanguagesModel,
-    KeyModelWithLanguages,
+    ResultErrorModel,
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
@@ -48,6 +48,9 @@ describe('Core Integration', () => {
         it('should be error', () => {
             // Arrange
             const errorConfig: IRulesConfig = {
+                ast: {
+                    isNgxTranslateImported: ErrorTypes.disable,
+                },
                 keysOnViews: ErrorTypes.error,
                 zombieKeys: ErrorTypes.warning,
                 misprint:  ErrorTypes.error,
@@ -111,6 +114,9 @@ describe('Core Integration', () => {
             const maxWarnings: number = 5;
             const ifFullOfWarning: boolean = true;
             const errorConfig: IRulesConfig = {
+                ast: {
+                    isNgxTranslateImported: ErrorTypes.disable,
+                },
                 keysOnViews: ErrorTypes.warning,
                 zombieKeys: ErrorTypes.warning,
                 maxWarning: 1,
@@ -243,6 +249,9 @@ describe('Core Integration', () => {
         it('should be custom', () => {
             // Arrange
             const errorConfig: IRulesConfig = {
+                ast: {
+                    isNgxTranslateImported: ErrorTypes.disable,
+                },
                 keysOnViews: ErrorTypes.warning,
                 zombieKeys: ErrorTypes.disable,
                 maxWarning: 1,
@@ -289,6 +298,9 @@ describe('Core Integration', () => {
     it('with full arguments', () => {
         // Arrange
         const errorConfig: IRulesConfig = {
+            ast: {
+                isNgxTranslateImported: ErrorTypes.disable,
+            },
             keysOnViews: ErrorTypes.error,
             zombieKeys: ErrorTypes.warning,
             maxWarning: 1,

@@ -30,6 +30,10 @@ which should exist in all languages files.
 
 ```bash
 npm install ngx-translate-lint -g
+
+BETA: 
+
+npm install ngx-translate-lint @angular/core @angular/compiler @angular/compiler-cli -g 
 ```
 
 ### GitHub
@@ -93,6 +97,7 @@ Examples:
 ```
 
 > NOTE: For `project` and `languages` options need to include file types like on the example.
+> WARNING!: `BETA` flag working only with angular 11 and higher!
 
 Default Config is: 
 ```json
@@ -104,8 +109,12 @@ Default Config is:
         "maxWarning": "0",
         "misprintCoefficient": "0.9",
         "ignoredKeys": [],
-        "ignoredMisprintKeys": []
+        "ignoredMisprintKeys": [],
+        "ast": {
+          "isNgsTranslateImported": "error"
+        }
     },
+    "tsconfig": "./",
     "project": "./src/app/**/*.{html,ts}",
     "languages": "./src/assets/i18n/*.json"
 }

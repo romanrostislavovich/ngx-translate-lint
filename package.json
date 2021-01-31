@@ -70,6 +70,9 @@
         ]
     },
     "dependencies": {
+        "@angular/compiler": "^11.1.1",
+        "@angular/compiler-cli": "^11.1.1",
+        "@angular/core": "^11.1.1",
         "chalk": "^2.4.2",
         "commander": "^2.20.0",
         "conventional-cli": "^1.2.0",
@@ -77,6 +80,7 @@
         "fs": "0.0.1-security",
         "glob": "^7.1.4",
         "lodash": "^4.17.20",
+        "ngast": "^0.6.2",
         "path": "^0.12.7",
         "rxjs": "^6.5.4",
         "string-similarity": "^4.0.1",
