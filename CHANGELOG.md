@@ -1,5 +1,12 @@
 # CHANGELOG
 
+# [1.14.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.13.2...v1.14.0) (2021-01-31)
+
+
+### Features
+
+* add ast rules ([3f2eec8](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/3f2eec8ede8a31fa21983fcf7fd18dd30af1a2ad))
+
 ## [1.13.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.13.1...v1.13.2) (2021-01-31)
 
 ## [1.13.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.13.0...v1.13.1) (2021-01-23)
