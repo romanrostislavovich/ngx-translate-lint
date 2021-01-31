@@ -202,7 +202,6 @@ class NgxTranslateLint {
         if (!!rules.ast && rules.ast.isNgxTranslateImported !== ErrorTypes.disable) {
              const isNgxTranslateImported: AstIsNgxTranslateImportedRule = new AstIsNgxTranslateImportedRule(allProjectModules);
              const isNgxTranslateResult: ResultErrorModel[] = isNgxTranslateImported.check(project);
-             console.log(isNgxTranslateResult);
             resultErrors.push(...isNgxTranslateResult);
         }
 
