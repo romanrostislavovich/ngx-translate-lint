@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [1.14.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.14.0...v1.14.1) (2021-02-03)
+
+
+### Bug Fixes
+
+* cannot read property 'ignore' of undefined ([21ba804](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/21ba80431d4cab689ebee0f63dafbc926ed77160)), closes [#100](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/100)
+* getLanguages return empty array if file doesn't include any keys ([f8c7ef2](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/f8c7ef249f2d57ad1531f7c9513e19ecfdcd41e9)), closes [#102](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/102)
+
 # [1.14.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.13.2...v1.14.0) (2021-01-31)
 
 
