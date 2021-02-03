@@ -75,15 +75,38 @@ class Cli {
             const projectPath: string = options.project;
             const languagePath: string = options.languages;
             const tsConfigPath: string = options.tsConfigPath;
-            const optionIgnore: string = options.ignore || options.rules.ignore;
-            const optionMisprint: ErrorTypes = options.misprint || options.rules.misprint;
-            const optionViewsRule: ErrorTypes = options.views || options.rules.views;
-            const optionMaxWarning: number =  options.maxWarning || options.rules.maxWarning;
-            const optionZombiesRule: ErrorTypes = options.zombies || options.rules.zombies;
-            const optionIgnoredKeys: string[] = options.ignoredKeys || options.rules.ignoredKeys;
-            const optionMisprintCoefficient: number = options.misprintCoefficient || options.rules.misprintCoefficient;
-            const optionIgnoredMisprintKeys: string[] = options.ignoredMisprintKeys || options.rules.ignoredMisprintKeys;
-            const optionAstRules: IRulesAstConfig = options.ast || options.rules.ast;
+
+            let optionIgnore: string;
+            let optionMisprint: ErrorTypes;
+            let optionViewsRule: ErrorTypes;
+            let optionMaxWarning: number ;
+            let optionZombiesRule: ErrorTypes ;
+            let optionIgnoredKeys: string[];
+            let optionMisprintCoefficient: number ;
+            let optionIgnoredMisprintKeys: string[];
+            let optionAstRules: IRulesAstConfig;
+            if (!!options.rules) {
+                 optionIgnore = options.rules.ignore;
+                 optionMisprint =  options.rules.misprint;
+                 optionViewsRule =  options.rules.views;
+                 optionMaxWarning =  options.rules.maxWarning;
+                 optionZombiesRule = options.rules.zombies;
+                 optionIgnoredKeys =  options.rules.ignoredKeys;
+                 optionMisprintCoefficient = options.rules.misprintCoefficient;
+                 optionIgnoredMisprintKeys =  options.rules.ignoredMisprintKeys;
+                 optionAstRules =  options.rules.ast;
+            } else {
+                 optionIgnore = options.ignore ;
+                 optionMisprint = options.misprint ;
+                 optionViewsRule = options.views;
+                 optionMaxWarning =  options.maxWarning ;
+                 optionZombiesRule = options.zombies ;
+                 optionIgnoredKeys = options.ignoredKeys;
+                 optionMisprintCoefficient = options.misprintCoefficient ;
+                 optionIgnoredMisprintKeys = options.ignoredMisprintKeys ;
+                 optionAstRules = options.ast;
+            }
+
 
             if (options.project && options.languages) {
                 this.runLint(
