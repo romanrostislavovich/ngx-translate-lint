@@ -1,9 +1,9 @@
 import { flatMap } from 'lodash';
 import { join } from 'path';
 import { config } from './config';
-import { ErrorFlow, ErrorTypes } from './enums';
-import { IRuleAst, IRulesConfig } from './interface';
-import { KeysUtils, resourceResolver } from './utils';
+import { ErrorTypes } from './enums';
+import { IRulesConfig } from './interface';
+import { KeysUtils } from './utils';
 import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel, LanguagesModel } from './models';
 import {
     AbsentViewKeysRule,
@@ -12,13 +12,10 @@ import {
 } from './rules';
 import * as path from 'path';
 import { KeyModelWithLanguages, LanguagesModelWithKey, ViewModelWithKey } from './models/KeyModelWithLanguages';
-import { DirectiveSymbol, WorkspaceSymbols } from 'ngast';
+import { WorkspaceSymbols } from 'ngast';
 import { AstIsNgxTranslateImportedRule } from './rules/ast/IsNgxTranslateImportedAstRule';
 import { NgModuleSymbol } from 'ngast/lib/ngtsc/module.symbol';
-import { PipeSymbol } from 'ngast/lib/ngtsc/pipe.symbol';
-import { InjectableSymbol } from 'ngast/lib/ngtsc/injectable.symbol';
-import { ClassRecord } from '@angular/compiler-cli/src/ngtsc/transform';
-import { ComponentSymbol } from 'ngast/lib/ngtsc/component.symbol';
+
 
 class NgxTranslateLint {
     public rules: IRulesConfig;
@@ -96,7 +93,17 @@ class NgxTranslateLint {
 
     public getLanguages(): LanguagesModel[] {
         const result: LanguagesModel[] = [];
-        const languagesKeys: FileLanguageModel = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeysWithValue();
+        const languagesFiles: FileLanguageModel = new FileLanguageModel(this.languagesPath, [], [], this.ignore);
+        const languagesKeys: FileLanguageModel = languagesFiles.getKeysWithValue();
+
+        if (languagesKeys.keys.length === 0) {
+            languagesFiles.files.forEach((filePath: string) => {
+                const languageName: string = path.basename(filePath, '.json');
+                const languageModel: LanguagesModel = new LanguagesModel(languageName);
+                languageModel.path = filePath;
+                result.push(languageModel);
+            });
+        }
 
         languagesKeys.keys.forEach((key: KeyModel) => {
            key.languages.forEach((languagePath: string) => {
