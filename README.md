@@ -91,8 +91,8 @@ Options:
 
 Examples:
 
-    $ npx ngx-translate-lint  -p ./src/app/**/*.{html,ts} -l ./src/assets/i18n/*.json'
-    $ ngx-translate-lint -p ./src/app/**/*.{html,ts} -l ./src/assets/i18n/*.json'
+    $ npx ngx-translate-lint  -p ./src/app/**/*.{html,ts} -l ./src/assets/i18n/*.json
+    $ ngx-translate-lint -p ./src/app/**/*.{html,ts} -l ./src/assets/i18n/*.json
     $ ngx-translate-lint -p ./src/app/**/*.{html,ts} -z disable -v error
 ```
 
