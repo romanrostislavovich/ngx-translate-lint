@@ -31,9 +31,9 @@ which should exist in all languages files.
 ```bash
 npm install ngx-translate-lint -g
 
-BETA: 
+BETA:
 
-npm install ngx-translate-lint @angular/core @angular/compiler @angular/compiler-cli -g 
+npm install ngx-translate-lint @angular/core @angular/compiler @angular/compiler-cli -g
 ```
 
 ### GitHub
@@ -99,7 +99,7 @@ Examples:
 > NOTE: For `project` and `languages` options need to include file types like on the example.
 > WARNING!: `BETA` flag working only with angular 11 and higher!
 
-Default Config is: 
+Default Config is:
 ```json
 {
     "rules": {
@@ -108,7 +108,7 @@ Default Config is:
         "misprint": "warning",
         "maxWarning": "0",
         "misprintCoefficient": "0.9",
-        "ignoredKeys": [],
+        "ignoredKeys": [ "IGNORED.KEY.(.*)" ], // can be string or RegExp
         "ignoredMisprintKeys": [],
         "ast": {
           "isNgsTranslateImported": "error"
@@ -142,7 +142,7 @@ const ruleConfig: IRulesConfig = {
         misprint: ErrorTypes.warning,
         maxWarning: 0,
         misprintCoefficient: 0.9,
-        ignoredKeys: [ 'EXAMPLE.KEY' ],
+        ignoredKeys: [ 'EXAMPLE.KEY', 'IGNORED.KEY.(.*)' ], // can be string or RegExp
         ignoredMisprintKeys: []
 };
 
@@ -152,7 +152,7 @@ const languages: LanguagesModel[] = ngxTranslateLint.getLanguages()  // Get Lang
 
 ```
 
-#### NOTE! 
+#### NOTE!
 If you have error `Can't resolve 'fs' in ...`. Please add next setting to you project:
  - webpack.js: (`angular.webpack.json`)
 ```javascript
@@ -161,7 +161,7 @@ config.externals = {
     "fs": 'require("fs")',
     "path": 'require("path")'
 };
-``` 
+```
  - tsconfig.json
  ```json
 {

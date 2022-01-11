@@ -72,7 +72,7 @@ class NgxTranslateLint {
         if(this.rules.ignoredKeys?.length !== 0) {
             errors = errors.reduce<ResultErrorModel[]>((acum, errorKey) => {
                 const errorKeyValue: string = errorKey.value;
-                if (!this.rules.ignoredKeys.includes(errorKeyValue)) {
+                if (!this.rules.ignoredKeys.some(ignoredKey => new RegExp(ignoredKey, "i").test(errorKeyValue))) {
                     const correctError: ResultErrorModel = new ResultErrorModel(
                         errorKey.value,
                         errorKey.errorFlow,
