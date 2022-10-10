@@ -1,5 +1,12 @@
 # CHANGELOG
 
+# [1.15.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.14.1...v1.15.0) (2022-10-10)
+
+
+### Features
+
+* add Regular Expression support for ignoredKeys ([f0f9acb](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/f0f9acb783cbe207193279fa188f7bf7fe51311e))
+
 ## [1.14.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.14.0...v1.14.1) (2021-02-03)
 
 

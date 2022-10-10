@@ -1,7 +1,7 @@
 {
     "author": "Raman Lauryniuk <romanrostislavovich@gmail.com>",
     "name": "ngx-translate-lint",
-    "version": "1.14.1",
+    "version": "1.15.0",
     "description": "Simple tools for check `ngx-translate` keys in app",
     "license": "MIT",
     "repository": "svoboda-rabstvo/ngx-translate-lint",
@@ -24,7 +24,7 @@
         "build": "tsc -p .",
         "lint": "npm run lint:typescript && npm run lint:markdown",
         "test": "npm run lint && npm run build && npm run test:integration",
-        "semantic-release": "semantic-release",
+        "semantic-release": "env-cmd semantic-release --no-ci",
         "self-lint": "npx ngx-translate-lint -p ./test/integration/inputs/views/*.{html,ts} -l ./test/integration/inputs/locales/*.json -i ./test/integration/inputs/locales/incorrect.json"
     },
     "files": [
