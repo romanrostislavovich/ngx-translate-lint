@@ -124,6 +124,22 @@ const assertDefaultModel: ResultErrorModel[]= [
             'EN-us.json'
         ]
     ),
+    new ResultErrorModel(
+        'general.buttons.back',
+        ErrorFlow.views, ErrorTypes.error,
+        getAbsolutePath(projectFolder, 'pipe.keys.html'),
+        [
+            'EN-us.json'
+        ]
+    ),
+    new ResultErrorModel(
+        'general.buttons.back.PART-2',
+        ErrorFlow.views, ErrorTypes.error,
+        getAbsolutePath(projectFolder, 'pipe.keys.html'),
+        [
+            'EN-us.json'
+        ]
+    ),
     // END BUG 61
     new ResultErrorModel(
         'STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_ONE_LOCALES',
