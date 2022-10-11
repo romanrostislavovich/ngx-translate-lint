@@ -17,6 +17,7 @@ import {
 import { assertFullModel } from './results/arguments.full';
 import { assertDefaultModel } from './results/default.full';
 import { assertCustomConfig } from './results/custom.config';
+import { configValues } from './results/config.values';
 import { getAbsolutePath, projectFolder } from './utils';
 
 describe('Core Integration', () => {
@@ -285,7 +286,7 @@ describe('Core Integration', () => {
         describe('getKeys', () => {
             it('should be correct', () => {
                 // Arrange
-                 const countOfKeys: number = 16;
+                 const countOfKeys: number = configValues.totalKeys;
                 // Act
                 const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
                 const result: KeyModelWithLanguages[] = model.getKeys();

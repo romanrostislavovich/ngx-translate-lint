@@ -107,6 +107,24 @@ const assertCustomConfig: ResultErrorModel[] = [
         ]
     ),
     // END BUG 61
+    // BUG 115
+    new ResultErrorModel(
+        'general.buttons.back',
+        ErrorFlow.views, ErrorTypes.warning,
+        getAbsolutePath(projectFolder, 'pipe.keys.html'),
+        [
+            'EN-us.json'
+        ]
+    ),
+    new ResultErrorModel(
+        'general.buttons.back.PART-2',
+        ErrorFlow.views, ErrorTypes.warning,
+        getAbsolutePath(projectFolder, 'pipe.keys.html'),
+        [
+            'EN-us.json'
+        ]
+    ),
+    // END BUG 115
 ];
 
 export { assertCustomConfig };
