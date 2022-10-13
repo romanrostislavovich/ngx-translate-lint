@@ -1,21 +1,5 @@
 # CHANGELOG
 
-# [1.15.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.14.1...v1.15.0) (2022-10-13)
-
-
-### Bug Fixes
-
-* changelog ([b98e739](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/b98e739fb3b2fe9c6dfe4e7ee8e2a8fd1dd92612))
-* gitignoer ([7b00f68](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/7b00f6898be7725c79bb1deb6642dfeb8901b2b1))
-* Incorrect behaviour with component mat-icon which includes a translation for the value of its attribute/property/directive ([30b5355](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/30b5355e73a7256d808300b2f7fe1f899cc2a5b9)), closes [#115](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/115)
-* readme ([887effc](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/887effca9004c4a814b0f0e77879422ebc5616c3))
-
-
-### Features
-
-* add Regular Expression support for ignoredKeys ([f0f9acb](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/f0f9acb783cbe207193279fa188f7bf7fe51311e))
-* Treat empty value as missing ([94d1af9](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/94d1af9427d9a457a2dcb3ec50a4e4749d2f5185)), closes [#107](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/107)
-
 # [1.16.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.14.1...v1.15.0) (2022-10-13)
 
 
