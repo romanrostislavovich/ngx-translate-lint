@@ -59,6 +59,22 @@ const cliOptions: OptionModel[] = [
             ErrorTypes.error
         ]
     }),
+
+    new OptionModel({
+        shortName: OptionsShortNames.emptyKeys,
+        longName: OptionsLongNames.emptyKeys,
+        required: false,
+        type: ArgumentTypes.enum,
+        description: `Described how to handle empty value on translate keys`,
+        additionalDescription: ``,
+        default: ErrorTypes.warning,
+        values: [
+            ErrorTypes.disable,
+            ErrorTypes.warning,
+            ErrorTypes.error
+        ]
+    }),
+
     new OptionModel({
         shortName: OptionsShortNames.ignore,
         longName: OptionsLongNames.ignore,
