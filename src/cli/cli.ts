@@ -78,16 +78,18 @@ class Cli {
 
             let optionIgnore: string;
             let optionMisprint: ErrorTypes;
+            let optionEmptyKey: ErrorTypes;
             let optionViewsRule: ErrorTypes;
             let optionMaxWarning: number ;
-            let optionZombiesRule: ErrorTypes ;
+            let optionZombiesRule: ErrorTypes;
             let optionIgnoredKeys: string[];
             let optionMisprintCoefficient: number ;
             let optionIgnoredMisprintKeys: string[];
             let optionAstRules: IRulesAstConfig;
             if (!!options.rules) {
                  optionIgnore = options.rules.ignore;
-                 optionMisprint =  options.rules.misprint;
+                 optionMisprint = options.rules.misprint;
+                 optionEmptyKey = options.rules.emptyKeys;
                  optionViewsRule =  options.rules.views;
                  optionMaxWarning =  options.rules.maxWarning;
                  optionZombiesRule = options.rules.zombies;
@@ -98,8 +100,9 @@ class Cli {
             } else {
                  optionIgnore = options.ignore ;
                  optionMisprint = options.misprint ;
+                 optionEmptyKey = options.emptyKeys;
                  optionViewsRule = options.views;
-                 optionMaxWarning =  options.maxWarning ;
+                 optionMaxWarning =  options.maxWarning;
                  optionZombiesRule = options.zombies ;
                  optionIgnoredKeys = options.ignoredKeys;
                  optionMisprintCoefficient = options.misprintCoefficient ;
@@ -111,7 +114,7 @@ class Cli {
             if (options.project && options.languages) {
                 this.runLint(
                     projectPath, languagePath, optionZombiesRule,
-                    optionViewsRule, optionIgnore, optionMaxWarning, optionMisprint,
+                    optionViewsRule, optionIgnore, optionMaxWarning, optionMisprint, optionEmptyKey,
                     optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys, optionAstRules, tsConfigPath
                 );
             } else {
@@ -157,6 +160,7 @@ class Cli {
         ignore?: string,
         maxWarning: number = 1,
         misprint?: ErrorTypes,
+        emptyKeys?: ErrorTypes,
         misprintCoefficient: number = 0.9,
         ignoredKeys: string[] = [],
         ignoredMisprintKeys: string[] = [],
@@ -168,6 +172,7 @@ class Cli {
             const errorConfig: IRulesConfig = {
                 misprint: misprint || ErrorTypes.warning,
                 zombieKeys: zombies || ErrorTypes.warning,
+                emptyKeys: emptyKeys || ErrorTypes.warning,
                 keysOnViews: views || ErrorTypes.error,
                 ast,
                 maxWarning,

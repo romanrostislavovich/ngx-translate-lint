@@ -45,6 +45,21 @@ class ResultCliModel {
         return result;
     }
 
+    public getEmptyKeys(): ResultErrorModel[] {
+        const result: ResultErrorModel[] = (this.errors.filter((item: ResultErrorModel) => item.errorFlow === ErrorFlow.emptyKeys) || []);
+        return result;
+    }
+
+    public countEmptyKeys(): number {
+        const result: number = (this.errors.filter((item: ResultErrorModel) => item.errorFlow === ErrorFlow.emptyKeys) || []).length;
+        return result;
+    }
+
+    public hasEmptyKeys(): boolean {
+        const result: boolean = this.countEmptyKeys() > 0;
+        return result;
+    }
+
     public exitCode(): StatusCodes {
         return this.hasErrors() ? StatusCodes.error : StatusCodes.successful;
     }

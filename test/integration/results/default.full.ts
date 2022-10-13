@@ -153,6 +153,14 @@ const assertDefaultModel: ResultErrorModel[]= [
             "STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_IN_LOCALES"
         ]
     ),
+
+    // FEAT 107
+    new ResultErrorModel(
+        'EMPTY.KEY',
+        ErrorFlow.emptyKeys, ErrorTypes.warning,
+        getAbsolutePath(languagesFolder, 'EN-eu.json')
+    ),
+    // END FEAT 107
 ];
 
 export { assertDefaultModel };

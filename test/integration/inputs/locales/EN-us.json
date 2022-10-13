@@ -16,5 +16,6 @@
         "KEY_FROM_ENUM": {
             "EXIST_IN_ALL_LOCALES": "Key from enum"
         }
-    }
+    },
+    "EMPTY.KEY": "NOT EMPTY"
 }

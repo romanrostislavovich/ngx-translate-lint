@@ -15,6 +15,13 @@ const assertFullModel: ResultErrorModel[]= [
         ErrorFlow.zombie, ErrorTypes.warning,
         getAbsolutePath(languagesFolder, 'EN-us.json'),
     ),
+    // FEAT 107
+    new ResultErrorModel(
+        'EMPTY.KEY',
+        ErrorFlow.zombie, ErrorTypes.warning,
+        getAbsolutePath(languagesFolder, 'EN-us.json')
+    ),
+    // END FEAT 107
     new ResultErrorModel(
         'STRING.KEY_FROM_DIRECTIVE_VIEW.EXIST_IN_ONE_LOCALE',
         ErrorFlow.views, ErrorTypes.error,
@@ -66,6 +73,7 @@ const assertFullModel: ResultErrorModel[]= [
             "STRING.KEY_FROM_DIRECTIVE_VIEW.EXIST_IN_ALL_LOCALES"
         ]
     ),
+
     new ResultErrorModel(
         'STRING.KEY_FROM_DIRECTIVE_INSIDE_TAG_VIEW.EXIST_IN_ONE_LOCALE',
         ErrorFlow.misprint, ErrorTypes.warning,
@@ -77,6 +85,7 @@ const assertFullModel: ResultErrorModel[]= [
             "STRING.KEY_FROM_DIRECTIVE_INSIDE_TAG_VIEW.EXIST_IN_ALL_LOCALES"
         ]
     ),
+
 ];
 
 export { assertFullModel };

@@ -7,6 +7,7 @@ enum OptionsLongNames {
     zombies = 'zombies',
     tsconfig = 'tsconfig',
     misprint = 'misprint',
+    emptyKeys = 'emptyKeys',
     languages = 'languages',
     maxWarning = 'maxWarning',
     misprintCoefficient = 'misprintCoefficient',
@@ -22,6 +23,7 @@ enum OptionsShortNames {
     misprint = 'm',
     tsconfig = 't',
     languages = 'l',
+    emptyKeys = 'e',
     misprintCoefficient = 'mc',
 }
 
