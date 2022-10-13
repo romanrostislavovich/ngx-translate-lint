@@ -69,6 +69,10 @@ Options:
           Described how to handle the error of zombies keys
           Possible Values: <disable|warning|error>
           (default: "warning")
+   -e, --emptyKeys [enum]
+          Described how to handle empty value on translate keys
+          Possible Values: <disable|warning|error>
+           (default: "warning")
   -i,  --ignore [glob]
           Ignore projects and languages files
           Possible Values: <relative path|absolute path>
@@ -106,6 +110,7 @@ Default Config is:
         "keysOnViews": "error",
         "zombieKeys": "warning",
         "misprint": "warning",
+        "emptyKeys": "warning",
         "maxWarning": "0",
         "misprintCoefficient": "0.9",
         "ignoredKeys": [ "IGNORED.KEY.(.*)" ], // can be string or RegExp
@@ -140,6 +145,7 @@ const ruleConfig: IRulesConfig = {
         keysOnViews: ErrorTypes.error,
         zombieKeys: ErrorTypes.warning,
         misprint: ErrorTypes.warning,
+        emptyKeys: ErrorTypes.warning,
         maxWarning: 0,
         misprintCoefficient: 0.9,
         ignoredKeys: [ 'EXAMPLE.KEY', 'IGNORED.KEY.(.*)' ], // can be string or RegExp
