@@ -1,16 +1,12 @@
 import { flatMap } from 'lodash';
+import * as path from 'path';
 import { join } from 'path';
 import { config } from './config';
 import { ErrorTypes } from './enums';
 import { IRulesConfig } from './interface';
 import { KeysUtils } from './utils';
-import { FileLanguageModel, FileViewModel, KeyModel, ResultCliModel, ResultErrorModel, LanguagesModel } from './models';
-import {
-    AbsentViewKeysRule,
-    MisprintRule,
-    ZombieRule
-} from './rules';
-import * as path from 'path';
+import { FileLanguageModel, FileViewModel, KeyModel, LanguagesModel, ResultCliModel, ResultErrorModel } from './models';
+import { AbsentViewKeysRule, MisprintRule, ZombieRule, EmptyKeysRule } from './rules';
 import { KeyModelWithLanguages, LanguagesModelWithKey, ViewModelWithKey } from './models/KeyModelWithLanguages';
 import { WorkspaceSymbols } from 'ngast';
 import { AstIsNgxTranslateImportedRule } from './rules/ast/IsNgxTranslateImportedAstRule';
@@ -48,7 +44,7 @@ class NgxTranslateLint {
             throw new Error('Error config is incorrect');
         }
 
-        const languagesKeys: FileLanguageModel = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeys();
+        const languagesKeys: FileLanguageModel = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeysWithValue();
         const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
         const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames);
         const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
@@ -58,7 +54,8 @@ class NgxTranslateLint {
         if (
             this.rules.zombieKeys !== ErrorTypes.disable ||
             this.rules.keysOnViews !== ErrorTypes.disable ||
-            this.rules.misprint !== ErrorTypes.disable
+            this.rules.misprint !== ErrorTypes.disable ||
+            this.rules.emptyKeys !== ErrorTypes.disable
         ) {
             const regExpResult: ResultErrorModel[] = this.runRegExp(views, languagesKeys);
             errors.push(...regExpResult);
@@ -189,6 +186,12 @@ class NgxTranslateLint {
         if (rules.misprint !== ErrorTypes.disable) {
             const ruleInstance: MisprintRule = new MisprintRule(this.rules.misprint, this.rules.misprintCoefficient, this.rules.ignoredMisprintKeys);
             const ruleResult: ResultErrorModel[] = ruleInstance.check(result, languagesKeys.keys);
+            result.push(...ruleResult);
+        }
+
+        if (rules.emptyKeys !== ErrorTypes.disable) {
+            const ruleInstance: EmptyKeysRule = new EmptyKeysRule(this.rules.emptyKeys);
+            const ruleResult: ResultErrorModel[] = ruleInstance.check(languagesKeys.keys);
             result.push(...ruleResult);
         }
 

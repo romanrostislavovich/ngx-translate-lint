@@ -3,6 +3,7 @@ interface IArgv {
     languages: string;
     views?: string;
     zombies?: string;
+    emptyKeys?: string;
     help?: boolean;
     version?: boolean;
     ignore?: string;

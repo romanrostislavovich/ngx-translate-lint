@@ -1,5 +1,5 @@
 import { ErrorFlow, ErrorTypes, ResultErrorModel } from "../../../src/core";
-import { getAbsolutePath, projectFolder } from '../utils';
+import { getAbsolutePath, languagesFolder, projectFolder } from '../utils';
 
 const assertCustomConfig: ResultErrorModel[] = [
     new ResultErrorModel(
@@ -107,6 +107,32 @@ const assertCustomConfig: ResultErrorModel[] = [
         ]
     ),
     // END BUG 61
+    // BUG 115
+    new ResultErrorModel(
+        'general.buttons.back',
+        ErrorFlow.views, ErrorTypes.warning,
+        getAbsolutePath(projectFolder, 'pipe.keys.html'),
+        [
+            'EN-us.json'
+        ]
+    ),
+    new ResultErrorModel(
+        'general.buttons.back.PART-2',
+        ErrorFlow.views, ErrorTypes.warning,
+        getAbsolutePath(projectFolder, 'pipe.keys.html'),
+        [
+            'EN-us.json'
+        ]
+    ),
+    // END BUG 115
+
+    // FEAT 107
+    new ResultErrorModel(
+        'EMPTY.KEY',
+        ErrorFlow.emptyKeys, ErrorTypes.warning,
+        getAbsolutePath(languagesFolder, 'EN-eu.json')
+    ),
+    // END FEAT 107
 ];
 
 export { assertCustomConfig };

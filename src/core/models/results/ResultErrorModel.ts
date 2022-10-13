@@ -43,6 +43,9 @@ class ResultErrorModel implements IValidationMessage  {
                    return accum;
                 }, []);
                 break;
+            case ErrorFlow.emptyKeys:
+                message = `Key: '${this.value}' is empty in ${this.currentPath}`;
+                break;
             default:
                 message = 'Unknown error please write to the author';
                 break;

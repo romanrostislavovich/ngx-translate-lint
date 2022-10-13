@@ -2,6 +2,7 @@
   "rules": {
     "keysOnViews": "error",
     "zombieKeys": "warning",
+    "emptyKeys": "warning",
     "misprint": {
       "type": "warning",
       "coefficient": 0.9

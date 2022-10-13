@@ -4,6 +4,7 @@
     {{ 'STRING.KEY_FROM_PIPE_VIEW.ABSENT_IN_ALL_LOCALES' | anotherPipe | translate }}
     {{ 'STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_ONE_LOCALES' | translate }}
     {{ 'OBJECT.KEY_FROM_PIPE_VIEW.EXIST_IN_ALL_LOCALES' | translate }}
+    {{ 'EMPTY.KEY' | translate }}
 </div>
 <div> {{'BUG92' | translate}} <mat-icon >keyboard_arrow_down</mat-icon> </div>
 <div>
@@ -11,4 +12,8 @@
     <h1 *ngIf="creatorState === CreatorState.NEW">{{'carousel.details.title-new' | translate}}</h1>
     <h1 *ngIf="creatorState === CreatorState.NEW">{{'creatorState.NEW' | translate}}</h1>
     <!-- END BUG 61 -->
+    <!-- BUG 115 -->
+    <mat-icon [matTooltip]="'general.buttons.back' | translate">keyboard_arrow_left</mat-icon>
+    <mat-icon [matTooltip]="'general.buttons.back.PART-2' | translate     ">keyboard_arrow_left</mat-icon>
+    <!-- END BUG 115 -->
 </div>

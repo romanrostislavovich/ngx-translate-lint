@@ -12,11 +12,13 @@ import {
     NgxTranslateLint,
     ResultCliModel,
     ResultErrorModel,
+    config as defaultConfig,
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
 import { assertDefaultModel } from './results/default.full';
 import { assertCustomConfig } from './results/custom.config';
+import { configValues } from './results/config.values';
 import { getAbsolutePath, projectFolder } from './utils';
 
 describe('Core Integration', () => {
@@ -31,6 +33,80 @@ describe('Core Integration', () => {
     const languagesIncorrectFile: string = './test/integration/inputs/locales/incorrect.json';
     const languagesAbsentMaskPath: string = './test/integration/inputs/locales';
 
+    describe('Empty Keys', () => {
+        it('should be warning by default', () => {
+            // Arrange
+            const hasEmptyKeys: boolean = true;
+            const countEmptyKeys: number = 1;
+            const errorType: ErrorTypes = ErrorTypes.warning;
+            // Act
+            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
+            const result: ResultCliModel = model.lint();
+
+            // Assert
+            assert.deepEqual(errorType, result.getEmptyKeys()[0].errorType);
+            assert.deepEqual(hasEmptyKeys, result.hasEmptyKeys());
+            assert.deepEqual(countEmptyKeys, result.countEmptyKeys());
+        });
+        it('should be error', () => {
+            // Arrange
+            const hasEmptyKeys: boolean = true;
+            const countEmptyKeys: number = 1;
+            const errorType: ErrorTypes = ErrorTypes.error;
+            const errorConfig: IRulesConfig = {
+                ...defaultConfig.defaultValues.rules,
+                emptyKeys: ErrorTypes.error,
+            };
+            // Act
+            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, undefined, errorConfig);
+            const result: ResultCliModel = model.lint();
+
+            // Assert
+            assert.deepEqual(errorType, result.getEmptyKeys()[0].errorType);
+            assert.deepEqual(hasEmptyKeys, result.hasEmptyKeys());
+            assert.deepEqual(countEmptyKeys, result.countEmptyKeys());
+        });
+      /*  it('should be error', () => {
+            // Arrange
+            const errorConfig: IRulesConfig = {
+                ast: {
+                    isNgxTranslateImported: ErrorTypes.disable,
+                },
+                keysOnViews: ErrorTypes.error,
+                zombieKeys: ErrorTypes.warning,
+                misprint:  ErrorTypes.error,
+                emptyKeys: ErrorTypes.warning,
+                maxWarning: 1,
+                misprintCoefficient: 0.9,
+                ignoredKeys: ["IGNORED.KEY.FLAG"],
+                ignoredMisprintKeys: []
+            };
+            const hasMisprint: boolean = true;
+            const countMisprint: number = 1;
+            const correctError: ResultErrorModel = new ResultErrorModel(
+                'STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_ONE_LOCALES',
+                ErrorFlow.misprint, ErrorTypes.error,
+                getAbsolutePath(projectFolder, 'pipe.keys.html'),
+                [
+                    'EN-eu.json',
+                    'EN-us.json'
+                ],
+                [
+                    "STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_IN_LOCALES"
+                ]
+            );
+
+            // Act
+            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath,  '', errorConfig);
+            const result: ResultCliModel = model.lint();
+            const clearErrors: ResultErrorModel[] = result.errors.filter((error: ResultErrorModel) => error.errorFlow === ErrorFlow.misprint);
+
+            // Assert
+            assert.deepEqual(hasMisprint, result.hasMisprint());
+            assert.deepEqual(countMisprint, result.countMisprint());
+            assert.deepEqual(correctError, clearErrors.pop());
+        });*/
+    });
     describe('Misprint', () => {
         it('should be warning by default', () => {
             // Arrange
@@ -54,6 +130,7 @@ describe('Core Integration', () => {
                 keysOnViews: ErrorTypes.error,
                 zombieKeys: ErrorTypes.warning,
                 misprint:  ErrorTypes.error,
+                emptyKeys: ErrorTypes.warning,
                 maxWarning: 1,
                 misprintCoefficient: 0.9,
                 ignoredKeys: ["IGNORED.KEY.FLAG"],
@@ -119,6 +196,7 @@ describe('Core Integration', () => {
                 },
                 keysOnViews: ErrorTypes.warning,
                 zombieKeys: ErrorTypes.warning,
+                emptyKeys: ErrorTypes.warning,
                 maxWarning: 1,
                 misprintCoefficient: 0.9,
                 misprint: ErrorTypes.disable,
@@ -254,6 +332,7 @@ describe('Core Integration', () => {
                 },
                 keysOnViews: ErrorTypes.warning,
                 zombieKeys: ErrorTypes.disable,
+                emptyKeys: ErrorTypes.warning,
                 maxWarning: 1,
                 misprintCoefficient: 0.9,
                 misprint: ErrorTypes.disable,
@@ -285,7 +364,7 @@ describe('Core Integration', () => {
         describe('getKeys', () => {
             it('should be correct', () => {
                 // Arrange
-                 const countOfKeys: number = 16;
+                 const countOfKeys: number = configValues.totalKeys;
                 // Act
                 const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
                 const result: KeyModelWithLanguages[] = model.getKeys();
@@ -303,6 +382,7 @@ describe('Core Integration', () => {
             },
             keysOnViews: ErrorTypes.error,
             zombieKeys: ErrorTypes.warning,
+            emptyKeys: ErrorTypes.warning,
             maxWarning: 1,
             misprintCoefficient: 0.9,
             misprint: ErrorTypes.warning,
