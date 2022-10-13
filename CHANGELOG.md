@@ -1,6 +1,6 @@
 # CHANGELOG
 
-# [1.15.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.14.1...v1.15.0) (2022-10-13)
+# [1.16.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.14.1...v1.15.0) (2022-10-13)
 
 
 ### Bug Fixes
