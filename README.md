@@ -115,6 +115,7 @@ Default Config is:
         "misprintCoefficient": "0.9",
         "ignoredKeys": [ "IGNORED.KEY.(.*)" ], // can be string or RegExp
         "ignoredMisprintKeys": [],
+        "customRegExpToFindKeys": [ /marker\("(.*)"\)/gm ], // to find: marker("TRSNLATE.KEY");
         "ast": {
           "isNgsTranslateImported": "error"
         }

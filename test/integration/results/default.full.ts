@@ -20,6 +20,16 @@ const assertDefaultModel: ResultErrorModel[]= [
         ErrorFlow.zombie, ErrorTypes.warning,
         getAbsolutePath(languagesFolder, 'EN-eu.json')
     ),
+    // FEAT 97
+    new ResultErrorModel(
+        'CUSTOM.REGEXP.ONE',
+        ErrorFlow.views, ErrorTypes.error,
+        getAbsolutePath(projectFolder, 'custom.keys.ts'),
+        [
+            'EN-us.json'
+        ]
+    ),
+    // END FEAT 97
     new ResultErrorModel(
         'STRING.KEY_FROM_DIRECTIVE_VIEW.EXIST_IN_ONE_LOCALE',
         ErrorFlow.views, ErrorTypes.error,

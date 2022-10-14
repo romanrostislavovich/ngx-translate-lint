@@ -12,7 +12,7 @@ class KeysUtils {
         }).value();
     }
 
-    public static findKeysList(keys: string[]): RegExp {
+    public static findKeysList(keys: string[], customRegExp: string[] | RegExp[] = []): RegExp {
         const keysFromDirectiveInsideTag: string = `(?<=<[^<]*[\\s*\\w*\\s*]*(translate|TRANSLATE)(?!\\}|\\s{0,}\\")[\\s*\\w*\\s*]*[^>]*>\\s*)([a-zA-Z0-9_.]*)(?=\\s*<\\s*\\/.*\\s*>)`;
         const keysFromDirectiveInView: string = `(?<=translate=["']{1,2}|\\[translate\\]=["']{1,2})([A-Za-z0-9_.]+)(?=["']{1,2})`;
         const keysFromPipeInView: string = `(?<=['"])([a-zA-Z0-9_\\-.]*)(?=['"]\\s?\\|\\s?translate|['"](\\s*\\|\\s*\\w*)*translate)`;
@@ -20,11 +20,16 @@ class KeysUtils {
             const regExpForSingleKey: string = `(?<=[^\\w.-])${key.replace('.', '\\.')}(?=[^\\w.-])`;
             return regExpForSingleKey;
         }).join('|');
+        // @ts-ignore
+        const customRegExpList: string[] = customRegExp.map((regexp: string ) => {
+           return `(${regexp})`;
+        });
         const resultKeysRegExp: string[] = [
             keysListRegExp,
             keysFromPipeInView,
             keysFromDirectiveInView,
             keysFromDirectiveInsideTag,
+            ...customRegExpList
         ];
         return new RegExp(resultKeysRegExp.join('|'), 'gm');
     }

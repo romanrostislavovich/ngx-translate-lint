@@ -11,6 +11,7 @@ interface IRulesConfig {
     misprintCoefficient: number;
     ignoredKeys: string[];
     ignoredMisprintKeys: string[];
+    customRegExpToFindKeys: string[] | RegExp[];
 }
 
 export { IRulesConfig };
