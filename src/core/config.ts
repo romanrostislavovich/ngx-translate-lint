@@ -14,7 +14,8 @@ const config: IAppConfig = {
             maxWarning: 0,
             misprintCoefficient: 0.9,
             ignoredKeys: [],
-            ignoredMisprintKeys: []
+            ignoredMisprintKeys: [],
+            customRegExpToFindKeys: []
         },
         tsconfigPath: './',
         projectPath: './src/app/**/*.{html,ts,resx}',
@@ -34,7 +35,8 @@ const defaultConfig: object = {
         "maxWarning": "0",
         "misprintCoefficient": "0.9",
         "ignoredKeys": [],
-        "ignoredMisprintKeys": []
+        "ignoredMisprintKeys": [],
+        "customRegExpToFindKeys": [],
     },
     "tsconfig": './',
     "project": './src/app/**/*.{html,ts,resx}',

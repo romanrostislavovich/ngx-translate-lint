@@ -30,5 +30,6 @@
     "general.buttons.back": "BUG 115",
     "general.buttons.back.PART-2": "BUG 115",
     "IGNORED.KEY.FLAG": "IGNORED.KEY.FLAG",
-    "EMPTY.KEY": ""
+    "EMPTY.KEY": "",
+    "CUSTOM.REGEXP.ONE": "CUSTOM.REGEXP.ONE"
 }

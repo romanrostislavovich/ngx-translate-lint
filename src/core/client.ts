@@ -46,7 +46,8 @@ class NgxTranslateLint {
 
         const languagesKeys: FileLanguageModel = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeysWithValue();
         const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
-        const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames);
+        const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys);
+        //
         const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
 
         let errors: ResultErrorModel[] = [];
@@ -120,7 +121,7 @@ class NgxTranslateLint {
 
         if (this.projectPath) {
             const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
-            const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames);
+            const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys);
             const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
 
             views.keys.forEach((key: KeyModel) => {

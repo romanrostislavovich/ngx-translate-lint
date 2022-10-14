@@ -85,6 +85,7 @@ class Cli {
             let optionIgnoredKeys: string[];
             let optionMisprintCoefficient: number ;
             let optionIgnoredMisprintKeys: string[];
+            let optionCustomRegExpToFindKeys: string[] | RegExp[];
             let optionAstRules: IRulesAstConfig;
             if (!!options.rules) {
                  optionIgnore = options.rules.ignore;
@@ -96,17 +97,19 @@ class Cli {
                  optionIgnoredKeys =  options.rules.ignoredKeys;
                  optionMisprintCoefficient = options.rules.misprintCoefficient;
                  optionIgnoredMisprintKeys =  options.rules.ignoredMisprintKeys;
+                 optionCustomRegExpToFindKeys = options.rulescustomRegExpToFindKeys;
                  optionAstRules =  options.rules.ast;
             } else {
-                 optionIgnore = options.ignore ;
-                 optionMisprint = options.misprint ;
+                 optionIgnore = options.ignore;
+                 optionMisprint = options.misprint;
                  optionEmptyKey = options.emptyKeys;
                  optionViewsRule = options.views;
                  optionMaxWarning =  options.maxWarning;
-                 optionZombiesRule = options.zombies ;
+                 optionZombiesRule = options.zombies;
                  optionIgnoredKeys = options.ignoredKeys;
                  optionMisprintCoefficient = options.misprintCoefficient ;
                  optionIgnoredMisprintKeys = options.ignoredMisprintKeys ;
+                 optionCustomRegExpToFindKeys = options.rulescustomRegExpToFindKeys;
                  optionAstRules = options.ast;
             }
 
@@ -115,7 +118,7 @@ class Cli {
                 this.runLint(
                     projectPath, languagePath, optionZombiesRule,
                     optionViewsRule, optionIgnore, optionMaxWarning, optionMisprint, optionEmptyKey,
-                    optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys, optionAstRules, tsConfigPath
+                    optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys, optionCustomRegExpToFindKeys, optionAstRules, tsConfigPath
                 );
             } else {
                 const cliHasError: boolean = this.validate();
@@ -164,6 +167,7 @@ class Cli {
         misprintCoefficient: number = 0.9,
         ignoredKeys: string[] = [],
         ignoredMisprintKeys: string[] = [],
+        customRegExpToFindKeys: string[] | RegExp[] = [],
         ast: IRulesAstConfig = {
             isNgxTranslateImported: ErrorTypes.error
         },
@@ -179,6 +183,7 @@ class Cli {
                 ignoredKeys,
                 ignoredMisprintKeys,
                 misprintCoefficient,
+                customRegExpToFindKeys,
             };
             const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig, tsConfigPath);
             const resultCliModel: ResultCliModel = validationModel.lint(maxWarning);
