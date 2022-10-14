@@ -1,5 +1,12 @@
 # CHANGELOG
 
+# [1.17.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.16.1...v1.17.0) (2022-10-14)
+
+
+### Features
+
+* No report of missing translation when using marker("key") ([a3ff962](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/a3ff962398cb76659d393703cc410d87cd864457)), closes [#97](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/97)
+
 ## [1.16.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.16.0...v1.16.1) (2022-10-13)
 
 
