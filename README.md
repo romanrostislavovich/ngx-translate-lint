@@ -150,7 +150,8 @@ const ruleConfig: IRulesConfig = {
         maxWarning: 0,
         misprintCoefficient: 0.9,
         ignoredKeys: [ 'EXAMPLE.KEY', 'IGNORED.KEY.(.*)' ], // can be string or RegExp
-        ignoredMisprintKeys: []
+        ignoredMisprintKeys: [],
+        customRegExpToFindKeys: []
 };
 
 const ngxTranslateLint = new NgxTranslateLint(viewsPath, languagesPath, ignoredLanguagesPath, ruleConfig)
