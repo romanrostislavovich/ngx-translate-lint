@@ -1,5 +1,12 @@
 # CHANGELOG
 
+# [1.18.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.17.0...v1.18.0) (2022-10-17)
+
+
+### Features
+
+* Refactor: Improve performance and Confusing option zombieKeys versus zombies ([4a4a815](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/4a4a815b72a3ba8ec89c2e145d30fa6dd542762a)), closes [#18](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/18) [#109](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/109)
+
 # [1.17.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.16.1...v1.17.0) (2022-10-14)
 
 
