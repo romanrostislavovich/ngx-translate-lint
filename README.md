@@ -61,11 +61,11 @@ Options:
           The path to languages folder
           Possible Values: <relative path|absolute path>
           (default: "./src/assets/i18n/*.json")
-  -v,  --views [enum]
+  -v,  --keysOnViews [enum]
           Described how to handle the error of missing keys on view
           Possible Values: <disable|warning|error>
           (default: "error")
-  -z,  --zombies [enum]
+  -z,  --zombieKeys [enum]
           Described how to handle the error of zombies keys
           Possible Values: <disable|warning|error>
           (default: "warning")
@@ -76,9 +76,14 @@ Options:
   -i,  --ignore [glob]
           Ignore projects and languages files
           Possible Values: <relative path|absolute path>
-  -m,  --misprint [enum]
-          Try to find matches with misprint keys on views and languages keys.
+  -m,  --misprintKeys [enum]
+          Try to find matches with misprint keys on views and languages keys. CCan be longer process!!
           Possible Values: <disable|warning|error>
+           (default: "disable")
+  -d,  --deepSearch [enum]
+          Add each translate key to global regexp end try to find them on project. Can be longer process!!
+          Possible Values: <disable|enable>
+           (default: "disable")
   -mc, --misprintCoefficient [number]
           Coefficient for misprint option can be from 0 to 1.0.
            (default: "0.9")
@@ -109,7 +114,8 @@ Default Config is:
     "rules": {
         "keysOnViews": "error",
         "zombieKeys": "warning",
-        "misprint": "warning",
+        "misprintKeys": "disable",
+        "deepSearch": "disable",
         "emptyKeys": "warning",
         "maxWarning": "0",
         "misprintCoefficient": "0.9",
@@ -137,7 +143,7 @@ The CLI process may exit with the following codes:
 ### TypeScript
 
 ```typescript
-import { NgxTranslateLint, IRulesConfig, ResultCliModel, ErrorTypes, LanguagesModel} from 'ngx-translate-lint';
+import { ToggleRule, NgxTranslateLint, IRulesConfig, ResultCliModel, ErrorTypes, LanguagesModel } from 'ngx-translate-lint';
 
 const viewsPath: string = './src/app/**/*.{html,ts}';
 const languagesPath: string = './src/assets/i18n/*.json';
@@ -145,12 +151,14 @@ const ignoredLanguagesPath: string = "./src/assets/i18n/ru.json, ./src/assets/i1
 const ruleConfig: IRulesConfig = {
         keysOnViews: ErrorTypes.error,
         zombieKeys: ErrorTypes.warning,
-        misprint: ErrorTypes.warning,
+        misprintKeys: ErrorTypes.disable,
+        deepSearch: ToggleRule.disable,
         emptyKeys: ErrorTypes.warning,
         maxWarning: 0,
         misprintCoefficient: 0.9,
         ignoredKeys: [ 'EXAMPLE.KEY', 'IGNORED.KEY.(.*)' ], // can be string or RegExp
-        ignoredMisprintKeys: []
+        ignoredMisprintKeys: [],
+        customRegExpToFindKeys: [ /marker\("(.*)"\)/gm ]
 };
 
 const ngxTranslateLint = new NgxTranslateLint(viewsPath, languagesPath, ignoredLanguagesPath, ruleConfig)

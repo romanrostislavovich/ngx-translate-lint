@@ -1,7 +1,7 @@
 import { ArgumentTypes } from 'conventional-cli';
 
 import { OptionModel } from './../models';
-import { config, ErrorTypes } from './../../core';
+import { config, ErrorTypes, ToggleRule } from './../../core';
 import { OptionsLongNames, OptionsPath, OptionsShortNames } from './../enums';
 
 const cliOptions: OptionModel[] = [
@@ -32,8 +32,8 @@ const cliOptions: OptionModel[] = [
         ]
     }),
     new OptionModel({
-        shortName: OptionsShortNames.views,
-        longName: OptionsLongNames.views,
+        shortName: OptionsShortNames.keysOnViews,
+        longName: OptionsLongNames.keysOnViews,
         required: false,
         type: ArgumentTypes.enum,
         description: `Described how to handle the error of missing keys on view`,
@@ -46,8 +46,8 @@ const cliOptions: OptionModel[] = [
         ]
     }),
     new OptionModel({
-        shortName: OptionsShortNames.zombies,
-        longName: OptionsLongNames.zombies,
+        shortName: OptionsShortNames.zombieKeys,
+        longName: OptionsLongNames.zombieKeys,
         required: false,
         type: ArgumentTypes.enum,
         description: `Described how to handle the error of zombies keys`,
@@ -99,17 +99,30 @@ const cliOptions: OptionModel[] = [
         ]
     }),
     new OptionModel({
-        shortName: OptionsShortNames.misprint,
-        longName: OptionsLongNames.misprint,
+        shortName: OptionsShortNames.misprintKeys,
+        longName: OptionsLongNames.misprintKeys,
         required: false,
         type: ArgumentTypes.enum,
-        description: `Try to find matches with misprint keys on views and languages keys. Coefficient: 0.9`,
+        description: `Try to find matches with misprint keys on views and languages keys. Coefficient: 0.9. Can be longer process!!`,
         additionalDescription: ``,
         default: ErrorTypes.warning,
         values: [
             ErrorTypes.disable,
             ErrorTypes.warning,
             ErrorTypes.error
+        ]
+    }),
+    new OptionModel({
+        shortName: OptionsShortNames.deepSearch,
+        longName: OptionsLongNames.deepSearch,
+        required: false,
+        type: ArgumentTypes.enum,
+        description: `Add each translate key to global regexp end try to find them on project. Can be longer process!!`,
+        additionalDescription: ``,
+        default: ToggleRule.disable,
+        values: [
+            ToggleRule.disable,
+            ToggleRule.enable,
         ]
     }),
     new OptionModel({
