@@ -1,12 +1,13 @@
-import { ErrorTypes } from './../enums';
+import { ErrorTypes, ToggleRule } from './../enums';
 import { IRulesAstConfig } from './IRulesAstConfig';
 
 interface IRulesConfig {
     ast: IRulesAstConfig;
-    misprint: ErrorTypes;
     emptyKeys: ErrorTypes;
     zombieKeys: ErrorTypes;
     keysOnViews: ErrorTypes;
+    misprintKeys: ErrorTypes;
+    deepSearch: ToggleRule;
     maxWarning: number;
     misprintCoefficient: number;
     ignoredKeys: string[];

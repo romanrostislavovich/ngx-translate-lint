@@ -10,7 +10,8 @@ import {
     NgxTranslateLint,
     ResultCliModel,
     ResultModel,
-    StatusCodes
+    StatusCodes,
+    ToggleRule
 } from "./../core";
 
 import { config } from './../core/config';
@@ -76,6 +77,7 @@ class Cli {
             const languagePath: string = options.languages;
             const tsConfigPath: string = options.tsConfigPath;
 
+            let deepSearch: ToggleRule;
             let optionIgnore: string;
             let optionMisprint: ErrorTypes;
             let optionEmptyKey: ErrorTypes;
@@ -87,25 +89,28 @@ class Cli {
             let optionIgnoredMisprintKeys: string[];
             let optionCustomRegExpToFindKeys: string[] | RegExp[];
             let optionAstRules: IRulesAstConfig;
+
             if (!!options.rules) {
+                 deepSearch = options.rules.deepSearch;
                  optionIgnore = options.rules.ignore;
-                 optionMisprint = options.rules.misprint;
+                 optionMisprint = options.rules.misprintKeys;
                  optionEmptyKey = options.rules.emptyKeys;
-                 optionViewsRule =  options.rules.views;
+                 optionViewsRule =  options.rules.keysOnViews;
                  optionMaxWarning =  options.rules.maxWarning;
-                 optionZombiesRule = options.rules.zombies;
+                 optionZombiesRule = options.rules.zombieKeys;
                  optionIgnoredKeys =  options.rules.ignoredKeys;
                  optionMisprintCoefficient = options.rules.misprintCoefficient;
                  optionIgnoredMisprintKeys =  options.rules.ignoredMisprintKeys;
-                 optionCustomRegExpToFindKeys = options.rulescustomRegExpToFindKeys;
+                 optionCustomRegExpToFindKeys = options.rules.rulescustomRegExpToFindKeys;
                  optionAstRules =  options.rules.ast;
             } else {
+                 deepSearch = options.deepSearch;
                  optionIgnore = options.ignore;
-                 optionMisprint = options.misprint;
+                 optionMisprint = options.misprintKeys;
                  optionEmptyKey = options.emptyKeys;
-                 optionViewsRule = options.views;
+                 optionViewsRule = options.keysOnViews;
                  optionMaxWarning =  options.maxWarning;
-                 optionZombiesRule = options.zombies;
+                 optionZombiesRule = options.zombieKeys;
                  optionIgnoredKeys = options.ignoredKeys;
                  optionMisprintCoefficient = options.misprintCoefficient ;
                  optionIgnoredMisprintKeys = options.ignoredMisprintKeys ;
@@ -117,7 +122,7 @@ class Cli {
             if (options.project && options.languages) {
                 this.runLint(
                     projectPath, languagePath, optionZombiesRule,
-                    optionViewsRule, optionIgnore, optionMaxWarning, optionMisprint, optionEmptyKey,
+                    optionViewsRule, optionIgnore, optionMaxWarning, optionMisprint, optionEmptyKey, deepSearch,
                     optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys, optionCustomRegExpToFindKeys, optionAstRules, tsConfigPath
                 );
             } else {
@@ -164,6 +169,7 @@ class Cli {
         maxWarning: number = 1,
         misprint?: ErrorTypes,
         emptyKeys?: ErrorTypes,
+        deepSearch?: ToggleRule,
         misprintCoefficient: number = 0.9,
         ignoredKeys: string[] = [],
         ignoredMisprintKeys: string[] = [],
@@ -174,7 +180,8 @@ class Cli {
         tsConfigPath?: string,
     ): void {
             const errorConfig: IRulesConfig = {
-                misprint: misprint || ErrorTypes.warning,
+                misprintKeys: misprint || ErrorTypes.disable,
+                deepSearch: deepSearch || ToggleRule.disable,
                 zombieKeys: zombies || ErrorTypes.warning,
                 emptyKeys: emptyKeys || ErrorTypes.warning,
                 keysOnViews: views || ErrorTypes.error,

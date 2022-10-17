@@ -1,4 +1,4 @@
-import { ErrorTypes } from './enums';
+import { ErrorTypes, ToggleRule } from './enums';
 import { IAppConfig } from './interface';
 
 const config: IAppConfig = {
@@ -7,10 +7,11 @@ const config: IAppConfig = {
             ast: {
               isNgxTranslateImported: ErrorTypes.error,
             },
-            misprint: ErrorTypes.warning,
             zombieKeys: ErrorTypes.warning,
             keysOnViews: ErrorTypes.error,
             emptyKeys: ErrorTypes.warning,
+            deepSearch: ToggleRule.disable,
+            misprintKeys: ErrorTypes.disable,
             maxWarning: 0,
             misprintCoefficient: 0.9,
             ignoredKeys: [],
@@ -30,8 +31,9 @@ const defaultConfig: object = {
         },
         "keysOnViews": "error",
         "zombieKeys": "warning",
-        "misprint": "warning",
         "emptyKeys": "warning",
+        "deepSearch": "disable",
+        "misprintKeys": "disable",
         "maxWarning": "0",
         "misprintCoefficient": "0.9",
         "ignoredKeys": [],
