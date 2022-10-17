@@ -2,16 +2,7 @@ import { ErrorFlow, ErrorTypes, ResultErrorModel } from "../../../src/core";
 import { getAbsolutePath, languagesFolder, projectFolder } from '../utils';
 
 const assertCustomConfig: ResultErrorModel[] = [
-    // FEAT 97
-    new ResultErrorModel(
-        'CUSTOM.REGEXP.ONE',
-        ErrorFlow.views, ErrorTypes.warning,
-        getAbsolutePath(projectFolder, 'custom.keys.ts'),
-        [
-            'EN-us.json'
-        ]
-    ),
-    // END FEAT 97
+
     new ResultErrorModel(
         'STRING.KEY_FROM_DIRECTIVE_VIEW.EXIST_IN_ONE_LOCALE',
         ErrorFlow.views, ErrorTypes.warning,

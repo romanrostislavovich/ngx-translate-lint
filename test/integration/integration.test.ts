@@ -4,6 +4,7 @@ import path from 'path';
 import { assert, expect } from 'chai';
 
 import {
+    config as defaultConfig,
     ErrorFlow,
     ErrorTypes,
     IRulesConfig,
@@ -12,7 +13,7 @@ import {
     NgxTranslateLint,
     ResultCliModel,
     ResultErrorModel,
-    config as defaultConfig,
+    ToggleRule,
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
@@ -46,8 +47,7 @@ describe('Core Integration', () => {
            const result: ResultCliModel = model.lint();
 
            // Assert
-           assert.deepEqual(result.errors.find(x => x.value === 'CUSTOM.REGEXP.ONE')?.errorType, ErrorTypes.error);
-
+           assert.deepEqual(result.errors.find(x => x.value === 'CUSTOM.REGEXP.ONE')?.errorType, ErrorTypes.warning);
        });
     });
     describe('Empty Keys', () => {
@@ -85,10 +85,10 @@ describe('Core Integration', () => {
         });
     });
     describe('Misprint', () => {
-        it('should be warning by default', () => {
+        it('should be disable by default', () => {
             // Arrange
-            const hasMisprint: boolean = true;
-            const countMisprint: number = 1;
+            const hasMisprint: boolean = false;
+            const countMisprint: number = 0;
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
@@ -106,7 +106,8 @@ describe('Core Integration', () => {
                 },
                 keysOnViews: ErrorTypes.error,
                 zombieKeys: ErrorTypes.warning,
-                misprint:  ErrorTypes.error,
+                misprintKeys:  ErrorTypes.error,
+                deepSearch: ToggleRule.enable,
                 emptyKeys: ErrorTypes.warning,
                 maxWarning: 1,
                 misprintCoefficient: 0.9,
@@ -144,9 +145,12 @@ describe('Core Integration', () => {
             const hasMisprint: boolean = true;
             const countMisprint: number = 2;
             const ignorePath: string = `${languagesIgnorePath}, ${projectIgnorePath}`;
-
+            const errorConfig: IRulesConfig = {
+                ...defaultConfig.defaultValues.rules,
+                misprintKeys:  ErrorTypes.warning,
+            };
             // Act
-            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath);
+            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath, errorConfig);
             const result: ResultCliModel = model.lint();
 
             // Assert
@@ -177,7 +181,8 @@ describe('Core Integration', () => {
                 emptyKeys: ErrorTypes.warning,
                 maxWarning: 1,
                 misprintCoefficient: 0.9,
-                misprint: ErrorTypes.disable,
+                misprintKeys: ErrorTypes.disable,
+                deepSearch: ToggleRule.enable,
                 ignoredKeys: ["IGNORED.KEY.FLAG"],
                 ignoredMisprintKeys: [],
                 customRegExpToFindKeys: []
@@ -210,9 +215,14 @@ describe('Core Integration', () => {
             // Arrange
             const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
             const ignorePath: string = `${languagesIgnorePath}, ${ignoreAbsoluteProjectPath}`;
+            const errorConfig: IRulesConfig = {
+                ...defaultConfig.defaultValues.rules,
+                deepSearch: ToggleRule.enable,
+                misprintKeys: ErrorTypes.warning
+            };
 
             // Act
-            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath);
+            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath, errorConfig);
             const result: ResultCliModel = model.lint();
 
             // Assert
@@ -247,9 +257,13 @@ describe('Core Integration', () => {
         it('should be absent mask', () => {
             // Arrange
             const ignorePath: string = `${languagesIgnorePath}, ${projectIgnorePath}, ${languagesIncorrectFile}`;
-
+            const errorConfig: IRulesConfig = {
+                ...defaultConfig.defaultValues.rules,
+                deepSearch: ToggleRule.enable,
+                misprintKeys: ErrorTypes.warning
+            };
             // Act
-            const model: NgxTranslateLint = new NgxTranslateLint(projectAbsentMaskPath, languagesAbsentMaskPath, ignorePath);
+            const model: NgxTranslateLint = new NgxTranslateLint(projectAbsentMaskPath, languagesAbsentMaskPath, ignorePath, errorConfig);
             const result: ResultCliModel = model.lint();
 
             // Assert
@@ -314,7 +328,8 @@ describe('Core Integration', () => {
                 emptyKeys: ErrorTypes.warning,
                 maxWarning: 1,
                 misprintCoefficient: 0.9,
-                misprint: ErrorTypes.disable,
+                misprintKeys: ErrorTypes.disable,
+                deepSearch: ToggleRule.enable,
                 ignoredKeys: ["IGNORED.KEY.FLAG"],
                 ignoredMisprintKeys: [],
                 customRegExpToFindKeys: []
@@ -365,7 +380,8 @@ describe('Core Integration', () => {
             emptyKeys: ErrorTypes.warning,
             maxWarning: 1,
             misprintCoefficient: 0.9,
-            misprint: ErrorTypes.warning,
+            misprintKeys: ErrorTypes.warning,
+            deepSearch: ToggleRule.enable,
             ignoredKeys: ["IGNORED.KEY.FLAG"],
             ignoredMisprintKeys: [],
             customRegExpToFindKeys: []

@@ -17,5 +17,6 @@
             "EXIST_IN_ALL_LOCALES": "Key from enum"
         }
     },
-    "EMPTY.KEY": "NOT EMPTY"
+    "EMPTY.KEY": "NOT EMPTY",
+    "CUSTOM.REGEXP.ONE": "CUSTOM.REGEXP.ONE"
 }

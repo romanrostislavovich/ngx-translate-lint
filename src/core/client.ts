@@ -46,8 +46,8 @@ class NgxTranslateLint {
 
         const languagesKeys: FileLanguageModel = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeysWithValue();
         const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
-        const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys);
-        //
+        const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys, this.rules.deepSearch);
+
         const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
 
         let errors: ResultErrorModel[] = [];
@@ -55,7 +55,7 @@ class NgxTranslateLint {
         if (
             this.rules.zombieKeys !== ErrorTypes.disable ||
             this.rules.keysOnViews !== ErrorTypes.disable ||
-            this.rules.misprint !== ErrorTypes.disable ||
+            this.rules.misprintKeys !== ErrorTypes.disable ||
             this.rules.emptyKeys !== ErrorTypes.disable
         ) {
             const regExpResult: ResultErrorModel[] = this.runRegExp(views, languagesKeys);
@@ -184,11 +184,12 @@ class NgxTranslateLint {
             result.push(...ruleResult);
         }
 
-        if (rules.misprint !== ErrorTypes.disable) {
-            const ruleInstance: MisprintRule = new MisprintRule(this.rules.misprint, this.rules.misprintCoefficient, this.rules.ignoredMisprintKeys);
+        if (rules.misprintKeys !== ErrorTypes.disable) {
+            const ruleInstance: MisprintRule = new MisprintRule(this.rules.misprintKeys, this.rules.misprintCoefficient, this.rules.ignoredMisprintKeys);
             const ruleResult: ResultErrorModel[] = ruleInstance.check(result, languagesKeys.keys);
             result.push(...ruleResult);
         }
+
 
         if (rules.emptyKeys !== ErrorTypes.disable) {
             const ruleInstance: EmptyKeysRule = new EmptyKeysRule(this.rules.emptyKeys);
