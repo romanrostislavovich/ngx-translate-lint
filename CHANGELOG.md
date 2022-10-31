@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.18.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.18.0...v1.18.1) (2022-10-31)
+
+
+### Bug Fixes
+
+* misprintKeys is enabled by default for CLI ([9640bef](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/9640bef706092dc86d6db469e3953a28290d9a59)), closes [#128](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/128)
+
 # [1.18.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.17.0...v1.18.0) (2022-10-17)
 
 
