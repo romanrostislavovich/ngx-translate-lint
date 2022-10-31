@@ -105,7 +105,7 @@ const cliOptions: OptionModel[] = [
         type: ArgumentTypes.enum,
         description: `Try to find matches with misprint keys on views and languages keys. Coefficient: 0.9. Can be longer process!!`,
         additionalDescription: ``,
-        default: ErrorTypes.warning,
+        default: ErrorTypes.disable,
         values: [
             ErrorTypes.disable,
             ErrorTypes.warning,
