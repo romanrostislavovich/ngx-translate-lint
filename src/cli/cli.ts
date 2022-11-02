@@ -15,11 +15,13 @@ import {
 } from "./../core";
 
 import { config } from './../core/config';
-import { OptionsLongNames } from './enums';
+import { OptionsLongNames, OptionsShortNames } from './enums';
 import chalk from 'chalk';
 import { parseJsonFile } from './utils';
 
 const name: string = 'ngx-translate-lint';
+const packageJsonPath: string = './package.json';
+
 // tslint:disable-next-line:no-any
 const docs: any = {
     name,
@@ -58,6 +60,9 @@ class Cli {
             const optionDefaultValue: string | ErrorTypes | undefined = option.default;
             this.cliClient.option(optionFlag, optionDescription, optionDefaultValue);
         });
+
+        const packageJson: any = parseJsonFile(packageJsonPath);
+        this.cliClient.version(packageJson.version);
 
         this.cliClient
             .name(docs.name)
@@ -118,6 +123,8 @@ class Cli {
                  optionAstRules = options.ast;
             }
 
+
+            this.printCurrentVersion();
 
             if (options.project && options.languages) {
                 this.runLint(
@@ -202,6 +209,12 @@ class Cli {
             if (resultModel.hasError) {
                 throw new FatalErrorModel(chalk.red(resultModel.message));
             }
+    }
+
+    private printCurrentVersion(): void {
+        const packageJson: any = parseJsonFile(packageJsonPath);
+        // tslint:disable-next-line:no-console
+        console.log(`Current version: ${packageJson.version}`);
     }
 }
 

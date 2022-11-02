@@ -56,7 +56,7 @@ class FileLanguageModel extends FileModel {
         const objectKeys: string[] = Object.keys(obj);
 
         objectKeys.forEach((key: string) => {
-            const keyValue: object = get(obj, key);
+            const keyValue: object = get(obj, key) || {};
             const isObject: boolean = typeof keyValue === 'object';
             const currentKey: string =  cat === null ? key : cat.concat('.', key);
 
@@ -80,7 +80,7 @@ class FileLanguageModel extends FileModel {
         const objectKeys: string[] = Object.keys(obj);
 
         objectKeys.forEach((key: string) => {
-            const keyValue: object = get(obj, key);
+            const keyValue: object = get(obj, key) || {};
             const isObject: boolean = typeof keyValue === 'object';
             const currentKey: string =  cat === null ? key : cat.concat('.', key);
 

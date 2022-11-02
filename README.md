@@ -61,41 +61,46 @@ Options:
           The path to languages folder
           Possible Values: <relative path|absolute path>
           (default: "./src/assets/i18n/*.json")
-  -v,  --keysOnViews [enum]
+  -kv,  --keysOnViews [enum]
           Described how to handle the error of missing keys on view
           Possible Values: <disable|warning|error>
           (default: "error")
-  -z,  --zombieKeys [enum]
+  -zk,  --zombieKeys [enum]
           Described how to handle the error of zombies keys
           Possible Values: <disable|warning|error>
           (default: "warning")
-   -e, --emptyKeys [enum]
+   -ek, --emptyKeys [enum]
           Described how to handle empty value on translate keys
           Possible Values: <disable|warning|error>
            (default: "warning")
   -i,  --ignore [glob]
           Ignore projects and languages files
           Possible Values: <relative path|absolute path>
-  -m,  --misprintKeys [enum]
+  --maxWarning [glob]
+          Max count of warnings in all files. If this value more that count of warnings, then an error is return
+          Possible Values: <number>
+           (default: "0")
+  -mk,  --misprintKeys [enum]
           Try to find matches with misprint keys on views and languages keys. CCan be longer process!!
           Possible Values: <disable|warning|error>
            (default: "disable")
-  -d,  --deepSearch [enum]
+  -ds,  --deepSearch [enum]
           Add each translate key to global regexp end try to find them on project. Can be longer process!!
           Possible Values: <disable|enable>
            (default: "disable")
   -mc, --misprintCoefficient [number]
           Coefficient for misprint option can be from 0 to 1.0.
-           (default: "0.9")
+          (default: "0.9")
   -c, --config [path]
           Path to the config file.
-  --maxWarning [number]
-           Max count of warnings in all files. If this value more that count of warnings, then an error is return
-           Possible Values: <number>
-           (default: "0")
+  -t, --tsconfig [path] [BETA]
+          The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file. Right now included only one rule: checked if `ngx-translate` imported for your project
+          Possible Values: <relative path|absolute path>
+           (default: "./")
 
 
-  -h, --help  output usage information
+  -V, --version   output the version number
+  -h, --help      output usage information
 
 
 Examples:
