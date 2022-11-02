@@ -61,6 +61,7 @@ class Cli {
             this.cliClient.option(optionFlag, optionDescription, optionDefaultValue);
         });
 
+        // tslint:disable-next-line:no-any
         const packageJson: any = parseJsonFile(packageJsonPath);
         this.cliClient.version(packageJson.version);
 
@@ -212,6 +213,7 @@ class Cli {
     }
 
     private printCurrentVersion(): void {
+        // tslint:disable-next-line:no-any
         const packageJson: any = parseJsonFile(packageJsonPath);
         // tslint:disable-next-line:no-console
         console.log(`Current version: ${packageJson.version}`);
