@@ -160,6 +160,14 @@ const cliOptions: OptionModel[] = [
             OptionsPath.absolute
         ]
     }),
+    new OptionModel({
+        longName: OptionsLongNames.version,
+        shortName: OptionsShortNames.version,
+        required: false,
+        description: 'Print current version of ngx-translate-lint',
+        type: ArgumentTypes.undefined,
+        additionalDescription: '',
+    }),
 ];
 
 export  { cliOptions };

@@ -1,4 +1,4 @@
-import { Argument, IArgument } from 'conventional-cli';
+import { Argument, ArgumentTypes, IArgument } from 'conventional-cli';
 
 class OptionModel extends Argument {
     constructor(
@@ -18,7 +18,7 @@ class OptionModel extends Argument {
     }
 
     public getFlag(): string {
-        const typeTemplate: string = `[${this.type}] `;
+        const typeTemplate: string = this.type !== ArgumentTypes.undefined ? `[${this.type}] ` : '';
         const betaTemplate: string = this.beta ? '[BETA] ' : '';
         const requiredTemplate: string = this.required ? '(required) ' : '';
         const longNameTemplate: string = `--${this.longName} `;

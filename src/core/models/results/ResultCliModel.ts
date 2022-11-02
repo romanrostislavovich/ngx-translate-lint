@@ -21,7 +21,7 @@ class ResultCliModel {
     }
 
     public isFullOfWarning(): boolean {
-        const result: boolean = this.maxCountWarning && this.maxCountWarning !== 0 && this.hasWarnings ? this.countWarnings() > this.maxCountWarning : false;
+        const result: boolean = this.maxCountWarning && this.maxCountWarning !== 0 && this.hasWarnings() ? this.countWarnings() > this.maxCountWarning : false;
         return result;
     }
 
@@ -78,7 +78,7 @@ class ResultCliModel {
             .map((dictionary: ResultErrorModel[], key: string) => {
                 let clearDictionary: ResultErrorModel[] = dictionary;
                 const hasError: boolean = some<ResultErrorModel[]>(dictionary, { 'errorType': ErrorTypes.error });
-                const errorType: ErrorTypes = hasError || this.isFullOfWarning ? ErrorTypes.error : ErrorTypes.warning;
+                const errorType: ErrorTypes = hasError || this.isFullOfWarning() ? ErrorTypes.error : ErrorTypes.warning;
                 if (this.isFullOfWarning()) {
                     clearDictionary = dictionary.map((item: ResultErrorModel) => {
                         item.errorType = ErrorTypes.error;
