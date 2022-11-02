@@ -1,7 +1,7 @@
 {
     "author": "Raman Lauryniuk <romanrostislavovich@gmail.com>",
     "name": "ngx-translate-lint",
-    "version": "1.18.1",
+    "version": "1.19.0",
     "description": "Simple tools for check `ngx-translate` keys in app",
     "license": "MIT",
     "repository": "svoboda-rabstvo/ngx-translate-lint",
@@ -100,6 +100,7 @@
         "@types/sinon": "^7.0.11",
         "@types/string-similarity": "^3.0.0",
         "chai": "^4.2.0",
+        "env-cmd": "^10.1.0",
         "husky": "^2.3.0",
         "markdownlint-cli": "^0.16.0",
         "mocha": "^8.2.1",

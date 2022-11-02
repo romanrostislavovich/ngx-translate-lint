@@ -1,5 +1,17 @@
 # CHANGELOG
 
+# [1.19.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.18.1...v1.19.0) (2022-11-02)
+
+
+### Bug Fixes
+
+* tests and ts-node ([79803e0](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/79803e06a7042b384c0007db1d589341802a187d))
+
+
+### Features
+
+* Add version flag to the CLI ([c001035](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/c0010351058234e138d26d2b430431d75512cf18)), closes [#125](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/125)
+
 ## [1.18.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.18.0...v1.18.1) (2022-10-31)
 
 
