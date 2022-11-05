@@ -12,7 +12,7 @@ class ResultErrorModel implements IValidationMessage  {
 
     constructor(
         value: string,
-        errorFlow: ErrorFlow = ErrorFlow.views,
+        errorFlow: ErrorFlow = ErrorFlow.keysOnViews,
         errorType: ErrorTypes = ErrorTypes.error,
         currentPath: string,
         absentedPath?: string | string[],
@@ -29,15 +29,15 @@ class ResultErrorModel implements IValidationMessage  {
     public message(): string | string[] | null {
         let message: string | string[] | null = null;
         switch (this.errorFlow) {
-            case ErrorFlow.views:
+            case ErrorFlow.keysOnViews:
                 message = isArray(this.absentedPath)
                     ? this.absentedPath.map((path: string) => `Key: '${this.value}' doesn't exist in '${path}'`)
                     : `Key: '${this.value}' doesn't exist in '${this.absentedPath}'`;
                 break;
-            case ErrorFlow.zombie:
+            case ErrorFlow.zombieKeys:
                 message = `Key: '${this.value}' doesn't exist in project'`;
                 break;
-            case ErrorFlow.misprint:
+            case ErrorFlow.misprintKeys:
                message = this.suggestions.reduce((accum: string[], item: string) => {
                    accum.push(`Possible match: '${item}' for key '${this.value}'`);
                    return accum;

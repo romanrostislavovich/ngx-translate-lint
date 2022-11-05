@@ -23,7 +23,8 @@
         "test:integration": "mocha -r ts-node/register ./test/integration/*.test.ts",
         "build": "tsc -p . && webpack -c config/webpack.config.js",
         "lint": "npm run lint:typescript && npm run lint:markdown",
-        "test": "npm run lint && npm run build && npm run test:integration",
+        "test": "npm run test:integration",
+        "pre:release": "npm run lint && npm run build && npm run test",
         "semantic-release": "env-cmd semantic-release --no-ci",
         "self-lint": "npx ngx-translate-lint -p ./test/integration/inputs/views/*.{html,ts} -l ./test/integration/inputs/locales/*.json -i ./test/integration/inputs/locales/incorrect.json"
     },
@@ -70,9 +71,6 @@
         ]
     },
     "dependencies": {
-        "@angular/compiler": "^11.1.1",
-        "@angular/compiler-cli": "^11.1.1",
-        "@angular/core": "^11.1.1",
         "chalk": "^2.4.2",
         "commander": "^2.20.0",
         "conventional-cli": "^1.2.0",

@@ -1,10 +1,16 @@
 enum ErrorFlow {
-    views = 'views',
-    zombie = 'zombie',
-    misprint = 'misprint',
+    help = 'help',
+    ignore = 'ignore',
+    config = 'config',
+    version = 'version',
+    project = 'project',
+    languages = 'languages',
     emptyKeys = 'emptyKeys',
-    astIsNgxTranslateImported = 'astIsNgxTranslateImported'
-
+    maxWarning = 'maxWarning',
+    zombieKeys = 'zombieKeys',
+    keysOnViews = 'keysOnViews',
+    misprintKeys = 'misprintKeys',
+    misprintCoefficient = 'misprintCoefficient',
 }
 
 export { ErrorFlow };

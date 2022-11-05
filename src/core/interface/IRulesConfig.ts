@@ -1,8 +1,6 @@
 import { ErrorTypes, ToggleRule } from './../enums';
-import { IRulesAstConfig } from './IRulesAstConfig';
 
 interface IRulesConfig {
-    ast: IRulesAstConfig;
     emptyKeys: ErrorTypes;
     zombieKeys: ErrorTypes;
     keysOnViews: ErrorTypes;

@@ -30,10 +30,6 @@ which should exist in all languages files.
 
 ```bash
 npm install ngx-translate-lint -g
-
-BETA:
-
-npm install ngx-translate-lint @angular/core @angular/compiler @angular/compiler-cli -g
 ```
 
 ### GitHub
@@ -69,7 +65,7 @@ Options:
           Described how to handle the error of zombies keys
           Possible Values: <disable|warning|error>
           (default: "warning")
-   -ek, --emptyKeys [enum]
+  -ek, --emptyKeys [enum]
           Described how to handle empty value on translate keys
           Possible Values: <disable|warning|error>
            (default: "warning")
@@ -93,10 +89,6 @@ Options:
           (default: "0.9")
   -c, --config [path]
           Path to the config file.
-  -t, --tsconfig [path] [BETA]
-          The beta argument which enables AST parsing for the angular project. Need to set up the path to the tsconfig file. Right now included only one rule: checked if `ngx-translate` imported for your project
-          Possible Values: <relative path|absolute path>
-           (default: "./")
 
 
   -V, --version   output the version number
@@ -127,11 +119,7 @@ Default Config is:
         "ignoredKeys": [ "IGNORED.KEY.(.*)" ], // can be string or RegExp
         "ignoredMisprintKeys": [],
         "customRegExpToFindKeys": [ /marker\("(.*)"\)/gm ], // to find: marker("TRSNLATE.KEY");
-        "ast": {
-          "isNgsTranslateImported": "error"
-        }
     },
-    "tsconfig": "./",
     "project": "./src/app/**/*.{html,ts}",
     "languages": "./src/assets/i18n/*.json"
 }
