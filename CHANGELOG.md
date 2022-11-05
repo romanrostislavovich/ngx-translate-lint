@@ -1,5 +1,12 @@
 # CHANGELOG
 
+# [1.20.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.19.0...v1.20.0) (2022-11-05)
+
+
+### Features
+
+* Remove Beta & AST flags and Dependencies ([547fa93](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/547fa938c536884d4094e451519c10f397bc9f1c)), closes [#130](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/130)
+
 # [1.19.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.18.1...v1.19.0) (2022-11-02)
 
 
