@@ -101,9 +101,6 @@ describe('Core Integration', () => {
         it('should be error', () => {
             // Arrange
             const errorConfig: IRulesConfig = {
-                ast: {
-                    isNgxTranslateImported: ErrorTypes.disable,
-                },
                 keysOnViews: ErrorTypes.error,
                 zombieKeys: ErrorTypes.warning,
                 misprintKeys:  ErrorTypes.error,
@@ -119,7 +116,7 @@ describe('Core Integration', () => {
             const countMisprint: number = 1;
             const correctError: ResultErrorModel = new ResultErrorModel(
                 'STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_ONE_LOCALES',
-                    ErrorFlow.misprint, ErrorTypes.error,
+                    ErrorFlow.misprintKeys, ErrorTypes.error,
                     getAbsolutePath(projectFolder, 'pipe.keys.html'),
                     [
                         'EN-eu.json',
@@ -133,7 +130,7 @@ describe('Core Integration', () => {
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath,  '', errorConfig);
             const result: ResultCliModel = model.lint();
-            const clearErrors: ResultErrorModel[] = result.errors.filter((error: ResultErrorModel) => error.errorFlow === ErrorFlow.misprint);
+            const clearErrors: ResultErrorModel[] = result.errors.filter((error: ResultErrorModel) => error.errorFlow === ErrorFlow.misprintKeys);
 
             // Assert
             assert.deepEqual(hasMisprint, result.hasMisprint());
@@ -173,9 +170,6 @@ describe('Core Integration', () => {
             const maxWarnings: number = 5;
             const ifFullOfWarning: boolean = true;
             const errorConfig: IRulesConfig = {
-                ast: {
-                    isNgxTranslateImported: ErrorTypes.disable,
-                },
                 keysOnViews: ErrorTypes.warning,
                 zombieKeys: ErrorTypes.warning,
                 emptyKeys: ErrorTypes.warning,
@@ -320,9 +314,6 @@ describe('Core Integration', () => {
         it('should be custom', () => {
             // Arrange
             const errorConfig: IRulesConfig = {
-                ast: {
-                    isNgxTranslateImported: ErrorTypes.disable,
-                },
                 keysOnViews: ErrorTypes.warning,
                 zombieKeys: ErrorTypes.disable,
                 emptyKeys: ErrorTypes.warning,
@@ -372,9 +363,6 @@ describe('Core Integration', () => {
     it('with full arguments', () => {
         // Arrange
         const errorConfig: IRulesConfig = {
-            ast: {
-                isNgxTranslateImported: ErrorTypes.disable,
-            },
             keysOnViews: ErrorTypes.error,
             zombieKeys: ErrorTypes.warning,
             emptyKeys: ErrorTypes.warning,

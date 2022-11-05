@@ -5,7 +5,6 @@ import { OptionModel } from './models';
 import {
     ErrorTypes,
     FatalErrorModel,
-    IRulesAstConfig,
     IRulesConfig,
     NgxTranslateLint,
     ResultCliModel,
@@ -94,7 +93,6 @@ class Cli {
             let optionMisprintCoefficient: number ;
             let optionIgnoredMisprintKeys: string[];
             let optionCustomRegExpToFindKeys: string[] | RegExp[];
-            let optionAstRules: IRulesAstConfig;
 
             if (!!options.rules) {
                  deepSearch = options.rules.deepSearch;
@@ -108,7 +106,6 @@ class Cli {
                  optionMisprintCoefficient = options.rules.misprintCoefficient;
                  optionIgnoredMisprintKeys =  options.rules.ignoredMisprintKeys;
                  optionCustomRegExpToFindKeys = options.rules.rulescustomRegExpToFindKeys;
-                 optionAstRules =  options.rules.ast;
             } else {
                  deepSearch = options.deepSearch;
                  optionIgnore = options.ignore;
@@ -121,7 +118,6 @@ class Cli {
                  optionMisprintCoefficient = options.misprintCoefficient ;
                  optionIgnoredMisprintKeys = options.ignoredMisprintKeys ;
                  optionCustomRegExpToFindKeys = options.rulescustomRegExpToFindKeys;
-                 optionAstRules = options.ast;
             }
 
 
@@ -131,7 +127,7 @@ class Cli {
                 this.runLint(
                     projectPath, languagePath, optionZombiesRule,
                     optionViewsRule, optionIgnore, optionMaxWarning, optionMisprint, optionEmptyKey, deepSearch,
-                    optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys, optionCustomRegExpToFindKeys, optionAstRules, tsConfigPath
+                    optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys, optionCustomRegExpToFindKeys, tsConfigPath
                 );
             } else {
                 const cliHasError: boolean = this.validate();
@@ -182,9 +178,6 @@ class Cli {
         ignoredKeys: string[] = [],
         ignoredMisprintKeys: string[] = [],
         customRegExpToFindKeys: string[] | RegExp[] = [],
-        ast: IRulesAstConfig = {
-            isNgxTranslateImported: ErrorTypes.error
-        },
         tsConfigPath?: string,
     ): void {
             const errorConfig: IRulesConfig = {
@@ -193,7 +186,6 @@ class Cli {
                 zombieKeys: zombies || ErrorTypes.warning,
                 emptyKeys: emptyKeys || ErrorTypes.warning,
                 keysOnViews: views || ErrorTypes.error,
-                ast,
                 maxWarning,
                 ignoredKeys,
                 ignoredMisprintKeys,

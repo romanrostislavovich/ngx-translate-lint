@@ -7,7 +7,7 @@ import { ErrorTypes, ErrorFlow } from './../enums';
 import { ResultErrorModel, KeyModel } from './../models';
 
 class AbsentViewKeysRule implements IRule {
-    public flow: ErrorFlow = ErrorFlow.views;
+    public flow: ErrorFlow = ErrorFlow.keysOnViews;
     public handler: ErrorTypes;
     public languagesPathList: string[];
 

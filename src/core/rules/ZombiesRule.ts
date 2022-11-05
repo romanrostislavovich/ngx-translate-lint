@@ -5,7 +5,7 @@ import { ErrorTypes, ErrorFlow } from './../enums';
 import { ResultErrorModel, KeyModel } from './../models';
 
 class ZombieRule implements IRule {
-    public flow: ErrorFlow = ErrorFlow.zombie;
+    public flow: ErrorFlow = ErrorFlow.zombieKeys;
     public handler: ErrorTypes;
 
     constructor(

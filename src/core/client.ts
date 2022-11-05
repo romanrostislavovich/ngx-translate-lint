@@ -9,7 +9,6 @@ import { FileLanguageModel, FileViewModel, KeyModel, LanguagesModel, ResultCliMo
 import { AbsentViewKeysRule, MisprintRule, ZombieRule, EmptyKeysRule } from './rules';
 import { KeyModelWithLanguages, LanguagesModelWithKey, ViewModelWithKey } from './models/KeyModelWithLanguages';
 import { WorkspaceSymbols } from 'ngast';
-import { AstIsNgxTranslateImportedRule } from './rules/ast/IsNgxTranslateImportedAstRule';
 import { NgModuleSymbol } from 'ngast/lib/ngtsc/module.symbol';
 
 
@@ -62,10 +61,6 @@ class NgxTranslateLint {
             errors.push(...regExpResult);
         }
 
-        if (this.rules.ast && this.rules.ast.isNgxTranslateImported && this.tsConfigPath) {
-            const astResult: ResultErrorModel[] =  this.runAst(this.tsConfigPath, this.rules);
-             errors.push(...astResult);
-        }
 
         if(this.rules.ignoredKeys?.length !== 0) {
             errors = errors.reduce<ResultErrorModel[]>((acum, errorKey) => {
@@ -198,26 +193,6 @@ class NgxTranslateLint {
         }
 
         return result;
-    }
-
-    private runAst(
-        project: string,
-        rules: IRulesConfig = this.rules
-   ): ResultErrorModel[] {
-         const resultErrors: ResultErrorModel[] = [];
-         const configPath: string = join(project, 'tsconfig.json');
-         const projectSymbols: WorkspaceSymbols = new WorkspaceSymbols(configPath);
-
-        const allProjectModules: NgModuleSymbol[] = projectSymbols.getAllModules();
-
-        // RULE: Is `ngx-translate` module imported
-        if (!!rules.ast && rules.ast.isNgxTranslateImported !== ErrorTypes.disable) {
-             const isNgxTranslateImported: AstIsNgxTranslateImportedRule = new AstIsNgxTranslateImportedRule(allProjectModules);
-             const isNgxTranslateResult: ResultErrorModel[] = isNgxTranslateImported.check(project);
-            resultErrors.push(...isNgxTranslateResult);
-        }
-
-         return resultErrors;
     }
 }
 

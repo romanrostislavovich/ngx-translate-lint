@@ -5,7 +5,7 @@ import { ErrorTypes, ErrorFlow } from './../enums';
 import { ResultErrorModel, KeyModel } from './../models';
 
 class MisprintRule implements IRule {
-    public flow: ErrorFlow = ErrorFlow.misprint;
+    public flow: ErrorFlow = ErrorFlow.misprintKeys;
     public handler: ErrorTypes;
     private readonly maxCoefficient: number;
     private ignoredMisprintKeys: string[] = [];

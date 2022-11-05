@@ -4,7 +4,6 @@ enum OptionsLongNames {
     config = 'config',
     version = 'version',
     project = 'project',
-    tsconfig = 'tsconfig',
     emptyKeys = 'emptyKeys',
     languages = 'languages',
     maxWarning = 'maxWarning',
@@ -13,7 +12,6 @@ enum OptionsLongNames {
     keysOnViews = 'keysOnViews',
     misprintKeys = 'misprintKeys',
     misprintCoefficient = 'misprintCoefficient',
-    isNgxTranslateLintImported = 'isNgxTranslateLintImported',
 }
 
 enum OptionsShortNames {
@@ -21,7 +19,6 @@ enum OptionsShortNames {
     config = 'c',
     project = 'p',
     version = 'v',
-    tsconfig = 't',
     languages = 'l',
     emptyKeys = 'ek',
     deepSearch = 'ds',
