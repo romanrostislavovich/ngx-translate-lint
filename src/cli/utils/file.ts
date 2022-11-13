@@ -5,6 +5,8 @@ import chalk from 'chalk';
 
 import { FatalErrorModel } from '../../core';
 
+const packageJsonPath: string = './package.json';
+
 // tslint:disable-next-line:no-any
 function parseJsonFile(filePath: string): any {
     if (!fs.existsSync(filePath)) {
@@ -16,12 +18,12 @@ function parseJsonFile(filePath: string): any {
     return result;
 }
 
-function getCurrentLibPath(relativeFilePath: string): string {
-    const result: string = path.resolve(__dirname,  '../../../', relativeFilePath);
+function getPackageJsonPath(): string {
+    const result: string = path.resolve(__dirname,  '../../../../', packageJsonPath);
     return result;
 }
 
 export {
-    getCurrentLibPath,
+    getPackageJsonPath,
     parseJsonFile
 };
