@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.20.3](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.20.2...v1.20.3) (2022-11-13)
+
+
+### Bug Fixes
+
+* Add summary to the end of lint ([acf5caf](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/acf5caf812d2ed2c502b00c8262aa34e942b308a)), closes [#120](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/120)
+
 ## [1.20.2](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.20.1...v1.20.2) (2022-11-13)
 
 
