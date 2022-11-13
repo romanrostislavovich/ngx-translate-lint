@@ -195,6 +195,7 @@ class Cli {
             const resultCliModel: ResultCliModel = validationModel.lint(maxWarning);
             const resultModel: ResultModel = resultCliModel.getResultModel();
             resultModel.printResult();
+            resultModel.printSummery();
 
             process.exitCode = resultCliModel.exitCode();
 
