@@ -1,7 +1,7 @@
 {
     "author": "Raman Lauryniuk <romanrostislavovich@gmail.com>",
     "name": "ngx-translate-lint",
-    "version": "1.20.0",
+    "version": "1.20.1",
     "description": "Simple tools for check `ngx-translate` keys in app",
     "license": "MIT",
     "repository": "svoboda-rabstvo/ngx-translate-lint",
