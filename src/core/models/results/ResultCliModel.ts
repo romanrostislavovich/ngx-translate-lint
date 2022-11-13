@@ -93,7 +93,7 @@ class ResultCliModel {
 
     public getResultModel(): ResultModel {
         const resultFiles: ResultFileModel[] = this.getResultFiles();
-        const resultModel: ResultModel = new ResultModel(resultFiles, this.hasErrors(), this.hasWarnings(), logger);
+        const resultModel: ResultModel = new ResultModel(this, resultFiles, this.hasErrors(), this.hasWarnings(), logger);
         return resultModel;
     }
 }
