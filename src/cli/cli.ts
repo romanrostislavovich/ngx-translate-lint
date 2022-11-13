@@ -16,7 +16,7 @@ import {
 import { config } from './../core/config';
 import { OptionsLongNames, OptionsShortNames } from './enums';
 import chalk from 'chalk';
-import { parseJsonFile } from './utils';
+import { parseJsonFile, getCurrentLibPath } from './utils';
 
 const name: string = 'ngx-translate-lint';
 const packageJsonPath: string = './package.json';
@@ -61,7 +61,7 @@ class Cli {
         });
 
         // tslint:disable-next-line:no-any
-        const packageJson: any = parseJsonFile(packageJsonPath);
+        const packageJson: any = parseJsonFile(getCurrentLibPath(packageJsonPath));
         this.cliClient.version(packageJson.version);
 
         this.cliClient
@@ -206,7 +206,7 @@ class Cli {
 
     private printCurrentVersion(): void {
         // tslint:disable-next-line:no-any
-        const packageJson: any = parseJsonFile(packageJsonPath);
+        const packageJson: any = parseJsonFile(getCurrentLibPath(packageJsonPath));
         // tslint:disable-next-line:no-console
         console.log(`Current version: ${packageJson.version}`);
     }
