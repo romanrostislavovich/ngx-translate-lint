@@ -1,4 +1,6 @@
 import * as fs from 'fs';
+import * as path from 'path';
+
 import chalk from 'chalk';
 
 import { FatalErrorModel } from '../../core';
@@ -14,6 +16,12 @@ function parseJsonFile(filePath: string): any {
     return result;
 }
 
+function getCurrentLibPath(relativeFilePath: string): string {
+    const result: string = path.resolve(__dirname,  '../../../', relativeFilePath);
+    return result;
+}
+
 export {
+    getCurrentLibPath,
     parseJsonFile
 };
