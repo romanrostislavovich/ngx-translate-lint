@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.20.1](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.20.0...v1.20.1) (2022-11-13)
+
+
+### Bug Fixes
+
+* Incorrect version is always printed incorrectly ([98b3607](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/98b3607e7843bc0ffe96f06799a19e17700f3a58)), closes [#136](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/136)
+
 # [1.20.0](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.19.0...v1.20.0) (2022-11-05)
 
 
