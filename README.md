@@ -118,12 +118,36 @@ Default Config is:
         "misprintCoefficient": "0.9",
         "ignoredKeys": [ "IGNORED.KEY.(.*)" ], // can be string or RegExp
         "ignoredMisprintKeys": [],
-        "customRegExpToFindKeys": [ /marker\("(.*)"\)/gm ], // to find: marker("TRSNLATE.KEY");
+        "customRegExpToFindKeys": [ "(?<=marker\\(['\"])([A-Za-z0-9_\\-.]+)(?=['\"]\\))"], // to find: marker('TRSNLATE.KEY');
     },
     "project": "./src/app/**/*.{html,ts}",
     "languages": "./src/assets/i18n/*.json"
 }
 ```
+
+#### How to write Custom RegExp
+
+We have `(?<=marker\\(['\"])([A-Za-z0-9_\\-.]+)(?=['\"]\\))` RegExp witch contains of 3 parts:
+
+- Prefix - `(?<=marker\\(['\"])`
+   - This construction tells that what we need matching before translate key
+   - start with `(?<=` and end `)`.
+   - `marker\\(['\"]` - tells that we try to find word `market` witch have on the second character `'`or `"`
+   - To summarize, we are trying to find keys before each word to be `market` and commas `'` or `"`
+  
+- Matching for key: `([A-Za-z0-9_\\-.]+)`
+  - This construction tells that we find and save all words which contain alphabet, numbers, and `_` or `-`.
+  - We recommend using this part of RegExp to find and save translated keys
+  - But you can also use `(.*)` If it's enough for your project
+- Postfix - `(?=['\"]\\))` (the same as prefix, but need to be ended)
+  - This construction tells that what we need matching after translate key
+  - start with `(?=` and end `)`
+  - `['\"]\\)` - tells that we try to find word comas `'` or `"` and ended with `)`
+  - To summarize, we are trying to find keys ended each word to be commas `'` or `"` and `)`
+
+Example RegExp will find following keys
+  - `marker('TRSNLATE.KEY')`
+  - `marker("TRSNLATE.KEY-2")`
 
 #### Exit Codes
 
@@ -151,7 +175,7 @@ const ruleConfig: IRulesConfig = {
         misprintCoefficient: 0.9,
         ignoredKeys: [ 'EXAMPLE.KEY', 'IGNORED.KEY.(.*)' ], // can be string or RegExp
         ignoredMisprintKeys: [],
-        customRegExpToFindKeys: [ /marker\("(.*)"\)/gm ]
+        customRegExpToFindKeys: [ "(?<=marker\\(['\"])([A-Za-z0-9_\\-.]+)(?=['\"]\\))" ] // to find: marker('TRSNLATE.KEY');
 };
 
 const ngxTranslateLint = new NgxTranslateLint(viewsPath, languagesPath, ignoredLanguagesPath, ruleConfig)

@@ -27,7 +27,7 @@ class KeysUtils {
 
         // @ts-ignore
         const customRegExpList: string[] = customRegExp.map((regexp: string ) => {
-           return `(${regexp})`;
+           return `${regexp}`;
         });
         const resultKeysRegExp: string[] = [
             keysFromPipeInView,

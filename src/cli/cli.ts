@@ -104,7 +104,7 @@ class Cli {
                  optionIgnoredKeys =  options.rules.ignoredKeys;
                  optionMisprintCoefficient = options.rules.misprintCoefficient;
                  optionIgnoredMisprintKeys =  options.rules.ignoredMisprintKeys;
-                 optionCustomRegExpToFindKeys = options.rules.rulescustomRegExpToFindKeys;
+                 optionCustomRegExpToFindKeys = options.rules.customRegExpToFindKeys;
             } else {
                  deepSearch = options.deepSearch;
                  optionIgnore = options.ignore;
@@ -116,7 +116,7 @@ class Cli {
                  optionIgnoredKeys = options.ignoredKeys;
                  optionMisprintCoefficient = options.misprintCoefficient ;
                  optionIgnoredMisprintKeys = options.ignoredMisprintKeys ;
-                 optionCustomRegExpToFindKeys = options.rulescustomRegExpToFindKeys;
+                 optionCustomRegExpToFindKeys = options.customRegExpToFindKeys;
             }
 
 
