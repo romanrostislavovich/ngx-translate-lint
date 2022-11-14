@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [1.20.4](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.20.3...v1.20.4) (2022-11-14)
+
+
+### Bug Fixes
+
+* custromRegExp option don't working on config (JSON) file ([663fb2a](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/663fb2a86a84ef449a69aff6edab57e0357e25fd)), closes [#140](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/140)
+* Keys on Directive doesn't find key with - separator ([7dad22e](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/7dad22eace7d4f4891cd158b8351f4d5c67c97b4)), closes [#142](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/142)
+
 ## [1.20.3](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.20.2...v1.20.3) (2022-11-13)
 
 
