@@ -3,7 +3,7 @@ interface IResultConfig {
 }
 
 const configValues: IResultConfig = {
-    totalKeys: 20
+    totalKeys: 23
 };
 
 export {  configValues, IResultConfig  };

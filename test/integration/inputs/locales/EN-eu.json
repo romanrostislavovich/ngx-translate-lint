@@ -31,5 +31,8 @@
     "general.buttons.back.PART-2": "BUG 115",
     "IGNORED.KEY.FLAG": "IGNORED.KEY.FLAG",
     "EMPTY.KEY": "",
-    "CUSTOM.REGEXP.ONE": "CUSTOM.REGEXP.ONE"
+    "CUSTOM.REGEXP.ONE": "CUSTOM.REGEXP.ONE",
+    "general.labels.jumpTo": "BUG 145",
+    "general.goal1": "BGU 145",
+    "general.goal2": "BGU 145"
 }

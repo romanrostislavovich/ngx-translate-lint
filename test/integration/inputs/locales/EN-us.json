@@ -18,5 +18,8 @@
         }
     },
     "EMPTY.KEY": "NOT EMPTY",
-    "CUSTOM.REGEXP.ONE": "CUSTOM.REGEXP.ONE"
+    "CUSTOM.REGEXP.ONE": "CUSTOM.REGEXP.ONE",
+    "general.labels.jumpTo": "BUG 145",
+    "general.goal1": "BGU 145",
+    "general.goal2": "BGU 145"
 }
