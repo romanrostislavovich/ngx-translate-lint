@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.20.5](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.20.4...v1.20.5) (2022-12-03)
+
+
+### Bug Fixes
+
+* Incorrect behaviour with component mat-icon which includes a complex translation for the value of its attribute/property/directive ([5f97891](https://github.com/svoboda-rabstvo/ngx-translate-lint/commit/5f978914e6018d0e63976a66419728068cce0c4a)), closes [#145](https://github.com/svoboda-rabstvo/ngx-translate-lint/issues/145)
+
 ## [1.20.4](https://github.com/svoboda-rabstvo/ngx-translate-lint/compare/v1.20.3...v1.20.4) (2022-11-14)
 
 
