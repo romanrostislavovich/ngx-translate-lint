@@ -1,11 +1,13 @@
 # ngx-translate-lint
 
-> Simple tools for check ngx-translate keys in whole app which use regexp and AST (beta).
+> Simple tools for check ngx-translate keys in Angular applications in whole app which use regexp
 
 [![Build Master](https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint.svg?branch=master)](https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint)
 [![semantic](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![npm](https://img.shields.io/npm/v/ngx-translate-lint.svg)](https://www.npmjs.com/package/ngx-translate-lint)
 [![download npm](https://img.shields.io/npm/dm/ngx-translate-lint.svg)](https://www.npmjs.com/package/ngx-translate-lint)
+
+> NOTE: for React applications you can use [`react-i18next-lint`](https://www.npmjs.com/package/react-i18next-lint)
 
 ## Table of Contents
 
@@ -13,9 +15,9 @@
 - [Installation](#installation)
 - [Usage](#usage)
     - [CLI](#cli)
-    - [TypeScript](#TypeScript)
+    - [TypeScript](#typescript)
 - [Contribute](#contribute)
-- [Used By](#UsedBy)
+- [Used By](#used-by)
 - [License](#license)
 
 ## Background
