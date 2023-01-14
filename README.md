@@ -7,7 +7,10 @@
 [![npm](https://img.shields.io/npm/v/ngx-translate-lint.svg)](https://www.npmjs.com/package/ngx-translate-lint)
 [![download npm](https://img.shields.io/npm/dm/ngx-translate-lint.svg)](https://www.npmjs.com/package/ngx-translate-lint)
 
-> NOTE: for React applications you can use [`react-i18next-lint`](https://www.npmjs.com/package/react-i18next-lint)
+> for `react-intl` use [`react-intl-lint`](https://www.npmjs.com/package/react-intl-lint)
+>
+> for `react-i18next` use [`react-i18next-lint`](https://www.npmjs.com/package/react-i18next-lint)
+
 
 ## Table of Contents
 
