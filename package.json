@@ -78,7 +78,6 @@
         "fs": "0.0.1-security",
         "glob": "^7.1.4",
         "lodash": "^4.17.20",
-        "ngast": "^0.6.2",
         "path": "^0.12.7",
         "rxjs": "^6.5.4",
         "string-similarity": "^4.0.1",
