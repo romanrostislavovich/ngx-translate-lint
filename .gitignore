@@ -6,3 +6,4 @@ dockerfile
 coverage/
 package-lock.json
 .env
+./.env
