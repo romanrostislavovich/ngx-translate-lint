@@ -67,11 +67,14 @@ Options:
           Possible Values: <disable|warning|error>
           (default: "error")
   -zk,  --zombieKeys [enum]
-          Described how to handle the error of zombies keys
+          Described how to handle the error of zombies keys.
+            Zombie keys are keys that doesn't exist on any languages file but exist on project, 
+            or exist languages but doesn't exist on project
           Possible Values: <disable|warning|error>
           (default: "warning")
   -ek, --emptyKeys [enum]
-          Described how to handle empty value on translate keys
+          Described how to handle empty value on translate keys. 
+            Empty keys are keys that doesn't have any value on languages files
           Possible Values: <disable|warning|error>
            (default: "warning")
   -i,  --ignore [glob]
@@ -108,7 +111,6 @@ Examples:
 ```
 
 > NOTE: For `project` and `languages` options need to include file types like on the example.
-> WARNING!: `BETA` flag working only with angular 11 and higher!
 
 Default Config is:
 ```json
@@ -220,6 +222,7 @@ Here can be your extensions:
 - [121 Platform](https://github.com/global-121/121-platform) - 121 is an open source platform for Cash based Aid built with Digital Identity & Local/Global Financial service partners.
 
 ## License
+
 
 [MIT][license-url]
 

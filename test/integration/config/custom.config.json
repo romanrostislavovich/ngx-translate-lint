@@ -1,0 +1,17 @@
+{
+  "rules": {
+    "keysOnViews": "warning",
+    "zombieKeys": "disable",
+    "misprintKeys": "disable",
+    "deepSearch": "disable",
+    "emptyKeys": "warning",
+    "maxWarning": "0",
+    "misprintCoefficient": "0.9",
+    "ignoredKeys": [ "IGNORED.KEY.(.*)" ],
+    "ignoredMisprintKeys": [],
+    "customRegExpToFindKeys": [ "(?<=marker\\(['\"])([A-Za-z0-9_\\-.]+)(?=['\"]\\))"]
+  },
+  "project": "./test/integration/inputs/views/directive.keys.html",
+  "languages": "./test/integration/inputs/locales/EN-*.json",
+  "ignore": "./test/integration/inputs/locales/incorrect.json"
+}

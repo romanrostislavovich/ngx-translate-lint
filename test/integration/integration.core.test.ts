@@ -17,22 +17,27 @@ import {
 } from './../../src/core';
 
 import { assertFullModel } from './results/arguments.full';
+import { assertAngular17Model } from './results/angular_17.full';
 import { assertDefaultModel } from './results/default.full';
 import { assertCustomConfig } from './results/custom.config';
 import { configValues } from './results/config.values';
 import { getAbsolutePath, projectFolder } from './utils';
 
 describe('Core Integration', () => {
-    const ignorePath: string = '';
-
     const projectIgnorePath: string = './test/integration/inputs/views/pipe.keys.html';
     const projectWithMaskPath: string = './test/integration/inputs/views/*.{html,ts}';
+    const projectAngular17Path: string = './test/integration/inputs/views/angular_17.html';
     const projectAbsentMaskPath: string = './test/integration/inputs/views/';
 
     const languagesIgnorePath: string = './test/integration/inputs/locales/EN-eu.json';
     const languagesWithMaskPath: string = './test/integration/inputs/locales/EN-*.json';
+    const languagesAngular17Path: string = './test/integration/inputs/locales/angular_17.json';
     const languagesIncorrectFile: string = './test/integration/inputs/locales/incorrect.json';
     const languagesAbsentMaskPath: string = './test/integration/inputs/locales';
+
+    const ignorePath: string = '';
+    const ignoreAngular17ViewPath: string = projectAngular17Path;
+    const ignoreAngular17LanguagesPath: string = languagesAngular17Path;
 
     describe('Custom RegExp to find keys', () => {
        it('should be find keys', () => {
@@ -208,7 +213,7 @@ describe('Core Integration', () => {
         it('should be relative and absolute and have projects and languages files', () => {
             // Arrange
             const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
-            const ignorePath: string = `${languagesIgnorePath}, ${ignoreAbsoluteProjectPath}`;
+            const ignorePath: string = `${languagesIgnorePath}, ${ignoreAbsoluteProjectPath}, ${ignoreAngular17LanguagesPath}, ${ignoreAngular17ViewPath}`;
             const errorConfig: IRulesConfig = {
                 ...defaultConfig.defaultValues.rules,
                 deepSearch: ToggleRule.enable,
@@ -250,7 +255,7 @@ describe('Core Integration', () => {
 
         it('should be absent mask', () => {
             // Arrange
-            const ignorePath: string = `${languagesIgnorePath}, ${projectIgnorePath}, ${languagesIncorrectFile}`;
+            const ignorePath: string = `${languagesIgnorePath}, ${projectIgnorePath}, ${languagesIncorrectFile}, ${ignoreAngular17LanguagesPath}, ${ignoreAngular17ViewPath}`;
             const errorConfig: IRulesConfig = {
                 ...defaultConfig.defaultValues.rules,
                 deepSearch: ToggleRule.enable,
@@ -321,13 +326,13 @@ describe('Core Integration', () => {
                 misprintCoefficient: 0.9,
                 misprintKeys: ErrorTypes.disable,
                 deepSearch: ToggleRule.enable,
-                ignoredKeys: ["IGNORED.KEY.FLAG"],
+                ignoredKeys: ["IGNORED.KEY.FLAG", "STRING.KEY_FROM_ANGULAR_17.EXIST_IN_ALL_LOCALES"],
                 ignoredMisprintKeys: [],
                 customRegExpToFindKeys: []
             };
 
             // Act
-            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath, errorConfig);
+            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignoreAngular17ViewPath, errorConfig);
             const result: ResultCliModel = model.lint();
 
             // Assert
@@ -360,6 +365,30 @@ describe('Core Integration', () => {
             });
         });
     });
+    it('Angular 17', () => {
+        const errorConfig: IRulesConfig = {
+            keysOnViews: ErrorTypes.error,
+            zombieKeys: ErrorTypes.warning,
+            emptyKeys: ErrorTypes.warning,
+            maxWarning: 1,
+            misprintCoefficient: 0.9,
+            misprintKeys: ErrorTypes.warning,
+            deepSearch: ToggleRule.enable,
+            ignoredKeys: ["IGNORED.KEY.FLAG"],
+            ignoredMisprintKeys: [],
+            customRegExpToFindKeys: []
+        };
+        const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectAngular17Path);
+        const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
+        const ignorePath: string = `${languagesIgnorePath}, ${ignoreAbsoluteProjectPath}`;
+
+        // Act
+        const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, languagesAngular17Path, ignorePath, errorConfig);
+        const result: ResultCliModel = model.lint();
+
+        // Assert
+        assert.deepEqual(assertAngular17Model, result.errors);
+    });
     it('with full arguments', () => {
         // Arrange
         const errorConfig: IRulesConfig = {
@@ -376,7 +405,7 @@ describe('Core Integration', () => {
         };
         const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
         const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
-        const ignorePath: string = `${languagesIgnorePath}, ${ignoreAbsoluteProjectPath}`;
+        const ignorePath: string = `${languagesIgnorePath}, ${ignoreAbsoluteProjectPath}, ${ignoreAngular17LanguagesPath}, ${ignoreAngular17ViewPath}`;
 
         // Act
         const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, languagesWithMaskPath, ignorePath, errorConfig);
