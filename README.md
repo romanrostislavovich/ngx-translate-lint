@@ -221,6 +221,7 @@ Here can be your extensions:
 
 ## License
 
+
 [MIT][license-url]
 
 [ngx-translate]: https://github.com/ngx-translate/core
