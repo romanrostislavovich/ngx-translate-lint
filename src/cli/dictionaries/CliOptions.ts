@@ -50,7 +50,7 @@ const cliOptions: OptionModel[] = [
         longName: OptionsLongNames.zombieKeys,
         required: false,
         type: ArgumentTypes.enum,
-        description: `Described how to handle the error of zombies keys`,
+        description: `Described how to handle the error of zombies keys. Zombie keys are keys that doesn't exist on any languages file but exist on project, or exist languages but doesn't exist on project`,
         additionalDescription: ``,
         default: ErrorTypes.warning,
         values: [
@@ -65,7 +65,7 @@ const cliOptions: OptionModel[] = [
         longName: OptionsLongNames.emptyKeys,
         required: false,
         type: ArgumentTypes.enum,
-        description: `Described how to handle empty value on translate keys`,
+        description: `Described how to handle empty value on translate keys. Empty keys are keys that doesn't have any value on languages files`,
         additionalDescription: ``,
         default: ErrorTypes.warning,
         values: [

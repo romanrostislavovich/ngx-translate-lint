@@ -17,6 +17,7 @@ import { config } from './../core/config';
 import { OptionsLongNames, OptionsShortNames } from './enums';
 import chalk from 'chalk';
 import { parseJsonFile, getPackageJsonPath } from './utils';
+import { defaultConfig } from 'sinon';
 
 const name: string = 'ngx-translate-lint';
 
@@ -77,8 +78,10 @@ class Cli {
         try {
             // tslint:disable-next-line:no-any
             const options: any = this.cliClient.config ? parseJsonFile(this.cliClient.config) : this.cliClient;
-            const projectPath: string = options.project;
-            const languagePath: string = options.languages;
+
+            const projectPath: string = this.cliClient.project  !== config.defaultValues.projectPath ? this.cliClient.project : options.project;
+            const languagePath: string = this.cliClient.languages !== config.defaultValues.languagesPath? this.cliClient.languages : options.languages;
+
             const tsConfigPath: string = options.tsConfigPath;
 
             let deepSearch: ToggleRule;
@@ -114,13 +117,10 @@ class Cli {
                  optionMaxWarning =  options.maxWarning;
                  optionZombiesRule = options.zombieKeys;
                  optionIgnoredKeys = options.ignoredKeys;
-                 optionMisprintCoefficient = options.misprintCoefficient ;
-                 optionIgnoredMisprintKeys = options.ignoredMisprintKeys ;
+                 optionMisprintCoefficient = options.misprintCoefficient;
+                 optionIgnoredMisprintKeys = options.ignoredMisprintKeys;
                  optionCustomRegExpToFindKeys = options.customRegExpToFindKeys;
             }
-
-
-            this.printCurrentVersion();
 
             if (options.project && options.languages) {
                 this.runLint(
@@ -146,6 +146,8 @@ class Cli {
     }
 
     public parse(): void {
+        this.printCurrentVersion();
+
         this.cliClient.parse(process.argv);
     }
 

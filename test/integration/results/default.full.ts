@@ -56,6 +56,15 @@ const assertDefaultModel: ResultErrorModel[]= [
         getAbsolutePath(languagesFolder, 'EN-us.json')
     ),
     new ResultErrorModel(
+        'STRING.KEY_FROM_ANGULAR_17.EXIST_IN_ALL_LOCALES',
+        ErrorFlow.keysOnViews, ErrorTypes.error,
+        getAbsolutePath(projectFolder, 'angular_17.html'),
+        [
+            'EN-eu.json',
+            'EN-us.json'
+        ]
+    ),
+    new ResultErrorModel(
         'STRING.KEY_FROM_DIRECTIVE_VIEW.EXIST_IN_ONE_LOCALE',
         ErrorFlow.keysOnViews, ErrorTypes.error,
         getAbsolutePath(projectFolder, 'directive.keys.html'),
