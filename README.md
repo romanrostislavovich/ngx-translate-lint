@@ -111,7 +111,6 @@ Examples:
 ```
 
 > NOTE: For `project` and `languages` options need to include file types like on the example.
-> WARNING!: `BETA` flag working only with angular 11 and higher!
 
 Default Config is:
 ```json
