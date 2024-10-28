@@ -67,11 +67,14 @@ Options:
           Possible Values: <disable|warning|error>
           (default: "error")
   -zk,  --zombieKeys [enum]
-          Described how to handle the error of zombies keys
+          Described how to handle the error of zombies keys.
+            Zombie keys are keys that doesn't exist on any languages file but exist on project, 
+            or exist languages but doesn't exist on project
           Possible Values: <disable|warning|error>
           (default: "warning")
   -ek, --emptyKeys [enum]
-          Described how to handle empty value on translate keys
+          Described how to handle empty value on translate keys. 
+            Empty keys are keys that doesn't have any value on languages files
           Possible Values: <disable|warning|error>
            (default: "warning")
   -i,  --ignore [glob]
