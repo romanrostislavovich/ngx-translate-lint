@@ -4,8 +4,8 @@
     "version": "1.20.7",
     "description": "Simple tools for check `ngx-translate` keys in app",
     "license": "MIT",
-    "repository": "svoboda-rabstvo/ngx-translate-lint",
-    "bugs": "https://github.com/svoboda-rabstvo/ngx-translate-lint/issues",
+    "repository": "https://github.com/romanrostislavovich/ngx-translate-lint.git",
+    "bugs": "https://github.com/romanrostislavovich/ngx-translate-lint/issues",
     "bin": {
         "ngx-translate-lint": "dist/bin.js"
     },
