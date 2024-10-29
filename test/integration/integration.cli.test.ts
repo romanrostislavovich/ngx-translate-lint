@@ -14,6 +14,7 @@ import 'mocha';
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 314e6d4... fix: small fix
 describe('CLI Integration', () => {
@@ -117,4 +118,8 @@ describe('CLI Integration', () => {
 describe('CLI Integration', () => {
 
 >>>>>>> 846af48... fix: small fix
+=======
+describe('CLI Integration', () => {
+
+>>>>>>> 51324e4... fix: comit
 });
