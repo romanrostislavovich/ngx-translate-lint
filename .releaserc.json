@@ -1,5 +1,19 @@
 {
-    "branch": "master",
+    "repositoryUrl": "https://github.com/romanrostislavovich/ngx-translate-lint.git",
+    "branches": [
+        {
+            "name": "master"
+        },
+        {
+            "name": "beta",
+            "prerelease": true
+        },
+        {
+            "name": "alpha",
+            "prerelease": true
+        }
+    ],
+    "defaultBranch": "master",
     "plugings": [
         ["semantic-release/commit-analyzer", {
             "preset": "angular",
@@ -64,7 +78,8 @@
             {
                 "type": "breaking",
                 "release": "major"
-            }
+            },
+            { "scope": "no-release", "release": false }
         ],
         "parserOpts": {
             "noteKeywords": [
