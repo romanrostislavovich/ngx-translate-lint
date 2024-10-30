@@ -2,8 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import chalk from 'chalk';
-
-import { FatalErrorModel } from '../../core';
+import { FatalErrorModel } from './../models';
 
 const packageJsonPath: string = './package.json';
 
@@ -23,7 +22,14 @@ function getPackageJsonPath(): string {
     return result;
 }
 
+// tslint:disable-next-line:typedef no-any
+function saveJsonFile(data: any, path: string) {
+    const jsonSpaces: number = 4;
+    fs.writeFileSync(path, JSON.stringify(data,  null, jsonSpaces));
+}
+
 export {
     getPackageJsonPath,
-    parseJsonFile
+    parseJsonFile,
+    saveJsonFile,
 };

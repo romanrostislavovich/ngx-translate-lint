@@ -147,6 +147,15 @@ const cliOptions: OptionModel[] = [
         ]
     }),
     new OptionModel({
+        longName: OptionsLongNames.fixZombiesKeys,
+        shortName: OptionsShortNames.fixZombiesKeys,
+        required: false,
+        type: ArgumentTypes.boolean,
+        description: `Auto fix zombies keys on languages files`,
+        additionalDescription: ``,
+        default: config.defaultValues.fixZombiesKeys?.toString() || 'false',
+    }),
+    new OptionModel({
         longName: OptionsLongNames.version,
         shortName: OptionsShortNames.version,
         required: false,
