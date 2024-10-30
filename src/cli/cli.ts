@@ -10,13 +10,14 @@ import {
     ResultCliModel,
     ResultModel,
     StatusCodes,
-    ToggleRule
+    ToggleRule,
+    parseJsonFile,
+    getPackageJsonPath,
 } from "./../core";
 
 import { config } from './../core/config';
 import { OptionsLongNames, OptionsShortNames } from './enums';
 import chalk from 'chalk';
-import { parseJsonFile, getPackageJsonPath } from './utils';
 import { defaultConfig } from 'sinon';
 
 const name: string = 'ngx-translate-lint';
@@ -81,6 +82,7 @@ class Cli {
 
             const projectPath: string = this.cliClient.project  !== config.defaultValues.projectPath ? this.cliClient.project : options.project;
             const languagePath: string = this.cliClient.languages !== config.defaultValues.languagesPath? this.cliClient.languages : options.languages;
+            const fixZombiesKeys: boolean = this.cliClient.fixZombiesKeys !== config.defaultValues.fixZombiesKeys ? this.cliClient.fixZombiesKeys : options.fixZombiesKeys;
 
             const tsConfigPath: string = options.tsConfigPath;
 
@@ -180,6 +182,7 @@ class Cli {
         ignoredMisprintKeys: string[] = [],
         customRegExpToFindKeys: string[] | RegExp[] = [],
         tsConfigPath?: string,
+        fixZombiesKeys?: boolean,
     ): void {
             const errorConfig: IRulesConfig = {
                 misprintKeys: misprint || ErrorTypes.disable,
