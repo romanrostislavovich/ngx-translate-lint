@@ -1,21 +1,22 @@
-import { flatMap } from 'lodash';
+import { flatMap, omit } from 'lodash';
 import * as path from 'path';
 import { config } from './config';
-import { ErrorTypes } from './enums';
+import { ErrorFlow, ErrorTypes } from './enums';
 import { IRulesConfig } from './interface';
-import { KeysUtils } from './utils';
+import { getPackageJsonPath, KeysUtils, parseJsonFile, saveJsonFile } from './utils';
 import { FileLanguageModel, FileViewModel, KeyModel, LanguagesModel, ResultCliModel, ResultErrorModel } from './models';
-import { AbsentViewKeysRule, MisprintRule, ZombieRule, EmptyKeysRule } from './rules';
+import { AbsentViewKeysRule, EmptyKeysRule, MisprintRule, ZombieRule } from './rules';
 import { KeyModelWithLanguages, LanguagesModelWithKey, ViewModelWithKey } from './models/KeyModelWithLanguages';
+
 
 
 class NgxTranslateLint {
     public rules: IRulesConfig;
-    public projectPath: string;
-    public languagesPath: string;
-    public tsConfigPath: string | undefined;
-
     public ignore?: string;
+    public projectPath: string;
+    public tsConfigPath: string | undefined;
+    public languagesPath: string;
+    public fixZombiesKeys: boolean | undefined;
 
     constructor (
         projectPath: string = config.defaultValues.projectPath,
@@ -23,12 +24,14 @@ class NgxTranslateLint {
         ignore?: string,
         rulesConfig: IRulesConfig = config.defaultValues.rules,
         tsConfigPath?: string,
+        fixZombiesKeys?: boolean,
     ) {
-        this.languagesPath = languagesPath;
-        this.projectPath = projectPath;
         this.ignore = ignore;
         this.rules = rulesConfig;
+        this.projectPath = projectPath;
         this.tsConfigPath = tsConfigPath;
+        this.languagesPath = languagesPath;
+        this.fixZombiesKeys = fixZombiesKeys;
     }
 
     public lint(maxWarning?: number): ResultCliModel {
@@ -189,9 +192,34 @@ class NgxTranslateLint {
             result.push(...ruleResult);
         }
 
+        if (!!this.fixZombiesKeys) {
+            const allZombiesKeys: ResultErrorModel[] = result.filter((error) => {
+                return error.errorFlow === ErrorFlow.zombieKeys;
+            });
+
+            const filesAndKeys: FileLanguageModel[] = allZombiesKeys.reduce((acum: FileLanguageModel[], item: ResultErrorModel) => {
+                const existingFileLanguage: FileLanguageModel | undefined = acum.find((x) => x.path === item.currentPath) ;
+                if (!!existingFileLanguage) {
+                    existingFileLanguage.keys.push(new KeyModel(item.value));
+                }  else {
+                    const newFileLanguage: FileLanguageModel = new FileLanguageModel(item.currentPath, [], [new KeyModel(item.value)]);
+                    acum.push(newFileLanguage);
+                }
+                 return acum;
+            }, []);
+
+            filesAndKeys.forEach((languageFile: FileLanguageModel) => {
+                // tslint:disable-next-line:no-any
+               const jsonData: any = parseJsonFile(languageFile.path);
+               const keysArray: string[] = languageFile.keys.map((x) => x.name);
+                // tslint:disable-next-line:no-any
+               const resultData: any  = omit(jsonData, keysArray);
+               saveJsonFile(resultData, languageFile.path);
+            });
+        }
+
         return result;
     }
 }
-
 
 export { NgxTranslateLint };

@@ -16,7 +16,8 @@ const config: IAppConfig = {
             customRegExpToFindKeys: []
         },
         projectPath: './src/app/**/*.{html,ts,resx}',
-        languagesPath: './src/assets/i18n/*.json'
+        languagesPath: './src/assets/i18n/*.json',
+        fixZombiesKeys: false,
     }
 };
 

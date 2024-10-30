@@ -11,6 +11,7 @@ enum OptionsLongNames {
     zombieKeys  = 'zombieKeys',
     keysOnViews = 'keysOnViews',
     misprintKeys = 'misprintKeys',
+    fixZombiesKeys = 'fixZombiesKeys',
     misprintCoefficient = 'misprintCoefficient',
 }
 
@@ -25,6 +26,7 @@ enum OptionsShortNames {
     zombieKeys = 'zk',
     keysOnViews = 'kv',
     misprintKeys = 'mk',
+    fixZombiesKeys = 'fz',
     misprintCoefficient = 'mc',
 }
 

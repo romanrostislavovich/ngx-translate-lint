@@ -97,6 +97,9 @@ Options:
           (default: "0.9")
   -c, --config [path]
           Path to the config file.
+ -fz, --fixZombiesKeys [boolean]
+          Auto fix zombies keys on languages files
+          (default: "false")
 
 
   -V, --version   output the version number
@@ -127,6 +130,7 @@ Default Config is:
         "ignoredMisprintKeys": [],
         "customRegExpToFindKeys": [ "(?<=marker\\(['\"])([A-Za-z0-9_\\-.]+)(?=['\"]\\))"], // to find: marker('TRSNLATE.KEY');
     },
+    "fixZombiesKeys": false,
     "project": "./src/app/**/*.{html,ts}",
     "languages": "./src/assets/i18n/*.json"
 }
@@ -180,6 +184,7 @@ const ruleConfig: IRulesConfig = {
         emptyKeys: ErrorTypes.warning,
         maxWarning: 0,
         misprintCoefficient: 0.9,
+        fixZombiesKeys: false,
         ignoredKeys: [ 'EXAMPLE.KEY', 'IGNORED.KEY.(.*)' ], // can be string or RegExp
         ignoredMisprintKeys: [],
         customRegExpToFindKeys: [ "(?<=marker\\(['\"])([A-Za-z0-9_\\-.]+)(?=['\"]\\))" ] // to find: marker('TRSNLATE.KEY');
