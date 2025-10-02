@@ -2,7 +2,6 @@
 
 > Simple tools for check ngx-translate keys in Angular applications in whole app which use regexp.
 
-[![Build Master](https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint.svg?branch=master)](https://travis-ci.com/svoboda-rabstvo/ngx-translate-lint)
 [![semantic](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![npm](https://img.shields.io/npm/v/ngx-translate-lint.svg)](https://www.npmjs.com/package/ngx-translate-lint)
 [![download npm](https://img.shields.io/npm/dm/ngx-translate-lint.svg)](https://www.npmjs.com/package/ngx-translate-lint)
@@ -195,23 +194,6 @@ const ngxTranslateLint = new NgxTranslateLint(viewsPath, languagesPath, ignoredL
 const resultLint: ResultCliModel = ngxTranslateLint.lint(); // Run Lint
 const languages: LanguagesModel[] = ngxTranslateLint.getLanguages()  // Get Languages with all keys and views
 
-```
-
-#### NOTE!
-If you have error `Can't resolve 'fs' in ...`. Please add next setting to you project:
- - webpack.js: (`angular.webpack.json`)
-```javascript
-config.externals = {
-    ...config.externals,
-    "fs": 'require("fs")',
-    "path": 'require("path")'
-};
-```
- - tsconfig.json
- ```json
-{
-    "skipLibCheck": true
-}
 ```
 
 ## Contribute
