@@ -21,6 +21,7 @@
         "lint:markdown": "markdownlint --config ./config/markdownlint.json ./docs/**/*.md",
         "test:unit": "nyc mocha -r ts-node/register ./test/unit/*.test.ts",
         "test:integration": "mocha -r ts-node/register ./test/integration/*.test.ts",
+        "test:url": "npm run build && node dist/bin.js -p ./test/integration/inputs/views/*.html -l https://raw.githubusercontent.com/romanrostislavovich/ngx-translate-lint/refs/heads/develop/test/integration/inputs/locales/EN-eu.json",
         "build": "tsc -p . && gulp -f ./config/gulp.js",
         "lint": "npm run lint:typescript && npm run lint:markdown",
         "test": "npm run test:integration",
