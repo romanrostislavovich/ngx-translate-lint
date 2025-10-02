@@ -196,23 +196,6 @@ const languages: LanguagesModel[] = ngxTranslateLint.getLanguages()  // Get Lang
 
 ```
 
-#### NOTE!
-If you have error `Can't resolve 'fs' in ...`. Please add next setting to you project:
- - webpack.js: (`angular.webpack.json`)
-```javascript
-config.externals = {
-    ...config.externals,
-    "fs": 'require("fs")',
-    "path": 'require("path")'
-};
-```
- - tsconfig.json
- ```json
-{
-    "skipLibCheck": true
-}
-```
-
 ## Contribute
 
 You may contribute in several ways like requesting new features,
