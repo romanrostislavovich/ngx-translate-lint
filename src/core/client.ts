@@ -7,6 +7,7 @@ import { getPackageJsonPath, KeysUtils, parseJsonFile, saveJsonFile } from './ut
 import { FileLanguageModel, FileViewModel, KeyModel, LanguagesModel, ResultCliModel, ResultErrorModel } from './models';
 import { AbsentViewKeysRule, EmptyKeysRule, MisprintRule, ZombieRule } from './rules';
 import { KeyModelWithLanguages, LanguagesModelWithKey, ViewModelWithKey } from './models/KeyModelWithLanguages';
+import { Http } from './utils/http';
 
 
 
@@ -34,7 +35,7 @@ class NgxTranslateLint {
         this.fixZombiesKeys = fixZombiesKeys;
     }
 
-    public lint(maxWarning?: number): ResultCliModel {
+    public async lint(maxWarning?: number): Promise<ResultCliModel> {
         if (!(this.projectPath && this.languagesPath)) {
             throw new Error(`Path to project or languages is incorrect`);
         }
@@ -43,7 +44,15 @@ class NgxTranslateLint {
             throw new Error('Error config is incorrect');
         }
 
-        const languagesKeys: FileLanguageModel = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeysWithValue();
+        const languageIsURL: boolean = this.languagesPath.includes('http') || this.languagesPath.includes('https');
+        let languagesKeys: FileLanguageModel;
+        if (languageIsURL) {
+            const fileData: string = await Http.get(this.languagesPath);
+            languagesKeys = new FileLanguageModel(this.languagesPath, [], [], this.ignore, fileData, true).getKeysWithValue();
+        } else {
+            languagesKeys = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeysWithValue();
+        }
+
         const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
         const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys, this.rules.deepSearch);
 
