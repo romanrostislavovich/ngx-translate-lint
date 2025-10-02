@@ -28,7 +28,8 @@ const cliOptions: OptionModel[] = [
         default: config.defaultValues.languagesPath,
         values: [
             OptionsPath.relative,
-            OptionsPath.absolute
+            OptionsPath.absolute,
+            OptionsPath.url
         ]
     }),
     new OptionModel({
