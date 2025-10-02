@@ -60,7 +60,7 @@ Options:
           (default: "./src/app/**/*.{html,ts}")
   -l,  --languages [glob] (required)
           The path to languages folder
-          Possible Values: <relative path|absolute path>
+          Possible Values: <relative path|absolute path|URL>
           (default: "./src/assets/i18n/*.json")
   -kv,  --keysOnViews [enum]
           Described how to handle the error of missing keys on view
@@ -111,6 +111,7 @@ Examples:
     $ npx ngx-translate-lint  -p ./src/app/**/*.{html,ts} -l ./src/assets/i18n/*.json
     $ ngx-translate-lint -p ./src/app/**/*.{html,ts} -l ./src/assets/i18n/*.json
     $ ngx-translate-lint -p ./src/app/**/*.{html,ts} -z disable -v error
+    $ ngx-translate-lint -p ./test/integration/inputs/views/*.html -l https://8.8.8.8/locales/EN-eu.json
 ```
 
 > NOTE: For `project` and `languages` options need to include file types like on the example.
