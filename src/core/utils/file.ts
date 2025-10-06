@@ -1,8 +1,8 @@
 
 import chalk from 'chalk';
 import { FatalErrorModel } from './../models';
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 const packageJsonPath: string = './package.json';
 

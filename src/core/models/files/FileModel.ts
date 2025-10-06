@@ -1,4 +1,4 @@
-import fs from 'fs';
+import * as fs from 'node:fs';
 
 import { KeyModel } from '../KeyModel';
 import { PathUtils, KeysUtils } from '../../utils';
