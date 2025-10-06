@@ -1,10 +1,10 @@
-import { readFileSync, readFile } from 'fs';
+import * as fs from 'node:fs';
 
 // tslint:disable-next-line:no-any
 const resourceResolver: any  = {
     get(url: string): Promise<string> {
         return new Promise((resolve, reject) => {
-            readFile(url, 'utf-8', (err, content) => {
+            fs.readFile(url, 'utf-8', (err, content) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -14,7 +14,7 @@ const resourceResolver: any  = {
         });
     },
     getSync(url: string): string {
-        return readFileSync(url).toString();
+        return fs.readFileSync(url).toString();
     }
 };
 

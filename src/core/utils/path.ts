@@ -1,5 +1,5 @@
-import path from 'path';
-import glob from 'glob';
+import * as path from 'node:path';
+import * as glob from 'glob';
 import dirGlob from 'dir-glob';
 import * as _ from 'lodash';
 
