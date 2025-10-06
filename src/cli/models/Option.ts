@@ -22,7 +22,7 @@ class OptionModel extends Argument {
         const betaTemplate: string = this.beta ? '[BETA] ' : '';
         const requiredTemplate: string = this.required ? '(required) ' : '';
         const longNameTemplate: string = `--${this.longName} `;
-        const shortNameTemplate: string = this.shortName ? '-' + this.shortName + ', ' : '';
+        const shortNameTemplate: string = this.shortName ? (this.shortName.length === 1 ? '-' + this.shortName : '--' + this.shortName ) + ', ' : '';
         return `${shortNameTemplate}${longNameTemplate}${typeTemplate}${requiredTemplate}${betaTemplate}`;
     }
 

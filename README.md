@@ -62,17 +62,17 @@ Options:
           The path to languages folder
           Possible Values: <relative path|absolute path|URL>
           (default: "./src/assets/i18n/*.json")
-  -kv,  --keysOnViews [enum]
+  --kv,  --keysOnViews [enum]
           Described how to handle the error of missing keys on view
           Possible Values: <disable|warning|error>
           (default: "error")
-  -zk,  --zombieKeys [enum]
+  --zk,  --zombieKeys [enum]
           Described how to handle the error of zombies keys.
             Zombie keys are keys that doesn't exist on any languages file but exist on project, 
             or exist languages but doesn't exist on project
           Possible Values: <disable|warning|error>
           (default: "warning")
-  -ek, --emptyKeys [enum]
+  --ek, --emptyKeys [enum]
           Described how to handle empty value on translate keys. 
             Empty keys are keys that doesn't have any value on languages files
           Possible Values: <disable|warning|error>
@@ -84,20 +84,20 @@ Options:
           Max count of warnings in all files. If this value more that count of warnings, then an error is return
           Possible Values: <number>
            (default: "0")
-  -mk,  --misprintKeys [enum]
+  --mk,  --misprintKeys [enum]
           Try to find matches with misprint keys on views and languages keys. CCan be longer process!!
           Possible Values: <disable|warning|error>
            (default: "disable")
-  -ds,  --deepSearch [enum]
+  --ds,  --deepSearch [enum]
           Add each translate key to global regexp end try to find them on project. Can be longer process!!
           Possible Values: <disable|enable>
            (default: "disable")
-  -mc, --misprintCoefficient [number]
+  --mc, --misprintCoefficient [number]
           Coefficient for misprint option can be from 0 to 1.0.
           (default: "0.9")
   -c, --config [path]
           Path to the config file.
- -fz, --fixZombiesKeys [boolean]
+  --fz, --fixZombiesKeys [boolean]
           Auto fix zombies keys on languages files
           (default: "false")
 
@@ -108,10 +108,10 @@ Options:
 
 Examples:
 
-    $ npx ngx-translate-lint  -p ./src/app/**/*.{html,ts} -l ./src/assets/i18n/*.json
-    $ ngx-translate-lint -p ./src/app/**/*.{html,ts} -l ./src/assets/i18n/*.json
-    $ ngx-translate-lint -p ./src/app/**/*.{html,ts} -z disable -v error
-    $ ngx-translate-lint -p ./test/integration/inputs/views/*.html -l https://8.8.8.8/locales/EN-eu.json
+    $ npx ngx-translate-lint  -p "./src/app/**/*.{html,ts}" -l "./src/assets/i18n/*.json"
+    $ ngx-translate-lint -p "./src/app/**/*.{html,ts}" -l "./src/assets/i18n/*.json"
+    $ ngx-translate-lint -p "./src/app/**/*.{html,ts}" -z "disable" -v "error"
+    $ ngx-translate-lint -p "./test/integration/inputs/views/*.html" -l "https://8.8.8.8/locales/EN-eu.json"
 ```
 
 > NOTE: For `project` and `languages` options need to include file types like on the example.
