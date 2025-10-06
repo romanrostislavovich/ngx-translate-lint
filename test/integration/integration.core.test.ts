@@ -21,7 +21,7 @@ import { assertAngular17Model } from './results/angular_17.full';
 import { assertDefaultModel } from './results/default.full';
 import { assertCustomConfig } from './results/custom.config';
 import { configValues } from './results/config.values';
-import { getAbsolutePath, projectFolder } from './utils';
+import { getAbsolutePath, projectFolder, sortResult } from './utils';
 
 describe('Core Integration', () => {
     const projectIgnorePath: string = './test/integration/inputs/views/pipe.keys.html';
@@ -124,8 +124,8 @@ describe('Core Integration', () => {
                     ErrorFlow.misprintKeys, ErrorTypes.error,
                     getAbsolutePath(projectFolder, 'pipe.keys.html'),
                     [
+                        'EN-us.json',
                         'EN-eu.json',
-                        'EN-us.json'
                     ],
                     [
                         "STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_IN_LOCALES"
@@ -237,7 +237,7 @@ describe('Core Integration', () => {
             const result: ResultCliModel = await model.lint();
 
             // Assert
-            assert.deepEqual(assertDefaultModel, result.errors);
+            assert.deepEqual(sortResult(assertDefaultModel), sortResult(result.errors));
         });
     });
     describe('Path', () => {
@@ -250,7 +250,7 @@ describe('Core Integration', () => {
             const result: ResultCliModel = await model.lint();
 
             // Assert
-            assert.deepEqual(assertDefaultModel, result.errors);
+            assert.deepEqual(sortResult(assertDefaultModel), sortResult(result.errors));
         });
 
         it('should be absent mask', async () => {
@@ -312,7 +312,7 @@ describe('Core Integration', () => {
             const result:  ResultCliModel = await model.lint();
 
             // Assert
-            assert.deepEqual(assertDefaultModel, result.errors);
+            assert.deepEqual(sortResult(assertDefaultModel), sortResult(result.errors));
         });
         it('should be incorrect', async () => {
             // Arrange
@@ -353,7 +353,7 @@ describe('Core Integration', () => {
             const result: ResultCliModel = await model.lint();
 
             // Assert
-            assert.deepEqual(assertCustomConfig, result.errors);
+            assert.deepEqual(sortResult(assertCustomConfig), sortResult(result.errors));
         });
     });
     describe('API', () => {

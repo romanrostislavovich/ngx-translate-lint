@@ -1,5 +1,5 @@
 import { flatMap, omit } from 'lodash';
-import * as path from 'path';
+import * as path from 'node:path';
 import { config } from './config';
 import { ErrorFlow, ErrorTypes } from './enums';
 import { IRulesConfig } from './interface';
