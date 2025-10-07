@@ -79,7 +79,7 @@ class Cli {
     public async runCli(): Promise<void> {
         try {
             // tslint:disable-next-line:no-any
-            const options: any = this.cliClient.config ? parseJsonFile(this.cliClient.config) : this.cliClient.opts();
+            const options: any = this.cliClient.opts().config ? parseJsonFile(this.cliClient.opts().config) : this.cliClient.opts();
 
             const projectPath: string = this.cliClient.opts().project  !== config.defaultValues.projectPath ? this.cliClient.opts().project : options.project;
             const languagePath: string = this.cliClient.opts().languages !== config.defaultValues.languagesPath? this.cliClient.opts().languages : options.languages;
