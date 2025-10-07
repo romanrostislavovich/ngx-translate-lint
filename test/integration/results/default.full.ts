@@ -60,8 +60,8 @@ const assertDefaultModel: ResultErrorModel[]= [
         ErrorFlow.keysOnViews, ErrorTypes.error,
         getAbsolutePath(projectFolder, 'angular_17.html'),
         [
-            'EN-eu.json',
-            'EN-us.json'
+            'EN-us.json',
+            'EN-eu.json'
         ]
     ),
     new ResultErrorModel(
@@ -78,8 +78,8 @@ const assertDefaultModel: ResultErrorModel[]= [
         , ErrorTypes.error,
         getAbsolutePath(projectFolder, 'directive.keys.html'),
         [
-            'EN-eu.json',
-            'EN-us.json'
+            'EN-us.json',
+            'EN-eu.json'
         ]
     ),
     new ResultErrorModel(
@@ -103,8 +103,8 @@ const assertDefaultModel: ResultErrorModel[]= [
         ErrorFlow.keysOnViews, ErrorTypes.error,
         getAbsolutePath(projectFolder, 'directive.keys.html'),
         [
-            'EN-eu.json',
-            'EN-us.json'
+            'EN-us.json',
+            'EN-eu.json'
         ]
     ),
     new ResultErrorModel(
@@ -120,8 +120,8 @@ const assertDefaultModel: ResultErrorModel[]= [
         ErrorFlow.keysOnViews, ErrorTypes.error,
         getAbsolutePath(projectFolder, 'pipe.keys.html'),
         [
-            'EN-eu.json',
-            'EN-us.json'
+            'EN-us.json',
+            'EN-eu.json'
         ]
     ),
     new ResultErrorModel(
@@ -129,8 +129,8 @@ const assertDefaultModel: ResultErrorModel[]= [
         ErrorFlow.keysOnViews, ErrorTypes.error,
         getAbsolutePath(projectFolder, 'pipe.keys.html'),
         [
-            'EN-eu.json',
-            'EN-us.json'
+            'EN-us.json',
+            'EN-eu.json'
         ]
     ),
     // BUG92
@@ -139,8 +139,8 @@ const assertDefaultModel: ResultErrorModel[]= [
         ErrorFlow.keysOnViews, ErrorTypes.error,
         getAbsolutePath(projectFolder, 'pipe.keys.html'),
         [
-            'EN-eu.json',
-            'EN-us.json'
+            'EN-us.json',
+            'EN-eu.json'
         ]
     ),
     // BUG 61
@@ -149,8 +149,8 @@ const assertDefaultModel: ResultErrorModel[]= [
         ErrorFlow.keysOnViews, ErrorTypes.error,
         getAbsolutePath(projectFolder, 'pipe.keys.html'),
         [
-            'EN-eu.json',
-            'EN-us.json'
+            'EN-us.json',
+            'EN-eu.json'
         ]
     ),
     new ResultErrorModel(

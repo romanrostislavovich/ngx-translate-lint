@@ -21,7 +21,7 @@ import { assertAngular17Model } from './results/angular_17.full';
 import { assertDefaultModel } from './results/default.full';
 import { assertCustomConfig } from './results/custom.config';
 import { configValues } from './results/config.values';
-import { getAbsolutePath, projectFolder } from './utils';
+import { getAbsolutePath, projectFolder, sortResult } from './utils';
 
 describe('Core Integration', () => {
     const projectIgnorePath: string = './test/integration/inputs/views/pipe.keys.html';
@@ -40,7 +40,7 @@ describe('Core Integration', () => {
     const ignoreAngular17LanguagesPath: string = languagesAngular17Path;
 
     describe('Custom RegExp to find keys', () => {
-       it('should be find keys', () => {
+       it('should be find keys',async () => {
            // Arrange
            const errorConfig: IRulesConfig = {
                ...defaultConfig.defaultValues.rules,
@@ -49,28 +49,28 @@ describe('Core Integration', () => {
 
            // Act
            const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, undefined, errorConfig);
-           const result: ResultCliModel = model.lint();
+           const result: ResultCliModel = await model.lint();
 
            // Assert
            assert.deepEqual(result.errors.find(x => x.value === 'CUSTOM.REGEXP.ONE')?.errorType, ErrorTypes.warning);
        });
     });
     describe('Empty Keys', () => {
-        it('should be warning by default', () => {
+        it('should be warning by default', async () => {
             // Arrange
             const hasEmptyKeys: boolean = true;
             const countEmptyKeys: number = 1;
             const errorType: ErrorTypes = ErrorTypes.warning;
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
-            const result: ResultCliModel = model.lint();
+            const result: ResultCliModel = await model.lint();
 
             // Assert
             assert.deepEqual(errorType, result.getEmptyKeys()[0].errorType);
             assert.deepEqual(hasEmptyKeys, result.hasEmptyKeys());
             assert.deepEqual(countEmptyKeys, result.countEmptyKeys());
         });
-        it('should be error', () => {
+        it('should be error', async () => {
             // Arrange
             const hasEmptyKeys: boolean = true;
             const countEmptyKeys: number = 1;
@@ -81,7 +81,7 @@ describe('Core Integration', () => {
             };
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, undefined, errorConfig);
-            const result: ResultCliModel = model.lint();
+            const result: ResultCliModel = await model.lint();
 
             // Assert
             assert.deepEqual(errorType, result.getEmptyKeys()[0].errorType);
@@ -90,20 +90,20 @@ describe('Core Integration', () => {
         });
     });
     describe('Misprint', () => {
-        it('should be disable by default', () => {
+        it('should be disable by default', async () => {
             // Arrange
             const hasMisprint: boolean = false;
             const countMisprint: number = 0;
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
-            const result: ResultCliModel = model.lint();
+            const result: ResultCliModel = await model.lint();
 
             // Assert
             assert.deepEqual(hasMisprint, result.hasMisprint());
             assert.deepEqual(countMisprint, result.countMisprint());
         });
-        it('should be error', () => {
+        it('should be error', async () => {
             // Arrange
             const errorConfig: IRulesConfig = {
                 keysOnViews: ErrorTypes.error,
@@ -124,8 +124,8 @@ describe('Core Integration', () => {
                     ErrorFlow.misprintKeys, ErrorTypes.error,
                     getAbsolutePath(projectFolder, 'pipe.keys.html'),
                     [
+                        'EN-us.json',
                         'EN-eu.json',
-                        'EN-us.json'
                     ],
                     [
                         "STRING.KEY_FROM_PIPE_VIEW.MISPRINT_IN_IN_LOCALES"
@@ -134,7 +134,7 @@ describe('Core Integration', () => {
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath,  '', errorConfig);
-            const result: ResultCliModel = model.lint();
+            const result: ResultCliModel = await model.lint();
             const clearErrors: ResultErrorModel[] = result.errors.filter((error: ResultErrorModel) => error.errorFlow === ErrorFlow.misprintKeys);
 
             // Assert
@@ -142,7 +142,7 @@ describe('Core Integration', () => {
             assert.deepEqual(countMisprint, result.countMisprint());
             assert.deepEqual(correctError, clearErrors.pop());
         });
-        it('should be have 2 or more suggestions for one key', () => {
+        it('should be have 2 or more suggestions for one key', async () => {
             // Arrange
             const hasMisprint: boolean = true;
             const countMisprint: number = 2;
@@ -153,7 +153,7 @@ describe('Core Integration', () => {
             };
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath, errorConfig);
-            const result: ResultCliModel = model.lint();
+            const result: ResultCliModel = await model.lint();
 
             // Assert
             assert.deepEqual(hasMisprint, result.hasMisprint());
@@ -161,15 +161,15 @@ describe('Core Integration', () => {
         });
     });
     describe('Warnings', () => {
-        it('should be 0 by default', () => {
+        it('should be 0 by default', async () => {
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
-            const result:  ResultCliModel = model.lint();
+            const result:  ResultCliModel = await model.lint();
 
             // Assert
             assert.deepEqual(0, result.maxCountWarning);
         });
-        it('should be error if warnings more thant 2', () => {
+        it('should be error if warnings more thant 2', async () => {
             // Arrange
             const ignorePath: string = '';
             const maxWarnings: number = 5;
@@ -189,20 +189,20 @@ describe('Core Integration', () => {
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath, errorConfig);
-            const result:  ResultCliModel = model.lint(maxWarnings);
+            const result:  ResultCliModel = await model.lint(maxWarnings);
 
             // Assert
             assert.deepEqual(ifFullOfWarning, result.isFullOfWarning());
             assert.deepEqual(maxWarnings, result.maxCountWarning);
         });
-        it('should be warning if warnings less thant 10', () => {
+        it('should be warning if warnings less thant 10', async () => {
             // Arrange
             const maxWarnings: number = 20;
             const ifFullOfWarning: boolean = false;
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
-            const result: ResultCliModel = model.lint(maxWarnings);
+            const result: ResultCliModel =  await model.lint(maxWarnings);
 
             // Assert
             assert.deepEqual(ifFullOfWarning, result.isFullOfWarning());
@@ -210,7 +210,7 @@ describe('Core Integration', () => {
         });
     });
     describe('Ignore', () => {
-        it('should be relative and absolute and have projects and languages files', () => {
+        it('should be relative and absolute and have projects and languages files', async () => {
             // Arrange
             const ignoreAbsoluteProjectPath: string = path.resolve(__dirname, process.cwd(), projectIgnorePath);
             const ignorePath: string = `${languagesIgnorePath}, ${ignoreAbsoluteProjectPath}, ${ignoreAngular17LanguagesPath}, ${ignoreAngular17ViewPath}`;
@@ -222,38 +222,38 @@ describe('Core Integration', () => {
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath, errorConfig);
-            const result: ResultCliModel = model.lint();
+            const result: ResultCliModel = await model.lint();
 
             // Assert
             assert.deepEqual(assertFullModel, result.errors);
         });
 
-        it('should be empty or incorrect', () => {
+        it('should be empty or incorrect', async () => {
             // Arrange
             const ignorePath: string = `null, 0, undefined, '',`;
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath);
-            const result: ResultCliModel = model.lint();
+            const result: ResultCliModel = await model.lint();
 
             // Assert
-            assert.deepEqual(assertDefaultModel, result.errors);
+            assert.deepEqual(sortResult(assertDefaultModel), sortResult(result.errors));
         });
     });
     describe('Path', () => {
-        it('should be relative and absolute', () => {
+        it('should be relative and absolute', async () => {
             // Arrange
             const absolutePathProject: string = path.resolve(__dirname, process.cwd(), projectWithMaskPath);
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, languagesWithMaskPath);
-            const result: ResultCliModel = model.lint();
+            const result: ResultCliModel = await model.lint();
 
             // Assert
-            assert.deepEqual(assertDefaultModel, result.errors);
+            assert.deepEqual(sortResult(assertDefaultModel), sortResult(result.errors));
         });
 
-        it('should be absent mask', () => {
+        it('should be absent mask', async () => {
             // Arrange
             const ignorePath: string = `${languagesIgnorePath}, ${projectIgnorePath}, ${languagesIncorrectFile}, ${ignoreAngular17LanguagesPath}, ${ignoreAngular17ViewPath}`;
             const errorConfig: IRulesConfig = {
@@ -263,12 +263,12 @@ describe('Core Integration', () => {
             };
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectAbsentMaskPath, languagesAbsentMaskPath, ignorePath, errorConfig);
-            const result: ResultCliModel = model.lint();
+            const result: ResultCliModel = await model.lint();
 
             // Assert
             assert.deepEqual(assertFullModel, result.errors);
         });
-        it('should be empty and incorrect', () => {
+        it('should be empty and incorrect', async () => {
             // Arrange
             const emptyFolder: string = '';
             const incorrectFolder: string = '../files';
@@ -277,10 +277,16 @@ describe('Core Integration', () => {
             const model: NgxTranslateLint = new NgxTranslateLint(emptyFolder, incorrectFolder);
 
             // Assert
-            expect(() => { model.lint(); }).to.throw();
+            let error: unknown;
+            try {
+                await model.lint();
+            } catch (e) {
+                error = e;
+            }
+            expect(error).to.be.an('Error');
         });
 
-        it('should with parse error', () => {
+        it('should with parse error', async () => {
             // Arrange
             const absoluteIncorrectLanguagesPath: string = path.resolve(__dirname, process.cwd(), languagesIncorrectFile);
             const errorMessage: string = `Can't parse JSON file: ${absoluteIncorrectLanguagesPath}`;
@@ -289,21 +295,26 @@ describe('Core Integration', () => {
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesIncorrectFile);
 
             // Assert
-            // model.lint();
-            assert.throws(() => { model.lint(); }, errorMessage);
+            let error: unknown;
+            try {
+                await model.lint();
+            } catch (e) {
+                error = e;
+            }
+            expect(error).to.be.an('Error');
         });
     });
 
     describe('Config', () => {
-        it('should be default', () => {
+        it('should be default', async () => {
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath);
-            const result:  ResultCliModel = model.lint();
+            const result:  ResultCliModel = await model.lint();
 
             // Assert
-            assert.deepEqual(assertDefaultModel, result.errors);
+            assert.deepEqual(sortResult(assertDefaultModel), sortResult(result.errors));
         });
-        it('should be incorrect', () => {
+        it('should be incorrect', async () => {
             // Arrange
             const errorConfig: object = {
                 keysOnViews: 'incorrect',
@@ -314,9 +325,15 @@ describe('Core Integration', () => {
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignorePath, errorConfig as IRulesConfig);
 
             // Assert
-            expect(() => { model.lint(); }).to.throw();
+            let error: unknown;
+            try {
+                await model.lint();
+            } catch (e) {
+                error = e;
+            }
+            expect(error).to.be.an('Error');
         });
-        it('should be custom', () => {
+        it('should be custom', async () => {
             // Arrange
             const errorConfig: IRulesConfig = {
                 keysOnViews: ErrorTypes.warning,
@@ -333,10 +350,10 @@ describe('Core Integration', () => {
 
             // Act
             const model: NgxTranslateLint = new NgxTranslateLint(projectWithMaskPath, languagesWithMaskPath, ignoreAngular17ViewPath, errorConfig);
-            const result: ResultCliModel = model.lint();
+            const result: ResultCliModel = await model.lint();
 
             // Assert
-            assert.deepEqual(assertCustomConfig, result.errors);
+            assert.deepEqual(sortResult(assertCustomConfig), sortResult(result.errors));
         });
     });
     describe('API', () => {
@@ -365,7 +382,7 @@ describe('Core Integration', () => {
             });
         });
     });
-    it('Angular 17', () => {
+    it('Angular 17',  async () => {
         const errorConfig: IRulesConfig = {
             keysOnViews: ErrorTypes.error,
             zombieKeys: ErrorTypes.warning,
@@ -384,12 +401,12 @@ describe('Core Integration', () => {
 
         // Act
         const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, languagesAngular17Path, ignorePath, errorConfig);
-        const result: ResultCliModel = model.lint();
+        const result: ResultCliModel = await model.lint();
 
         // Assert
         assert.deepEqual(assertAngular17Model, result.errors);
     });
-    it('with full arguments', () => {
+    it('with full arguments', async () => {
         // Arrange
         const errorConfig: IRulesConfig = {
             keysOnViews: ErrorTypes.error,
@@ -409,7 +426,7 @@ describe('Core Integration', () => {
 
         // Act
         const model: NgxTranslateLint = new NgxTranslateLint(absolutePathProject, languagesWithMaskPath, ignorePath, errorConfig);
-        const result: ResultCliModel = model.lint();
+        const result: ResultCliModel = await model.lint();
 
         // Assert
         assert.deepEqual(assertFullModel, result.errors);

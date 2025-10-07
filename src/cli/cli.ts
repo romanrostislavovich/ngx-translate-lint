@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import commander from 'commander';
+import commander, { Option } from 'commander';
 
 import { OptionModel } from './models';
 import {
@@ -18,7 +18,6 @@ import {
 import { config } from './../core/config';
 import { OptionsLongNames, OptionsShortNames } from './enums';
 import chalk from 'chalk';
-import { defaultConfig } from 'sinon';
 
 const name: string = 'ngx-translate-lint';
 
@@ -40,7 +39,8 @@ Examples:
 };
 
 class Cli {
-    private cliClient: commander.CommanderStatic = commander;
+    // tslint:disable-next-line:no-any
+    private cliClient: any = commander.program;
     private cliOptions: OptionModel[] = [];
 
     constructor(options: OptionModel[]) {
@@ -59,12 +59,12 @@ class Cli {
             const optionFlag: string = option.getFlag();
             const optionDescription: string = option.getDescription();
             const optionDefaultValue: string | ErrorTypes | undefined = option.default;
-            this.cliClient.option(optionFlag, optionDescription, optionDefaultValue);
+            this.cliClient.addOption(new Option(optionFlag, optionDescription).default(optionDefaultValue));
         });
 
         // tslint:disable-next-line:no-any
         const packageJson: any = parseJsonFile(getPackageJsonPath());
-        this.cliClient.version(packageJson.version);
+        this.cliClient.version(packageJson.version, '-v, --version', `Print current version of ${name}`);
 
         this.cliClient
             .name(docs.name)
@@ -79,11 +79,11 @@ class Cli {
     public async runCli(): Promise<void> {
         try {
             // tslint:disable-next-line:no-any
-            const options: any = this.cliClient.config ? parseJsonFile(this.cliClient.config) : this.cliClient;
+            const options: any = this.cliClient.opts().config ? parseJsonFile(this.cliClient.opts().config) : this.cliClient.opts();
 
-            const projectPath: string = this.cliClient.project  !== config.defaultValues.projectPath ? this.cliClient.project : options.project;
-            const languagePath: string = this.cliClient.languages !== config.defaultValues.languagesPath? this.cliClient.languages : options.languages;
-            const fixZombiesKeys: boolean = this.cliClient.fixZombiesKeys !== config.defaultValues.fixZombiesKeys ? this.cliClient.fixZombiesKeys : options.fixZombiesKeys;
+            const projectPath: string = this.cliClient.opts().project  !== config.defaultValues.projectPath ? this.cliClient.opts().project : options.project;
+            const languagePath: string = this.cliClient.opts().languages !== config.defaultValues.languagesPath? this.cliClient.opts().languages : options.languages;
+            const fixZombiesKeys: boolean = this.cliClient.opts().fixZombiesKeys !== config.defaultValues.fixZombiesKeys ? this.cliClient.opts().fixZombiesKeys : options.fixZombiesKeys;
 
             const tsConfigPath: string = options.tsConfigPath;
 
@@ -157,7 +157,7 @@ class Cli {
     private validate(): boolean {
         const requiredOptions: OptionModel[] = this.cliOptions.filter((option: OptionModel) => option.required);
         const missingRequiredOption: boolean = requiredOptions.reduce((accum: boolean, option: OptionModel) => {
-            if (!this.cliClient[String(option.longName)]) {
+            if (!this.cliClient.opts()[String(option.longName)]) {
                 accum = false;
                 // tslint:disable-next-line: no-console
                 console.error(`Missing required argument: ${option.getFlag()}`);
