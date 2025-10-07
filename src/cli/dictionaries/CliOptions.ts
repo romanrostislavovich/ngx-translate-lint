@@ -156,6 +156,7 @@ const cliOptions: OptionModel[] = [
         additionalDescription: ``,
         default: config.defaultValues.fixZombiesKeys?.toString() || 'false',
     }),
+    /*
     new OptionModel({
         longName: OptionsLongNames.version,
         shortName: OptionsShortNames.version,
@@ -164,6 +165,8 @@ const cliOptions: OptionModel[] = [
         type: ArgumentTypes.undefined,
         additionalDescription: '',
     }),
+
+     */
 ];
 
 export  { cliOptions };

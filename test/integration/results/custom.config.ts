@@ -16,8 +16,8 @@ const assertCustomConfig: ResultErrorModel[] = [
         ErrorFlow.keysOnViews, ErrorTypes.warning,
         getAbsolutePath(projectFolder, 'directive.keys.html'),
         [
-           'EN-eu.json',
-            'EN-us.json'
+            'EN-us.json',
+            'EN-eu.json'
         ]
     ),
     new ResultErrorModel(
@@ -41,8 +41,8 @@ const assertCustomConfig: ResultErrorModel[] = [
         ErrorFlow.keysOnViews, ErrorTypes.warning,
         getAbsolutePath(projectFolder, 'directive.keys.html'),
         [
-           'EN-eu.json',
-           'EN-us.json'
+           'EN-us.json',
+            'EN-eu.json'
         ]
     ),
     new ResultErrorModel(
@@ -66,8 +66,8 @@ const assertCustomConfig: ResultErrorModel[] = [
         ErrorFlow.keysOnViews, ErrorTypes.warning,
         getAbsolutePath(projectFolder, 'pipe.keys.html'),
         [
-           'EN-eu.json',
-           'EN-us.json'
+           'EN-us.json',
+            'EN-eu.json'
         ]
     ),
     new ResultErrorModel(
@@ -75,8 +75,8 @@ const assertCustomConfig: ResultErrorModel[] = [
         ErrorFlow.keysOnViews, ErrorTypes.warning,
         getAbsolutePath(projectFolder, 'pipe.keys.html'),
         [
-            'EN-eu.json',
-            'EN-us.json'
+            'EN-us.json',
+            'EN-eu.json'
         ]
     ),
     // BUG92
@@ -85,8 +85,8 @@ const assertCustomConfig: ResultErrorModel[] = [
         ErrorFlow.keysOnViews, ErrorTypes.warning,
         getAbsolutePath(projectFolder, 'pipe.keys.html'),
         [
-            'EN-eu.json',
-            'EN-us.json'
+            'EN-us.json',
+            'EN-eu.json'
         ]
     ),
     // END BUG 92
@@ -96,8 +96,8 @@ const assertCustomConfig: ResultErrorModel[] = [
         ErrorFlow.keysOnViews, ErrorTypes.warning,
         getAbsolutePath(projectFolder, 'pipe.keys.html'),
         [
-            'EN-eu.json',
-            'EN-us.json'
+            'EN-us.json',
+            'EN-eu.json'
         ]
     ),
     new ResultErrorModel(
