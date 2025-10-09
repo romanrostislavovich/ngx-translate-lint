@@ -9,28 +9,23 @@ import { AbsentViewKeysRule, EmptyKeysRule, MisprintRule, ZombieRule } from './r
 import { KeyModelWithLanguages, LanguagesModelWithKey, ViewModelWithKey } from './models/KeyModelWithLanguages';
 import { Http } from './utils/http';
 
-
-
 class NgxTranslateLint {
     public rules: IRulesConfig;
     public ignore?: string;
     public projectPath: string;
-    public tsConfigPath: string | undefined;
     public languagesPath: string;
     public fixZombiesKeys: boolean | undefined;
 
     constructor (
-        projectPath: string = config.defaultValues.projectPath,
-        languagesPath: string = config.defaultValues.languagesPath,
+        projectPath: string = config.defaultValues.project,
+        languagesPath: string = config.defaultValues.languages,
         ignore?: string,
         rulesConfig: IRulesConfig = config.defaultValues.rules,
-        tsConfigPath?: string,
         fixZombiesKeys?: boolean,
     ) {
         this.ignore = ignore;
         this.rules = rulesConfig;
         this.projectPath = projectPath;
-        this.tsConfigPath = tsConfigPath;
         this.languagesPath = languagesPath;
         this.fixZombiesKeys = fixZombiesKeys;
     }
