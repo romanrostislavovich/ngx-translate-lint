@@ -15,8 +15,8 @@ const config: IAppConfig = {
             ignoredMisprintKeys: [],
             customRegExpToFindKeys: []
         },
-        projectPath: './src/app/**/*.{html,ts,resx}',
-        languagesPath: './src/assets/i18n/*.json',
+        project: './src/app/**/*.{html,ts,resx}',
+        languages: './src/assets/i18n/*.json',
         fixZombiesKeys: false,
     }
 };
