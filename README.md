@@ -54,65 +54,65 @@ Usage: ngx-translate-lint [options]
 Simple CLI tools for check `ngx-translate` keys in app
 
 Options:
-  -p,  --project [glob] (required)
+  -p, --project [glob]                   
           The path to project folder
           Possible Values: <relative path|absolute path>
-          (default: "./src/app/**/*.{html,ts}")
-  -l,  --languages [glob] (required)
+          
+  -l, --languages [glob]                 
           The path to languages folder
           Possible Values: <relative path|absolute path|URL>
-          (default: "./src/assets/i18n/*.json")
-  --kv,  --keysOnViews [enum]
+          
+  --kv, --keysOnViews [enum]             
           Described how to handle the error of missing keys on view
           Possible Values: <disable|warning|error>
-          (default: "error")
-  --zk,  --zombieKeys [enum]
-          Described how to handle the error of zombies keys.
-            Zombie keys are keys that doesn't exist on any languages file but exist on project, 
-            or exist languages but doesn't exist on project
+          
+  --zk, --zombieKeys [enum]              
+          Described how to handle the error of zombies keys. Zombie keys are keys that doesn't exist on any languages file but exist on project, or exist languages but doesn't exist on project
           Possible Values: <disable|warning|error>
-          (default: "warning")
-  --ek, --emptyKeys [enum]
-          Described how to handle empty value on translate keys. 
-            Empty keys are keys that doesn't have any value on languages files
+          
+  --ek, --emptyKeys [enum]               
+          Described how to handle empty value on translate keys. Empty keys are keys that doesn't have any value on languages files
           Possible Values: <disable|warning|error>
-           (default: "warning")
-  -i,  --ignore [glob]
+          
+  -i, --ignore [glob]                    
           Ignore projects and languages files
           Possible Values: <relative path|absolute path>
-  --maxWarning [glob]
+          
+  --maxWarning [glob]                    
           Max count of warnings in all files. If this value more that count of warnings, then an error is return
           Possible Values: <number>
-           (default: "0")
-  --mk,  --misprintKeys [enum]
-          Try to find matches with misprint keys on views and languages keys. CCan be longer process!!
+          
+  --mk, --misprintKeys [enum]            
+          Try to find matches with misprint keys on views and languages keys. Coefficient: 0.9. Can be longer process!!
           Possible Values: <disable|warning|error>
-           (default: "disable")
-  --ds,  --deepSearch [enum]
+          
+  --ds, --deepSearch [enum]              
           Add each translate key to global regexp end try to find them on project. Can be longer process!!
           Possible Values: <disable|enable>
-           (default: "disable")
-  --mc, --misprintCoefficient [number]
+          
+  --mc, --misprintCoefficient [number]   
           Coefficient for misprint option can be from 0 to 1.0.
-          (default: "0.9")
-  -c, --config [path]
-          Path to the config file.
-  --fz, --fixZombiesKeys [boolean]
+          
+          
+  -c, --config [path]                    
+          Path to config
+          Possible Values: <relative path|absolute path>
+          
+  --fz, --fixZombiesKeys [boolean]       
           Auto fix zombies keys on languages files
-          (default: "false")
-
-
-  -V, --version   output the version number
-  -h, --help      output usage information
+          
+          
+  -v, --version                          Print current version of ngx-translate-lint
+  -h, --help                             display help for command
 
 
 Examples:
 
-    $ npx ngx-translate-lint  -p "./src/app/**/*.{html,ts}" -l "./src/assets/i18n/*.json"
-    $ ngx-translate-lint -p "./src/app/**/*.{html,ts}" -l "./src/assets/i18n/*.json"
-    $ ngx-translate-lint -p "./src/app/**/*.{html,ts}" -z "disable" -v "error"
-    $ ngx-translate-lint -p "./test/integration/inputs/views/*.html" -l "https://8.8.8.8/locales/EN-eu.json"
-```
+    $ ngx-translate-lint -p ./src/app/**/*.{html,ts,resx} -l ./src/assets/i18n/*.json
+    $ ngx-translate-lint -p ./src/app/**/*.{html,ts,resx} -z disable -v error
+    $ ngx-translate-lint -p ./src/app/**/*.{html,ts,resx} -i ./src/assets/i18n/EN-us.json, ./src/app/app.*.{json}
+    $ ngx-translate-lint -p ./src/app/**/*.{html,ts,resx} -l https://8.8.8.8/locales/EN-eu.json
+```    
 
 > NOTE: For `project` and `languages` options need to include file types like on the example.
 
