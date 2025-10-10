@@ -59,7 +59,7 @@ class Cli {
             const optionFlag: string = option.getFlag();
             const optionDescription: string = option.getDescription();
             const optionDefaultValue: string | ErrorTypes | undefined = option.default;
-            this.cliClient.addOption(new Option(optionFlag, optionDescription).default(optionDefaultValue));
+            this.cliClient.addOption(new Option(optionFlag, optionDescription));
         });
 
         // tslint:disable-next-line:no-any
@@ -84,7 +84,7 @@ class Cli {
             const defaultOptions: any = config.defaultValues;
 
             const resultOptions: any = {
-              ...defaultOptions,
+               ...defaultOptions,
               ...defaultOptions.rules,
 
               ...fileOptions,
