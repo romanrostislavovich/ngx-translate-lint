@@ -59,7 +59,8 @@ class NgxTranslateLint {
             this.rules.zombieKeys !== ErrorTypes.disable ||
             this.rules.keysOnViews !== ErrorTypes.disable ||
             this.rules.misprintKeys !== ErrorTypes.disable ||
-            this.rules.emptyKeys !== ErrorTypes.disable
+            this.rules.emptyKeys !== ErrorTypes.disable ||
+            !!this.fixZombiesKeys
         ) {
             const regExpResult: ResultErrorModel[] = this.runRegExp(views, languagesKeys);
             errors.push(...regExpResult);
@@ -209,16 +210,16 @@ class NgxTranslateLint {
                     const newFileLanguage: FileLanguageModel = new FileLanguageModel(item.currentPath, [], [new KeyModel(item.value)]);
                     acum.push(newFileLanguage);
                 }
-                 return acum;
+                return acum;
             }, []);
 
             filesAndKeys.forEach((languageFile: FileLanguageModel) => {
                 // tslint:disable-next-line:no-any
-               const jsonData: any = parseJsonFile(languageFile.path);
-               const keysArray: string[] = languageFile.keys.map((x) => x.name);
+                const jsonData: any = parseJsonFile(languageFile.path);
+                const keysArray: string[] = languageFile.keys.map((x) => x.name);
                 // tslint:disable-next-line:no-any
-               const resultData: any  = omit(jsonData, keysArray);
-               saveJsonFile(resultData, languageFile.path);
+                const resultData: any  = omit(jsonData, keysArray);
+                saveJsonFile(resultData, languageFile.path);
             });
         }
 
