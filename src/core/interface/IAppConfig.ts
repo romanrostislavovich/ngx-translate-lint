@@ -2,8 +2,8 @@ import { IRulesConfig } from './IRulesConfig';
 
 interface IDefaultValues {
     rules: IRulesConfig;
-    projectPath: string;
-    languagesPath: string;
+    project: string;
+    languages: string;
     fixZombiesKeys?: boolean;
 }
 interface IAppConfig {

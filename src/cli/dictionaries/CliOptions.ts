@@ -8,11 +8,11 @@ const cliOptions: OptionModel[] = [
     new OptionModel({
         shortName: OptionsShortNames.project,
         longName: OptionsLongNames.project,
-        required: true,
+        required: false,
         type: ArgumentTypes.glob,
         description: `The path to project folder`,
         additionalDescription: ``,
-        default: config.defaultValues.projectPath,
+        default: config.defaultValues.project,
         values: [
             OptionsPath.relative,
             OptionsPath.absolute
@@ -21,11 +21,11 @@ const cliOptions: OptionModel[] = [
     new OptionModel({
         shortName: OptionsShortNames.languages,
         longName: OptionsLongNames.languages,
-        required: true,
+        required: false,
         type: ArgumentTypes.glob,
         description: `The path to languages folder`,
         additionalDescription: ``,
-        default: config.defaultValues.languagesPath,
+        default: config.defaultValues.languages,
         values: [
             OptionsPath.relative,
             OptionsPath.absolute,

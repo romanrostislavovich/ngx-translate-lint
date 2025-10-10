@@ -30,10 +30,10 @@ const docs: any = {
 
 Examples:
 
-    $ ${name} -p ${config.defaultValues.projectPath} -l ${config.defaultValues.languagesPath}
-    $ ${name} -p ${config.defaultValues.projectPath} -z ${ErrorTypes.disable} -v ${ErrorTypes.error}
-    $ ${name} -p ${config.defaultValues.projectPath} -i ./src/assets/i18n/EN-us.json, ./src/app/app.*.{json}
-    $ ${name} -p ${config.defaultValues.projectPath} -l https://8.8.8.8/locales/EN-eu.json
+    $ ${name} -p ${config.defaultValues.project} -l ${config.defaultValues.languages}
+    $ ${name} -p ${config.defaultValues.project} -z ${ErrorTypes.disable} -v ${ErrorTypes.error}
+    $ ${name} -p ${config.defaultValues.project} -i ./src/assets/i18n/EN-us.json, ./src/app/app.*.{json}
+    $ ${name} -p ${config.defaultValues.project} -l https://8.8.8.8/locales/EN-eu.json
 
 `
 };
@@ -59,7 +59,7 @@ class Cli {
             const optionFlag: string = option.getFlag();
             const optionDescription: string = option.getDescription();
             const optionDefaultValue: string | ErrorTypes | undefined = option.default;
-            this.cliClient.addOption(new Option(optionFlag, optionDescription).default(optionDefaultValue));
+            this.cliClient.addOption(new Option(optionFlag, optionDescription));
         });
 
         // tslint:disable-next-line:no-any
@@ -78,58 +78,41 @@ class Cli {
 
     public async runCli(): Promise<void> {
         try {
-            // tslint:disable-next-line:no-any
-            const options: any = this.cliClient.opts().config ? parseJsonFile(this.cliClient.opts().config) : this.cliClient.opts();
+            // Options
+            const fileOptions: any = this.cliClient.opts().config ? parseJsonFile(this.cliClient.opts().config) : {};
+            const commandOptions: any = this.cliClient.opts();
+            const defaultOptions: any = config.defaultValues;
 
-            const projectPath: string = this.cliClient.opts().project  !== config.defaultValues.projectPath ? this.cliClient.opts().project : options.project;
-            const languagePath: string = this.cliClient.opts().languages !== config.defaultValues.languagesPath? this.cliClient.opts().languages : options.languages;
-            const fixZombiesKeys: boolean = this.cliClient.opts().fixZombiesKeys !== config.defaultValues.fixZombiesKeys ? this.cliClient.opts().fixZombiesKeys : options.fixZombiesKeys;
+            const resultOptions: any = {
+               ...defaultOptions,
+              ...defaultOptions.rules,
 
-            const tsConfigPath: string = options.tsConfigPath;
+              ...fileOptions,
+              ...fileOptions.rules,
 
-            let deepSearch: ToggleRule;
-            let optionIgnore: string;
-            let optionMisprint: ErrorTypes;
-            let optionEmptyKey: ErrorTypes;
-            let optionViewsRule: ErrorTypes;
-            let optionMaxWarning: number ;
-            let optionZombiesRule: ErrorTypes;
-            let optionIgnoredKeys: string[];
-            let optionMisprintCoefficient: number ;
-            let optionIgnoredMisprintKeys: string[];
-            let optionCustomRegExpToFindKeys: string[] | RegExp[];
+              ...commandOptions
+            };
 
-            if (!!options.rules) {
-                 deepSearch = options.rules.deepSearch;
-                 optionIgnore = options.rules.ignore;
-                 optionMisprint = options.rules.misprintKeys;
-                 optionEmptyKey = options.rules.emptyKeys;
-                 optionViewsRule =  options.rules.keysOnViews;
-                 optionMaxWarning =  options.rules.maxWarning;
-                 optionZombiesRule = options.rules.zombieKeys;
-                 optionIgnoredKeys =  options.rules.ignoredKeys;
-                 optionMisprintCoefficient = options.rules.misprintCoefficient;
-                 optionIgnoredMisprintKeys =  options.rules.ignoredMisprintKeys;
-                 optionCustomRegExpToFindKeys = options.rules.customRegExpToFindKeys;
-            } else {
-                 deepSearch = options.deepSearch;
-                 optionIgnore = options.ignore;
-                 optionMisprint = options.misprintKeys;
-                 optionEmptyKey = options.emptyKeys;
-                 optionViewsRule = options.keysOnViews;
-                 optionMaxWarning =  options.maxWarning;
-                 optionZombiesRule = options.zombieKeys;
-                 optionIgnoredKeys = options.ignoredKeys;
-                 optionMisprintCoefficient = options.misprintCoefficient;
-                 optionIgnoredMisprintKeys = options.ignoredMisprintKeys;
-                 optionCustomRegExpToFindKeys = options.customRegExpToFindKeys;
-            }
+            const projectPath: string = resultOptions.project;
+            const languagePath: string = resultOptions.languages;
+            const fixZombiesKeys: boolean = resultOptions.fixZombiesKeys;
+            const deepSearch: ToggleRule = resultOptions.deepSearch;
+            const optionIgnore: string = resultOptions.ingore;
+            const optionMisprint: ErrorTypes = resultOptions.misprintKeys;
+            const optionEmptyKey: ErrorTypes = resultOptions.emptyKeys;
+            const optionViewsRule: ErrorTypes = resultOptions.keysOnViews;
+            const optionMaxWarning: number = resultOptions.maxWarning;
+            const optionZombiesRule: ErrorTypes = resultOptions.zombiesKeys;
+            const optionIgnoredKeys: string[] = resultOptions.ignoreKeys;
+            const optionMisprintCoefficient: number = resultOptions.misprintCoefficient;
+            const optionIgnoredMisprintKeys: string[] = resultOptions.ignoredMisprintKeys;
+            const optionCustomRegExpToFindKeys: string[] | RegExp[] = resultOptions.customRegExpToFindKeys;
 
-            if (options.project && options.languages) {
+            if (projectPath && languagePath) {
                 await this.runLint(
                     projectPath, languagePath, optionZombiesRule,
                     optionViewsRule, optionIgnore, optionMaxWarning, optionMisprint, optionEmptyKey, deepSearch,
-                    optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys, optionCustomRegExpToFindKeys, tsConfigPath
+                    optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys, optionCustomRegExpToFindKeys
                 );
             } else {
                 const cliHasError: boolean = this.validate();
@@ -182,7 +165,6 @@ class Cli {
         ignoredKeys: string[] = [],
         ignoredMisprintKeys: string[] = [],
         customRegExpToFindKeys: string[] | RegExp[] = [],
-        tsConfigPath?: string,
         fixZombiesKeys?: boolean,
     ): Promise<void> {
             const errorConfig: IRulesConfig = {
@@ -197,7 +179,7 @@ class Cli {
                 misprintCoefficient,
                 customRegExpToFindKeys,
             };
-            const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig, tsConfigPath);
+            const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig);
             const resultCliModel: ResultCliModel = await validationModel.lint(maxWarning);
             const resultModel: ResultModel = resultCliModel.getResultModel();
             resultModel.printResult();
