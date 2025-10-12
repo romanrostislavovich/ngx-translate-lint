@@ -2,7 +2,7 @@ import { flatMap, omit } from 'lodash';
 import * as path from 'node:path';
 import { config } from './config';
 import { ErrorFlow, ErrorTypes } from './enums';
-import { IRulesConfig } from './interface';
+import { IFetch, IRulesConfig } from './interface';
 import { getPackageJsonPath, KeysUtils, parseJsonFile, saveJsonFile } from './utils';
 import { FileLanguageModel, FileViewModel, KeyModel, LanguagesModel, ResultCliModel, ResultErrorModel } from './models';
 import { AbsentViewKeysRule, EmptyKeysRule, MisprintRule, ZombieRule } from './rules';
@@ -15,19 +15,22 @@ class NgxTranslateLint {
     public projectPath: string;
     public languagesPath: string;
     public fixZombiesKeys: boolean | undefined;
-
+    public fetchSettings: IFetch | undefined;
     constructor (
         projectPath: string = config.defaultValues.project,
         languagesPath: string = config.defaultValues.languages,
         ignore?: string,
         rulesConfig: IRulesConfig = config.defaultValues.rules,
         fixZombiesKeys?: boolean,
+        fetchSettings?: IFetch
     ) {
         this.ignore = ignore;
         this.rules = rulesConfig;
         this.projectPath = projectPath;
         this.languagesPath = languagesPath;
         this.fixZombiesKeys = fixZombiesKeys;
+        this.fetchSettings = fetchSettings;
+
     }
 
     public async lint(maxWarning?: number): Promise<ResultCliModel> {
@@ -42,7 +45,7 @@ class NgxTranslateLint {
         const languageIsURL: boolean = this.languagesPath.includes('http') || this.languagesPath.includes('https');
         let languagesKeys: FileLanguageModel;
         if (languageIsURL) {
-            const fileData: string = await Http.get(this.languagesPath);
+            const fileData: string = await Http.get(this.languagesPath, this.fetchSettings);
             languagesKeys = new FileLanguageModel(this.languagesPath, [], [], this.ignore, fileData, true).getKeysWithValue();
         } else {
             languagesKeys = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeysWithValue();

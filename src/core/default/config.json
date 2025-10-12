@@ -10,6 +10,12 @@
     "ignoredKeys": [],
     "ignoredMisprintKeys": []
   },
+  "fetch": {
+    "requestQuery": "",
+    "requestHeaders": {},
+    "responseQuery": ""
+  },
+  "fixZombiesKeys": false,
   "project": "./src/app/**/*.{html,ts}",
   "languages": "./src/assets/i18n/*.json"
 }

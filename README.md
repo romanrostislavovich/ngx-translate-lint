@@ -131,6 +131,11 @@ Default Config is:
         "ignoredMisprintKeys": [],
         "customRegExpToFindKeys": [ "(?<=marker\\(['\"])([A-Za-z0-9_\\-.]+)(?=['\"]\\))"], // to find: marker('TRSNLATE.KEY');
     },
+    "fetch": {
+        "requestQuery": "",
+        "requestHeaders": {},
+        "responseQuery": ""
+    },
     "fixZombiesKeys": false,
     "project": "./src/app/**/*.{html,ts}",
     "languages": "./src/assets/i18n/*.json"
