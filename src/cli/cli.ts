@@ -12,7 +12,7 @@ import {
     StatusCodes,
     ToggleRule,
     parseJsonFile,
-    getPackageJsonPath,
+    getPackageJsonPath, IFetch,
 } from "./../core";
 
 import { config } from './../core/config';
@@ -107,12 +107,13 @@ class Cli {
             const optionMisprintCoefficient: number = resultOptions.misprintCoefficient;
             const optionIgnoredMisprintKeys: string[] = resultOptions.ignoredMisprintKeys;
             const optionCustomRegExpToFindKeys: string[] | RegExp[] = resultOptions.customRegExpToFindKeys;
+            const fetchSettings: IFetch = resultOptions.fetch;
 
             if (projectPath && languagePath) {
                 await this.runLint(
                     projectPath, languagePath, optionZombiesRule,
                     optionViewsRule, optionIgnore, optionMaxWarning, optionMisprint, optionEmptyKey, deepSearch,
-                    optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys, optionCustomRegExpToFindKeys,fixZombiesKeys
+                    optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys, optionCustomRegExpToFindKeys,fixZombiesKeys, fetchSettings
                 );
             } else {
                 const cliHasError: boolean = this.validate(resultOptions);
@@ -168,6 +169,7 @@ class Cli {
         ignoredMisprintKeys: string[] = [],
         customRegExpToFindKeys: string[] | RegExp[] = [],
         fixZombiesKeys?: boolean,
+        fetchSettings?: IFetch
     ): Promise<void> {
             const errorConfig: IRulesConfig = {
                 misprintKeys: misprint || ErrorTypes.disable,
@@ -181,7 +183,7 @@ class Cli {
                 misprintCoefficient,
                 customRegExpToFindKeys,
             };
-            const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig, fixZombiesKeys);
+            const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig, fixZombiesKeys, fetchSettings);
             const resultCliModel: ResultCliModel = await validationModel.lint(maxWarning);
             const resultModel: ResultModel = resultCliModel.getResultModel();
             resultModel.printResult();
