@@ -177,26 +177,41 @@ The CLI process may exit with the following codes:
 ### TypeScript
 
 ```typescript
-import { ToggleRule, NgxTranslateLint, IRulesConfig, ResultCliModel, ErrorTypes, LanguagesModel } from 'ngx-translate-lint';
+import {
+    ToggleRule,
+    NgxTranslateLint,
+    IRulesConfig,
+    ResultCliModel,
+    ErrorTypes,
+    LanguagesModel,
+    IFetch,
+    ngxTranslateRegEx,
+} from 'ngx-translate-lint';
 
 const viewsPath: string = './src/app/**/*.{html,ts}';
 const languagesPath: string = './src/assets/i18n/*.json';
 const ignoredLanguagesPath: string = "./src/assets/i18n/ru.json, ./src/assets/i18n/ru-RU.json";
 const ruleConfig: IRulesConfig = {
-        keysOnViews: ErrorTypes.error,
-        zombieKeys: ErrorTypes.warning,
-        misprintKeys: ErrorTypes.disable,
-        deepSearch: ToggleRule.disable,
-        emptyKeys: ErrorTypes.warning,
-        maxWarning: 0,
-        misprintCoefficient: 0.9,
-        fixZombiesKeys: false,
-        ignoredKeys: [ 'EXAMPLE.KEY', 'IGNORED.KEY.(.*)' ], // can be string or RegExp
-        ignoredMisprintKeys: [],
-        customRegExpToFindKeys: [ "(?<=marker\\(['\"])([A-Za-z0-9_\\-.]+)(?=['\"]\\))" ] // to find: marker('TRSNLATE.KEY');
+    keysOnViews: ErrorTypes.error,
+    zombieKeys: ErrorTypes.warning,
+    misprintKeys: ErrorTypes.disable,
+    deepSearch: ToggleRule.disable,
+    emptyKeys: ErrorTypes.warning,
+    maxWarning: 0,
+    misprintCoefficient: 0.9,
+    fixZombiesKeys: false,
+    ignoredKeys: ['EXAMPLE.KEY', 'IGNORED.KEY.(.*)'], // can be string or RegExp
+    ignoredMisprintKeys: [],
+    customRegExpToFindKeys: ["(?<=marker\\(['\"])([A-Za-z0-9_\\-.]+)(?=['\"]\\))"] // to find: marker('TRSNLATE.KEY');
 };
-
-const ngxTranslateLint = new NgxTranslateLint(viewsPath, languagesPath, ignoredLanguagesPath, ruleConfig)
+const fixZombiesKeys: boolean = false;
+const fetchSettings: IFetch = {
+    requestQuery: "",
+    requestHeaders: {},
+    responseQuery: ""
+};
+const ngxTranslateRegEx: ngxTranslateRegEx = ngxTranslateRegEx; // Here can be your array of regexp to find keys
+const ngxTranslateLint = new NgxTranslateLint(viewsPath, languagesPath, ignoredLanguagesPath, ruleConfig, fixZombiesKeys, fetchSettings, ngxTranslateRegEx)
 const resultLint: ResultCliModel = ngxTranslateLint.lint(); // Run Lint
 const languages: LanguagesModel[] = ngxTranslateLint.getLanguages()  // Get Languages with all keys and views
 
