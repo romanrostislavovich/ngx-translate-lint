@@ -8,6 +8,7 @@ import { FileLanguageModel, FileViewModel, KeyModel, LanguagesModel, ResultCliMo
 import { AbsentViewKeysRule, EmptyKeysRule, MisprintRule, ZombieRule } from './rules';
 import { KeyModelWithLanguages, LanguagesModelWithKey, ViewModelWithKey } from './models/KeyModelWithLanguages';
 import { Http } from './utils/http';
+import { ngxTranslateRegEx } from '../ngx-translate/regexp';
 
 class NgxTranslateLint {
     public rules: IRulesConfig;
@@ -16,13 +17,15 @@ class NgxTranslateLint {
     public languagesPath: string;
     public fixZombiesKeys: boolean | undefined;
     public fetchSettings: IFetch | undefined;
+    public toolsRegEx: string[] = [];
     constructor (
         projectPath: string = config.defaultValues.project,
         languagesPath: string = config.defaultValues.languages,
         ignore?: string,
         rulesConfig: IRulesConfig = config.defaultValues.rules,
         fixZombiesKeys?: boolean,
-        fetchSettings?: IFetch
+        fetchSettings?: IFetch,
+        toolsRegEx: string[] = ngxTranslateRegEx,
     ) {
         this.ignore = ignore;
         this.rules = rulesConfig;
@@ -30,7 +33,7 @@ class NgxTranslateLint {
         this.languagesPath = languagesPath;
         this.fixZombiesKeys = fixZombiesKeys;
         this.fetchSettings = fetchSettings;
-
+        this.toolsRegEx = toolsRegEx;
     }
 
     public async lint(maxWarning?: number): Promise<ResultCliModel> {
@@ -52,7 +55,7 @@ class NgxTranslateLint {
         }
 
         const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
-        const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys, this.rules.deepSearch);
+        const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys, this.rules.deepSearch, this.toolsRegEx);
 
         const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
 
@@ -124,7 +127,7 @@ class NgxTranslateLint {
 
         if (this.projectPath) {
             const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
-            const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys);
+            const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys, this.rules.deepSearch,this.toolsRegEx);
             const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
 
             views.keys.forEach((key: KeyModel) => {
