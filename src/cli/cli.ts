@@ -18,6 +18,7 @@ import {
 import { config } from './../core/config';
 import { OptionsLongNames, OptionsShortNames } from './enums';
 import chalk from 'chalk';
+import path from 'path';
 
 const name: string = 'ngx-translate-lint';
 
@@ -79,18 +80,18 @@ class Cli {
     public async runCli(): Promise<void> {
         try {
             // Options
-            const fileOptions: any = this.cliClient.opts().config ? parseJsonFile(this.cliClient.opts().config) : {};
+            const fileOptions: any = await this.getConfig(this.cliClient.opts().config);
             const commandOptions: any = this.cliClient.opts();
             const defaultOptions: any = config.defaultValues;
 
             const resultOptions: any = {
-               ...defaultOptions,
-              ...defaultOptions.rules,
+                ...defaultOptions,
+                ...defaultOptions.rules,
 
-              ...fileOptions,
-              ...fileOptions.rules,
+                ...fileOptions,
+                ...fileOptions.rules,
 
-              ...commandOptions
+                ...commandOptions
             };
 
             const projectPath: string = resultOptions.project;
@@ -129,6 +130,24 @@ class Cli {
             process.exitCode = StatusCodes.crash;
         } finally {
             process.exit();
+        }
+    }
+
+    // tslint:disable-next-line:no-any
+    public async getConfig(configPath: string): Promise<any> {
+        if (!configPath) {
+            return {};
+        }
+
+        const extension: string = path.extname(configPath);
+
+        if (extension === '.json') {
+            return parseJsonFile(configPath);
+        }
+
+        if (extension === '.js') {
+            const result: any =  await import(configPath);
+            return result.default;
         }
     }
 
