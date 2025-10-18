@@ -140,7 +140,7 @@ const cliOptions: OptionModel[] = [
         shortName: OptionsShortNames.config,
         required: false,
         type: ArgumentTypes.path,
-        description: `Path to config`,
+        description: `Path to config via JSON or JS file`,
         additionalDescription: ``,
         values: [
             OptionsPath.relative,

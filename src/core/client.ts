@@ -45,11 +45,12 @@ class NgxTranslateLint {
             throw new Error('Error config is incorrect');
         }
 
-        const languageIsURL: boolean = this.languagesPath.includes('http') || this.languagesPath.includes('https');
+        const languageIsURL: boolean = this.languagesPath.includes('http') || this.languagesPath.includes('https') || typeof this.fetchSettings?.get === 'function';
         let languagesKeys: FileLanguageModel;
         if (languageIsURL) {
             const fileData: string = await Http.get(this.languagesPath, this.fetchSettings);
-            languagesKeys = new FileLanguageModel(this.languagesPath, [], [], this.ignore, fileData, true).getKeysWithValue();
+            const languagesPath: string = typeof this.fetchSettings?.get === 'function' ? 'translation api fetch' : this.languagesPath;
+            languagesKeys = new FileLanguageModel(languagesPath, [], [], this.ignore, fileData, true).getKeysWithValue();
         } else {
             languagesKeys = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeysWithValue();
         }
