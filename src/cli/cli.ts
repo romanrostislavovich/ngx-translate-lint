@@ -12,12 +12,13 @@ import {
     StatusCodes,
     ToggleRule,
     parseJsonFile,
-    getPackageJsonPath,
+    getPackageJsonPath, IFetch,
 } from "./../core";
 
 import { config } from './../core/config';
 import { OptionsLongNames, OptionsShortNames } from './enums';
 import chalk from 'chalk';
+import path from 'path';
 
 const name: string = 'ngx-translate-lint';
 
@@ -79,43 +80,44 @@ class Cli {
     public async runCli(): Promise<void> {
         try {
             // Options
-            const fileOptions: any = this.cliClient.opts().config ? parseJsonFile(this.cliClient.opts().config) : {};
+            const fileOptions: any = await this.getConfig(this.cliClient.opts().config);
             const commandOptions: any = this.cliClient.opts();
             const defaultOptions: any = config.defaultValues;
 
             const resultOptions: any = {
-               ...defaultOptions,
-              ...defaultOptions.rules,
+                ...defaultOptions,
+                ...defaultOptions.rules,
 
-              ...fileOptions,
-              ...fileOptions.rules,
+                ...fileOptions,
+                ...fileOptions.rules,
 
-              ...commandOptions
+                ...commandOptions
             };
 
             const projectPath: string = resultOptions.project;
             const languagePath: string = resultOptions.languages;
             const fixZombiesKeys: boolean = resultOptions.fixZombiesKeys;
             const deepSearch: ToggleRule = resultOptions.deepSearch;
-            const optionIgnore: string = resultOptions.ingore;
+            const optionIgnore: string = resultOptions.ignore;
             const optionMisprint: ErrorTypes = resultOptions.misprintKeys;
             const optionEmptyKey: ErrorTypes = resultOptions.emptyKeys;
             const optionViewsRule: ErrorTypes = resultOptions.keysOnViews;
             const optionMaxWarning: number = resultOptions.maxWarning;
-            const optionZombiesRule: ErrorTypes = resultOptions.zombiesKeys;
-            const optionIgnoredKeys: string[] = resultOptions.ignoreKeys;
+            const optionZombiesRule: ErrorTypes = resultOptions.zombieKeys;
+            const optionIgnoredKeys: string[] = resultOptions.ignoredKeys;
             const optionMisprintCoefficient: number = resultOptions.misprintCoefficient;
             const optionIgnoredMisprintKeys: string[] = resultOptions.ignoredMisprintKeys;
             const optionCustomRegExpToFindKeys: string[] | RegExp[] = resultOptions.customRegExpToFindKeys;
+            const fetchSettings: IFetch = resultOptions.fetch;
 
             if (projectPath && languagePath) {
                 await this.runLint(
                     projectPath, languagePath, optionZombiesRule,
                     optionViewsRule, optionIgnore, optionMaxWarning, optionMisprint, optionEmptyKey, deepSearch,
-                    optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys, optionCustomRegExpToFindKeys
+                    optionMisprintCoefficient, optionIgnoredKeys, optionIgnoredMisprintKeys, optionCustomRegExpToFindKeys,fixZombiesKeys, fetchSettings
                 );
             } else {
-                const cliHasError: boolean = this.validate();
+                const cliHasError: boolean = this.validate(resultOptions);
                 if (cliHasError) {
                     process.exit(StatusCodes.crash);
                 } else {
@@ -131,24 +133,44 @@ class Cli {
         }
     }
 
+    // tslint:disable-next-line:no-any
+    public async getConfig(configPath: string): Promise<any> {
+        if (!configPath) {
+            return {};
+        }
+
+        const extension: string = path.extname(configPath);
+
+        if (extension === '.json') {
+            return parseJsonFile(configPath);
+        }
+
+        if (extension === '.js') {
+            const result: any =  await import(configPath);
+            return result.default;
+        }
+    }
+
     public parse(): void {
         this.printCurrentVersion();
 
         this.cliClient.parse(process.argv);
     }
 
-    private validate(): boolean {
-        const requiredOptions: OptionModel[] = this.cliOptions.filter((option: OptionModel) => option.required);
-        const missingRequiredOption: boolean = requiredOptions.reduce((accum: boolean, option: OptionModel) => {
-            if (!this.cliClient.opts()[String(option.longName)]) {
-                accum = false;
-                // tslint:disable-next-line: no-console
-                console.error(`Missing required argument: ${option.getFlag()}`);
-            }
-            return accum;
-        }, false);
+    private validate(options: any): boolean {
+        if (!options.project) {
+            // tslint:disable-next-line: no-console
+            console.error(`Missing required argument: --project`);
+            return true;
+        }
 
-        return missingRequiredOption;
+        if (!options.languages) {
+            // tslint:disable-next-line: no-console
+            console.error(`Missing required argument: --languages`);
+            return true;
+        }
+
+        return false;
     }
 
     public  async runLint(
@@ -166,6 +188,7 @@ class Cli {
         ignoredMisprintKeys: string[] = [],
         customRegExpToFindKeys: string[] | RegExp[] = [],
         fixZombiesKeys?: boolean,
+        fetchSettings?: IFetch
     ): Promise<void> {
             const errorConfig: IRulesConfig = {
                 misprintKeys: misprint || ErrorTypes.disable,
@@ -179,7 +202,7 @@ class Cli {
                 misprintCoefficient,
                 customRegExpToFindKeys,
             };
-            const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig);
+            const validationModel: NgxTranslateLint = new NgxTranslateLint(project, languages, ignore, errorConfig, fixZombiesKeys, fetchSettings);
             const resultCliModel: ResultCliModel = await validationModel.lint(maxWarning);
             const resultModel: ResultModel = resultCliModel.getResultModel();
             resultModel.printResult();

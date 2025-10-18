@@ -15,6 +15,11 @@ const config: IAppConfig = {
             ignoredMisprintKeys: [],
             customRegExpToFindKeys: []
         },
+        fetch: {
+            requestQuery: "",
+            requestHeaders: {},
+            responseQuery: ""
+        },
         project: './src/app/**/*.{html,ts,resx}',
         languages: './src/assets/i18n/*.json',
         fixZombiesKeys: false,

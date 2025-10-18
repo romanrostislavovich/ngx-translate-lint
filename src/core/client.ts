@@ -2,12 +2,13 @@ import { flatMap, omit } from 'lodash';
 import * as path from 'node:path';
 import { config } from './config';
 import { ErrorFlow, ErrorTypes } from './enums';
-import { IRulesConfig } from './interface';
+import { IFetch, IRulesConfig } from './interface';
 import { getPackageJsonPath, KeysUtils, parseJsonFile, saveJsonFile } from './utils';
 import { FileLanguageModel, FileViewModel, KeyModel, LanguagesModel, ResultCliModel, ResultErrorModel } from './models';
 import { AbsentViewKeysRule, EmptyKeysRule, MisprintRule, ZombieRule } from './rules';
 import { KeyModelWithLanguages, LanguagesModelWithKey, ViewModelWithKey } from './models/KeyModelWithLanguages';
 import { Http } from './utils/http';
+import { ngxTranslateRegEx } from '../ngx-translate/regexp';
 
 class NgxTranslateLint {
     public rules: IRulesConfig;
@@ -15,19 +16,24 @@ class NgxTranslateLint {
     public projectPath: string;
     public languagesPath: string;
     public fixZombiesKeys: boolean | undefined;
-
+    public fetchSettings: IFetch | undefined;
+    public toolsRegEx: string[] = [];
     constructor (
         projectPath: string = config.defaultValues.project,
         languagesPath: string = config.defaultValues.languages,
         ignore?: string,
         rulesConfig: IRulesConfig = config.defaultValues.rules,
         fixZombiesKeys?: boolean,
+        fetchSettings?: IFetch,
+        toolsRegEx: string[] = ngxTranslateRegEx,
     ) {
         this.ignore = ignore;
         this.rules = rulesConfig;
         this.projectPath = projectPath;
         this.languagesPath = languagesPath;
         this.fixZombiesKeys = fixZombiesKeys;
+        this.fetchSettings = fetchSettings;
+        this.toolsRegEx = toolsRegEx;
     }
 
     public async lint(maxWarning?: number): Promise<ResultCliModel> {
@@ -39,17 +45,18 @@ class NgxTranslateLint {
             throw new Error('Error config is incorrect');
         }
 
-        const languageIsURL: boolean = this.languagesPath.includes('http') || this.languagesPath.includes('https');
+        const languageIsURL: boolean = this.languagesPath.includes('http') || this.languagesPath.includes('https') || typeof this.fetchSettings?.get === 'function';
         let languagesKeys: FileLanguageModel;
         if (languageIsURL) {
-            const fileData: string = await Http.get(this.languagesPath);
-            languagesKeys = new FileLanguageModel(this.languagesPath, [], [], this.ignore, fileData, true).getKeysWithValue();
+            const fileData: string = await Http.get(this.languagesPath, this.fetchSettings);
+            const languagesPath: string = typeof this.fetchSettings?.get === 'function' ? 'translation api fetch' : this.languagesPath;
+            languagesKeys = new FileLanguageModel(languagesPath, [], [], this.ignore, fileData, true).getKeysWithValue();
         } else {
             languagesKeys = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeysWithValue();
         }
 
         const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
-        const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys, this.rules.deepSearch);
+        const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys, this.rules.deepSearch, this.toolsRegEx);
 
         const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
 
@@ -59,7 +66,8 @@ class NgxTranslateLint {
             this.rules.zombieKeys !== ErrorTypes.disable ||
             this.rules.keysOnViews !== ErrorTypes.disable ||
             this.rules.misprintKeys !== ErrorTypes.disable ||
-            this.rules.emptyKeys !== ErrorTypes.disable
+            this.rules.emptyKeys !== ErrorTypes.disable ||
+            !!this.fixZombiesKeys
         ) {
             const regExpResult: ResultErrorModel[] = this.runRegExp(views, languagesKeys);
             errors.push(...regExpResult);
@@ -120,7 +128,7 @@ class NgxTranslateLint {
 
         if (this.projectPath) {
             const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
-            const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys);
+            const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys, this.rules.deepSearch,this.toolsRegEx);
             const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
 
             views.keys.forEach((key: KeyModel) => {
@@ -209,16 +217,16 @@ class NgxTranslateLint {
                     const newFileLanguage: FileLanguageModel = new FileLanguageModel(item.currentPath, [], [new KeyModel(item.value)]);
                     acum.push(newFileLanguage);
                 }
-                 return acum;
+                return acum;
             }, []);
 
             filesAndKeys.forEach((languageFile: FileLanguageModel) => {
                 // tslint:disable-next-line:no-any
-               const jsonData: any = parseJsonFile(languageFile.path);
-               const keysArray: string[] = languageFile.keys.map((x) => x.name);
+                const jsonData: any = parseJsonFile(languageFile.path);
+                const keysArray: string[] = languageFile.keys.map((x) => x.name);
                 // tslint:disable-next-line:no-any
-               const resultData: any  = omit(jsonData, keysArray);
-               saveJsonFile(resultData, languageFile.path);
+                const resultData: any  = omit(jsonData, keysArray);
+                saveJsonFile(resultData, languageFile.path);
             });
         }
 
