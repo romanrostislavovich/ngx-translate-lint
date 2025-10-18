@@ -54,69 +54,69 @@ Usage: ngx-translate-lint [options]
 Simple CLI tools for check `ngx-translate` keys in app
 
 Options:
-  -p,  --project [glob] (required)
+  -p, --project [glob]                   
           The path to project folder
           Possible Values: <relative path|absolute path>
-          (default: "./src/app/**/*.{html,ts}")
-  -l,  --languages [glob] (required)
+          
+  -l, --languages [glob]                 
           The path to languages folder
           Possible Values: <relative path|absolute path|URL>
-          (default: "./src/assets/i18n/*.json")
-  --kv,  --keysOnViews [enum]
+          
+  --kv, --keysOnViews [enum]             
           Described how to handle the error of missing keys on view
           Possible Values: <disable|warning|error>
-          (default: "error")
-  --zk,  --zombieKeys [enum]
-          Described how to handle the error of zombies keys.
-            Zombie keys are keys that doesn't exist on any languages file but exist on project, 
-            or exist languages but doesn't exist on project
+          
+  --zk, --zombieKeys [enum]              
+          Described how to handle the error of zombies keys. Zombie keys are keys that doesn't exist on any languages file but exist on project, or exist languages but doesn't exist on project
           Possible Values: <disable|warning|error>
-          (default: "warning")
-  --ek, --emptyKeys [enum]
-          Described how to handle empty value on translate keys. 
-            Empty keys are keys that doesn't have any value on languages files
+          
+  --ek, --emptyKeys [enum]               
+          Described how to handle empty value on translate keys. Empty keys are keys that doesn't have any value on languages files
           Possible Values: <disable|warning|error>
-           (default: "warning")
-  -i,  --ignore [glob]
+          
+  -i, --ignore [glob]                    
           Ignore projects and languages files
           Possible Values: <relative path|absolute path>
-  --maxWarning [glob]
+          
+  --maxWarning [glob]                    
           Max count of warnings in all files. If this value more that count of warnings, then an error is return
           Possible Values: <number>
-           (default: "0")
-  --mk,  --misprintKeys [enum]
-          Try to find matches with misprint keys on views and languages keys. CCan be longer process!!
+          
+  --mk, --misprintKeys [enum]            
+          Try to find matches with misprint keys on views and languages keys. Coefficient: 0.9. Can be longer process!!
           Possible Values: <disable|warning|error>
-           (default: "disable")
-  --ds,  --deepSearch [enum]
+          
+  --ds, --deepSearch [enum]              
           Add each translate key to global regexp end try to find them on project. Can be longer process!!
           Possible Values: <disable|enable>
-           (default: "disable")
-  --mc, --misprintCoefficient [number]
+          
+  --mc, --misprintCoefficient [number]   
           Coefficient for misprint option can be from 0 to 1.0.
-          (default: "0.9")
-  -c, --config [path]
-          Path to the config file.
-  --fz, --fixZombiesKeys [boolean]
+          
+          
+  -c, --config [path]                    
+          Path to config via JSON or JS file
+          Possible Values: <relative path|absolute path>
+          
+  --fz, --fixZombiesKeys [boolean]       
           Auto fix zombies keys on languages files
-          (default: "false")
-
-
-  -V, --version   output the version number
-  -h, --help      output usage information
+          
+          
+  -v, --version                          Print current version of ngx-translate-lint
+  -h, --help                             display help for command
 
 
 Examples:
 
-    $ npx ngx-translate-lint  -p "./src/app/**/*.{html,ts}" -l "./src/assets/i18n/*.json"
-    $ ngx-translate-lint -p "./src/app/**/*.{html,ts}" -l "./src/assets/i18n/*.json"
-    $ ngx-translate-lint -p "./src/app/**/*.{html,ts}" -z "disable" -v "error"
-    $ ngx-translate-lint -p "./test/integration/inputs/views/*.html" -l "https://8.8.8.8/locales/EN-eu.json"
-```
+    $ ngx-translate-lint -p ./src/app/**/*.{html,ts,resx} -l ./src/assets/i18n/*.json
+    $ ngx-translate-lint -p ./src/app/**/*.{html,ts,resx} -z disable -v error
+    $ ngx-translate-lint -p ./src/app/**/*.{html,ts,resx} -i ./src/assets/i18n/EN-us.json, ./src/app/app.*.{json}
+    $ ngx-translate-lint -p ./src/app/**/*.{html,ts,resx} -l https://8.8.8.8/locales/EN-eu.json
+```    
 
 > NOTE: For `project` and `languages` options need to include file types like on the example.
 
-Default Config is:
+Default JSON Config is:
 ```json
 {
     "rules": {
@@ -131,10 +131,60 @@ Default Config is:
         "ignoredMisprintKeys": [],
         "customRegExpToFindKeys": [ "(?<=marker\\(['\"])([A-Za-z0-9_\\-.]+)(?=['\"]\\))"], // to find: marker('TRSNLATE.KEY');
     },
+    "fetch": {
+        "requestQuery": "",
+        "requestHeaders": {},
+        "responseQuery": ""
+    },
     "fixZombiesKeys": false,
     "project": "./src/app/**/*.{html,ts}",
     "languages": "./src/assets/i18n/*.json"
 }
+```
+
+JS Config should have `default` export via object like config. See example:
+
+Example JS config is:
+```javascript
+
+const config = {
+    rules: {
+        keysOnViews: "error",
+        zombieKeys: "warning",
+        emptyKeys: "warning",
+        misprint: {
+            type: "warning",
+            coefficient: 0.9
+        },
+        ignoredKeys: [],
+        ignoredMisprintKeys: []
+    },
+    fetch: {
+        requestQuery: "",
+        requestHeaders: {},
+        responseQuery: "",
+        get: async () => {
+            const requestOne = fetch('https://8.8.8.8/locales/EN-eu.json');
+            const requestTwo = fetch('https://8.8.8.8/locales/EN-us.json');
+            const result = await Promise.all([requestOne, requestTwo]).then(async ([responseOne, responseTwo]) => {
+                return {
+                    ...(await responseOne.json()),
+                    ...(await  responseTwo.json())
+                }
+            });
+            // NOTE: result should contains only translation keys. Example 
+            // {
+            //   "translation.key": "value"
+            // }
+            return result;
+        }
+    },
+    fixZombiesKeys: false,
+    project: "./src/app/**/*.{html,ts}",
+    languages: "./src/assets/i18n/*.json"
+}
+
+export default config;
 ```
 
 #### How to write Custom RegExp
@@ -172,26 +222,44 @@ The CLI process may exit with the following codes:
 ### TypeScript
 
 ```typescript
-import { ToggleRule, NgxTranslateLint, IRulesConfig, ResultCliModel, ErrorTypes, LanguagesModel } from 'ngx-translate-lint';
+import {
+    ToggleRule,
+    NgxTranslateLint,
+    IRulesConfig,
+    ResultCliModel,
+    ErrorTypes,
+    LanguagesModel,
+    IFetch,
+    ngxTranslateRegEx,
+} from 'ngx-translate-lint';
 
 const viewsPath: string = './src/app/**/*.{html,ts}';
 const languagesPath: string = './src/assets/i18n/*.json';
 const ignoredLanguagesPath: string = "./src/assets/i18n/ru.json, ./src/assets/i18n/ru-RU.json";
 const ruleConfig: IRulesConfig = {
-        keysOnViews: ErrorTypes.error,
-        zombieKeys: ErrorTypes.warning,
-        misprintKeys: ErrorTypes.disable,
-        deepSearch: ToggleRule.disable,
-        emptyKeys: ErrorTypes.warning,
-        maxWarning: 0,
-        misprintCoefficient: 0.9,
-        fixZombiesKeys: false,
-        ignoredKeys: [ 'EXAMPLE.KEY', 'IGNORED.KEY.(.*)' ], // can be string or RegExp
-        ignoredMisprintKeys: [],
-        customRegExpToFindKeys: [ "(?<=marker\\(['\"])([A-Za-z0-9_\\-.]+)(?=['\"]\\))" ] // to find: marker('TRSNLATE.KEY');
+    keysOnViews: ErrorTypes.error,
+    zombieKeys: ErrorTypes.warning,
+    misprintKeys: ErrorTypes.disable,
+    deepSearch: ToggleRule.disable,
+    emptyKeys: ErrorTypes.warning,
+    maxWarning: 0,
+    misprintCoefficient: 0.9,
+    fixZombiesKeys: false,
+    ignoredKeys: ['EXAMPLE.KEY', 'IGNORED.KEY.(.*)'], // can be string or RegExp
+    ignoredMisprintKeys: [],
+    customRegExpToFindKeys: ["(?<=marker\\(['\"])([A-Za-z0-9_\\-.]+)(?=['\"]\\))"] // to find: marker('TRSNLATE.KEY');
 };
-
-const ngxTranslateLint = new NgxTranslateLint(viewsPath, languagesPath, ignoredLanguagesPath, ruleConfig)
+const fixZombiesKeys: boolean = false;
+const fetchSettings: IFetch = {
+    requestQuery: "",
+    requestHeaders: {},
+    responseQuery: "",
+    get: () => {
+        // You fetch to get locales
+    }
+};
+const ngxTranslateRegEx: ngxTranslateRegEx = ngxTranslateRegEx; // Here can be your array of regexp to find keys
+const ngxTranslateLint = new NgxTranslateLint(viewsPath, languagesPath, ignoredLanguagesPath, ruleConfig, fixZombiesKeys, fetchSettings, ngxTranslateRegEx)
 const resultLint: ResultCliModel = ngxTranslateLint.lint(); // Run Lint
 const languages: LanguagesModel[] = ngxTranslateLint.getLanguages()  // Get Languages with all keys and views
 
