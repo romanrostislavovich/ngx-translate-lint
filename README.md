@@ -95,7 +95,7 @@ Options:
           
           
   -c, --config [path]                    
-          Path to config
+          Path to config via JSON or JS file
           Possible Values: <relative path|absolute path>
           
   --fz, --fixZombiesKeys [boolean]       
@@ -116,7 +116,7 @@ Examples:
 
 > NOTE: For `project` and `languages` options need to include file types like on the example.
 
-Default Config is:
+Default JSON Config is:
 ```json
 {
     "rules": {
@@ -140,6 +140,51 @@ Default Config is:
     "project": "./src/app/**/*.{html,ts}",
     "languages": "./src/assets/i18n/*.json"
 }
+```
+
+JS Config should have `default` export via object like config. See example:
+
+Example JS config is:
+```javascript
+
+const config = {
+    rules: {
+        keysOnViews: "error",
+        zombieKeys: "warning",
+        emptyKeys: "warning",
+        misprint: {
+            type: "warning",
+            coefficient: 0.9
+        },
+        ignoredKeys: [],
+        ignoredMisprintKeys: []
+    },
+    fetch: {
+        requestQuery: "",
+        requestHeaders: {},
+        responseQuery: "",
+        get: async () => {
+            const requestOne = fetch('https://8.8.8.8/locales/EN-eu.json');
+            const requestTwo = fetch('https://8.8.8.8/locales/EN-us.json');
+            const result = await Promise.all([requestOne, requestTwo]).then(async ([responseOne, responseTwo]) => {
+                return {
+                    ...(await responseOne.json()),
+                    ...(await  responseTwo.json())
+                }
+            });
+            // NOTE: result should contains only translation keys. Example 
+            // {
+            //   "translation.key": "value"
+            // }
+            return result;
+        }
+    },
+    fixZombiesKeys: false,
+    project: "./src/app/**/*.{html,ts}",
+    languages: "./src/assets/i18n/*.json"
+}
+
+export default config;
 ```
 
 #### How to write Custom RegExp
@@ -208,7 +253,10 @@ const fixZombiesKeys: boolean = false;
 const fetchSettings: IFetch = {
     requestQuery: "",
     requestHeaders: {},
-    responseQuery: ""
+    responseQuery: "",
+    get: () => {
+        // You fetch to get locales
+    }
 };
 const ngxTranslateRegEx: ngxTranslateRegEx = ngxTranslateRegEx; // Here can be your array of regexp to find keys
 const ngxTranslateLint = new NgxTranslateLint(viewsPath, languagesPath, ignoredLanguagesPath, ruleConfig, fixZombiesKeys, fetchSettings, ngxTranslateRegEx)

@@ -1,6 +1,7 @@
 import { IRulesConfig } from './IRulesConfig';
 
 interface IFetch {
+    get?: Function;
     requestQuery: string;
     responseQuery: string;
     requestHeaders: { [key: string]: string };
