@@ -12,7 +12,7 @@ import {
     StatusCodes,
     ToggleRule,
     parseJsonFile,
-    getPackageJsonPath, IFetch,
+    getPackageJsonPath, IFetch, PathUtils,
 } from "./../core";
 
 import { config } from './../core/config';
@@ -146,7 +146,8 @@ class Cli {
         }
 
         if (extension === '.js') {
-            const result: any =  await import(configPath);
+            const correctConfigPath: string = PathUtils.resolvePath(configPath);
+            const result: any =  await import(correctConfigPath);
             return result.default;
         }
     }
