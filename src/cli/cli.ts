@@ -60,9 +60,12 @@ class Cli {
             const optionFlag: string = option.getFlag();
             const optionDescription: string = option.getDescription();
             const optionDefaultValue: string | ErrorTypes | undefined = option.default;
-            this.cliClient.addOption(new Option(optionFlag, optionDescription));
+            const commandOption: Option = new Option(optionFlag, optionDescription);
+            commandOption.default(optionDefaultValue);
+            this.cliClient.addOption(option);
         });
 
+        this.cliClient.allowExcessArguments(true);
         // tslint:disable-next-line:no-any
         const packageJson: any = parseJsonFile(getPackageJsonPath());
         this.cliClient.version(packageJson.version, '-v, --version', `Print current version of ${name}`);
