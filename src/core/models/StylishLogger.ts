@@ -1,7 +1,7 @@
-import chalk from "chalk";
-
 import { ILogger } from "./../interface";
 import { ErrorTypes } from "./../enums";
+// tslint:disable-next-line:typedef
+const chalk = require("chalk");
 
 class StylishLogger implements ILogger {
     private logger: ILogger;

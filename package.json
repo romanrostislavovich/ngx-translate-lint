@@ -1,15 +1,15 @@
 {
     "author": "Raman Lauryniuk <romanrostislavovich@gmail.com>",
     "name": "ngx-translate-lint",
-    "version": "1.26.4",
+    "version": "1.26.5",
     "description": "Simple tools for check `ngx-translate` keys in app",
     "license": "MIT",
     "repository": "https://github.com/romanrostislavovich/ngx-translate-lint.git",
     "bugs": "https://github.com/romanrostislavovich/ngx-translate-lint/issues",
     "bin": {
-        "ngx-translate-lint": "dist/bin.js"
+        "ngx-translate-lint": "./dist/bin.js"
     },
-    "main": "dist/src/core/index.js",
+    "main": "./dist/src/core/index.js",
     "scripts": {
         "tsc": "./node_modules/.bin/tsc",
         "markdownlint": "./node_modules/.bin/markdownlint",
