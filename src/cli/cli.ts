@@ -60,9 +60,8 @@ class Cli {
             const optionFlag: string = option.getFlag();
             const optionDescription: string = option.getDescription();
             const optionDefaultValue: string | ErrorTypes | undefined = option.default;
-            const commandOption: Option = new Option(optionFlag, optionDescription);
-            commandOption.default(optionDefaultValue);
-            this.cliClient.addOption(option);
+            const commandOption: Option = new Option(optionFlag, optionDescription).default(optionDefaultValue);
+            this.cliClient.addOption(commandOption);
         });
 
         this.cliClient.allowExcessArguments(true);
