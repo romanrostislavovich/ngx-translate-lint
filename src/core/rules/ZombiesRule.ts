@@ -1,5 +1,3 @@
-import { differenceBy } from 'lodash';
-
 import { IRule } from './../interface';
 import { ErrorTypes, ErrorFlow } from './../enums';
 import { ResultErrorModel, KeyModel } from './../models';
@@ -15,16 +13,22 @@ class ZombieRule implements IRule {
     }
 
     public check(viewKeys: KeyModel[], languagesKeys: KeyModel[]): ResultErrorModel[] {
-        const keysListError: KeyModel[] = differenceBy<KeyModel, KeyModel>(languagesKeys, viewKeys, 'name');
-        const resultErrorList: ResultErrorModel[] = keysListError.reduce((result: ResultErrorModel[], key: KeyModel) => {
-            const resultErrors: ResultErrorModel[] = key.languages.map((languagePath: string) => {
-                const resultErrorModel: ResultErrorModel = new ResultErrorModel(key.name, this.flow, this.handler, languagePath);
-                return resultErrorModel;
+        const viewKeyNames: Set<string> = new Set(viewKeys.map((key: KeyModel) => key.name));
+
+        return languagesKeys.flatMap((key: KeyModel) => {
+            if (viewKeyNames.has(key.name)) {
+                return [];
+            }
+
+            return key.languages.map((languagePath: string) => {
+                return new ResultErrorModel(
+                    key.name,
+                    this.flow,
+                    this.handler,
+                    languagePath
+                );
             });
-            result.push(...resultErrors);
-            return result;
-        }, []);
-        return resultErrorList;
+        });
     }
 }
 

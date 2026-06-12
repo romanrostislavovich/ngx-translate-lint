@@ -1,11 +1,10 @@
-import { get, transform } from 'lodash';
-
 import { KeyModel } from '../KeyModel';
 import { FileModel } from './FileModel';
 
 class FileLanguageModel extends FileModel {
     public fileData?: string;
     public isURL?: boolean;
+
     constructor(
         path: string,
         files: string[] = [],
@@ -23,106 +22,110 @@ class FileLanguageModel extends FileModel {
         if (this.isURL) {
             this.files = [this.path];
             const fileKeysNames: string[] = this.getLanguageKeys(JSON.parse(this.fileData || '{}'));
-            this.keys = !fileKeysNames ? [] : fileKeysNames
-                .filter(x => !!x)
-                .map((key: string) => {
-                    return new KeyModel(key, [], [this.path]);
-                });
-            return  this;
+            this.keys = fileKeysNames.map((key: string) => {
+                return new KeyModel(key, [], [this.path]);
+            });
+            return this;
         } else {
-            this.files =  this.getNormalizeFiles();
+            this.files = this.getNormalizeFiles();
             this.keys = this.parseKeys((fileData: string, filePath: string): KeyModel[] => {
                 try {
                     const fileKeysNames: string[] = this.getLanguageKeys(JSON.parse(this.fileData || fileData));
-                    return !fileKeysNames ? [] : fileKeysNames
-                        .filter(x => !!x)
-                        .map((key: string) => {
-                            return new KeyModel(key, [], [filePath]);
-                        });
+                    return fileKeysNames.map((key: string) => {
+                        return new KeyModel(key, [], [filePath]);
+                    });
                 } catch (e) {
-                    const errorMessage: string = `Can't parse JSON file: ${filePath}`;
-                    throw new Error(errorMessage);
+                    throw new Error(`Can't parse JSON file: ${filePath}`);
                 }
-
             });
             return this;
         }
-
     }
 
     public getKeysWithValue(): FileLanguageModel {
         if (this.isURL) {
             this.files = [this.path];
-           const fileKeysNames: KeyModel[] = this.getLanguageKeysWithValue(JSON.parse(this.fileData || '{}'));
-           this.keys = fileKeysNames.map((key: KeyModel) => {
+            const fileKeysNames: KeyModel[] = this.getLanguageKeysWithValue(JSON.parse(this.fileData || '{}'));
+            this.keys = fileKeysNames.map((key: KeyModel) => {
                 key.languages.push(this.path);
                 return key;
-           });
-           return this;
+            });
+            return this;
         } else {
             this.files = this.getNormalizeFiles();
             this.keys = this.parseKeysWithValues((fileData: string, filePath: string): KeyModel[] => {
                 try {
-                    const fileKeysNames: KeyModel[]  = this.getLanguageKeysWithValue(JSON.parse(this.fileData || fileData));
+                    const fileKeysNames: KeyModel[] = this.getLanguageKeysWithValue(JSON.parse(this.fileData || fileData));
                     return fileKeysNames.map((key: KeyModel) => {
                         key.languages.push(filePath);
                         return key;
                     });
                 } catch (e) {
-                    const errorMessage: string = `Can't parse JSON file: ${filePath}`;
-                    throw new Error(errorMessage);
+                    throw new Error(`Can't parse JSON file: ${filePath}`);
                 }
-
             });
             return this;
         }
-
     }
 
-    private getLanguageKeysWithValue(obj: object, cat: string | null = null, tKeys: string[] = [], tValues: KeyModel[] = []): KeyModel[] {
-        const currentKeys: string[] = [ ...tKeys ];
-        const correctKeys: KeyModel[] = tValues;
+    private getLanguageKeysWithValue(
+        obj: object,
+        cat: string = '',
+        accumulator: KeyModel[] = []
+    ): KeyModel[] {
+        if (!obj || typeof obj !== 'object') {
+            return accumulator;
+        }
+
         const objectKeys: string[] = Object.keys(obj);
 
-        objectKeys.forEach((key: string) => {
+        for (const key of objectKeys) {
+            // tslint:disable-next-line:no-any
             // @ts-ignore
-            const keyValue: object = get(obj, key);
-            const isObject: boolean = typeof keyValue === 'object';
-            const currentKey: string =  cat === null ? key : cat.concat('.', key);
+            const keyValue: any = obj[key];
+            const currentKey: string = cat ? `${cat}.${key}` : key;
 
-            if (isObject) {
-                const childKeys: string[] = this.getLanguageKeysWithValue(keyValue, currentKey, tKeys, correctKeys).map((x) => x.name);
-                currentKeys.push(...childKeys);
+            if (keyValue !== null && typeof keyValue === 'object' && !Array.isArray(keyValue)) {
+                this.getLanguageKeysWithValue(keyValue, currentKey, accumulator);
             } else {
-                correctKeys.push({
+                accumulator.push({
                     name: currentKey,
-                    value: keyValue.toString(),
+                    value: String(keyValue ?? ''), // Безопасное преобразование в строку
                     views: [],
                     languages: []
-                });
+                } as KeyModel);
             }
-        });
-        return correctKeys;
+        }
+
+        return accumulator;
     }
 
-    private getLanguageKeys(obj: object, cat: string | null = null, tKeys: string[] = []): string[] {
-        const currentKeys: string[] = [ ...tKeys ];
+    private getLanguageKeys(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // tslint:disable-next-line:no-any
+        obj: any,
+        cat: string = '',
+        accumulator: string[] = []
+    ): string[] {
+        if (!obj || typeof obj !== 'object') {
+            return accumulator;
+        }
+
         const objectKeys: string[] = Object.keys(obj);
 
-        objectKeys.forEach((key: string) => {
-            // @ts-ignore
-            const keyValue: object = get(obj, key);
-            const isObject: boolean = typeof keyValue === 'object';
-            const currentKey: string =  cat === null ? key : cat.concat('.', key);
+        for (const key of objectKeys) {
+            // tslint:disable-next-line:no-any
+            const keyValue: any = obj[key];
+            const currentKey: string = cat ? `${cat}.${key}` : key;
 
-            if (isObject) {
-                const childKeys: string[] = this.getLanguageKeys(keyValue, currentKey, tKeys);
-                currentKeys.push(...childKeys);
+            if (keyValue !== null && typeof keyValue === 'object' && !Array.isArray(keyValue)) {
+                this.getLanguageKeys(keyValue, currentKey, accumulator);
             } else {
-                currentKeys.push(currentKey);
+                accumulator.push(currentKey);
             }
-        });
-        return currentKeys;
+        }
+
+        return accumulator;
     }
 }
 

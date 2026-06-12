@@ -1,9 +1,8 @@
-import { flatMap, omit } from 'lodash';
 import * as path from 'node:path';
 import { config } from './config';
 import { ErrorFlow, ErrorTypes } from './enums';
 import { IFetch, IRulesConfig } from './interface';
-import { getPackageJsonPath, KeysUtils, parseJsonFile, saveJsonFile } from './utils';
+import { KeysUtils, parseJsonFile, saveJsonFile } from './utils';
 import { FileLanguageModel, FileViewModel, KeyModel, LanguagesModel, ResultCliModel, ResultErrorModel } from './models';
 import { AbsentViewKeysRule, EmptyKeysRule, MisprintRule, ZombieRule } from './rules';
 import { KeyModelWithLanguages, LanguagesModelWithKey, ViewModelWithKey } from './models/KeyModelWithLanguages';
@@ -18,6 +17,7 @@ class NgxTranslateLint {
     public fixZombiesKeys: boolean | undefined;
     public fetchSettings: IFetch | undefined;
     public toolsRegEx: string[] = [];
+
     constructor (
         projectPath: string = config.defaultValues.project,
         languagesPath: string = config.defaultValues.languages,
@@ -47,6 +47,7 @@ class NgxTranslateLint {
 
         const languageIsURL: boolean = this.languagesPath.includes('http') || this.languagesPath.includes('https') || typeof this.fetchSettings?.get === 'function';
         let languagesKeys: FileLanguageModel;
+
         if (languageIsURL) {
             const fileData: string = await Http.get(this.languagesPath, this.fetchSettings);
             const languagesPath: string = typeof this.fetchSettings?.get === 'function' ? 'translation api fetch' : this.languagesPath;
@@ -55,7 +56,7 @@ class NgxTranslateLint {
             languagesKeys = new FileLanguageModel(this.languagesPath, [], [], this.ignore).getKeysWithValue();
         }
 
-        const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
+        const languagesKeysNames: string[] = languagesKeys.keys.flatMap((key: KeyModel) => key.name);
         const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys, this.rules.deepSearch, this.toolsRegEx);
 
         const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
@@ -73,71 +74,63 @@ class NgxTranslateLint {
             errors.push(...regExpResult);
         }
 
+        if (this.rules.ignoredKeys?.length !== 0) {
+            const ignoredRegexps: RegExp[] = this.rules.ignoredKeys.map(ignoredKey => new RegExp(ignoredKey, "i"));
 
-        if(this.rules.ignoredKeys?.length !== 0) {
-            errors = errors.reduce<ResultErrorModel[]>((acum, errorKey) => {
-                const errorKeyValue: string = errorKey.value;
-                if (!this.rules.ignoredKeys.some(ignoredKey => new RegExp(ignoredKey, "i").test(errorKeyValue))) {
-                    const correctError: ResultErrorModel = new ResultErrorModel(
-                        errorKey.value,
-                        errorKey.errorFlow,
-                        errorKey.errorType,
-                        errorKey.currentPath,
-                        errorKey.absentedPath,
-                        errorKey.suggestions,
-                    );
-                    acum.push(correctError);
-                }
-                return acum;
-            }, []);
+            errors = errors.filter(errorKey => {
+                const isIgnored: boolean = ignoredRegexps.some(rx => rx.test(errorKey.value));
+                return !isIgnored;
+            });
         }
 
-        const cliResult: ResultCliModel = new ResultCliModel(errors, maxWarning);
-        return cliResult;
+        return new ResultCliModel(errors, maxWarning);
     }
 
     public getLanguages(): LanguagesModel[] {
-        const result: LanguagesModel[] = [];
         const languagesFiles: FileLanguageModel = new FileLanguageModel(this.languagesPath, [], [], this.ignore);
         const languagesKeys: FileLanguageModel = languagesFiles.getKeysWithValue();
+
+        const languageMap:  Map<string, LanguagesModel> = new Map<string, LanguagesModel>();
 
         if (languagesKeys.keys.length === 0) {
             languagesFiles.files.forEach((filePath: string) => {
                 const languageName: string = path.basename(filePath, '.json');
                 const languageModel: LanguagesModel = new LanguagesModel(languageName);
                 languageModel.path = filePath;
-                result.push(languageModel);
+                languageMap.set(languageName, languageModel);
             });
         }
 
         languagesKeys.keys.forEach((key: KeyModel) => {
-           key.languages.forEach((languagePath: string) => {
-               const name: string = path.basename(languagePath);
-               const languageIndex: number = result.findIndex((x) => x.name === name);
+            key.languages.forEach((languagePath: string) => {
+                const name: string = path.basename(languagePath);
 
-               if (languageIndex === -1) {
-                   const language: LanguagesModel = new LanguagesModel(name);
-                   language.path = languagePath;
-                   language.keys.push(key);
-                   result.push(language);
-               } else {
-                   result[languageIndex].keys.push(key);
-               }
-           });
+                let language: LanguagesModel | undefined = languageMap.get(name);
+                if (!language) {
+                    language = new LanguagesModel(name);
+                    language.path = languagePath;
+                    languageMap.set(name, language);
+                }
+                language.keys.push(key);
+            });
         });
 
+        const result: LanguagesModel[] = Array.from(languageMap.values());
+
         if (this.projectPath) {
-            const languagesKeysNames: string[] = flatMap(languagesKeys.keys, (key: KeyModel) => key.name);
-            const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys, this.rules.deepSearch,this.toolsRegEx);
+            const languagesKeysNames: string[] = languagesKeys.keys.flatMap((key: KeyModel) => key.name);
+            const viewsRegExp: RegExp = KeysUtils.findKeysList(languagesKeysNames, this.rules.customRegExpToFindKeys, this.rules.deepSearch, this.toolsRegEx);
             const views: FileViewModel = new FileViewModel(this.projectPath, [], [], this.ignore).getKeys(viewsRegExp);
 
-            views.keys.forEach((key: KeyModel) => {
-               result.forEach((language: LanguagesModel) => {
-                   const keyIndex: number = language.keys.findIndex((x) => x.name === key.name);
-                   if (keyIndex !== -1 ){
-                       language.keys[keyIndex].views = key.views;
-                   }
-               });
+            result.forEach((language: LanguagesModel) => {
+                const keyMap:  Map<string, KeyModel> = new Map(language.keys.map(k => [k.name, k]));
+
+                views.keys.forEach((key: KeyModel) => {
+                    const targetKey: KeyModel | undefined = keyMap.get(key.name);
+                    if (targetKey) {
+                        targetKey.views = key.views;
+                    }
+                });
             });
         }
 
@@ -145,32 +138,28 @@ class NgxTranslateLint {
     }
 
     public getKeys(): KeyModelWithLanguages[] {
-        const result: KeyModelWithLanguages[] = [];
         const languagesKeys: LanguagesModel[] = this.getLanguages();
-        languagesKeys.forEach((language: LanguagesModel) => {
-           language.keys.forEach((key: KeyModel) => {
-               const isKeyExistIndex: number = result.findIndex(x => x.name === key.name);
-               if (isKeyExistIndex === -1 ) {
 
-                   const viewsModels: ViewModelWithKey[] = key.views.map((x) => {
-                       return new ViewModelWithKey(x);
-                   });
-                   const languagesModel: LanguagesModelWithKey = new LanguagesModelWithKey(language.name, language.path, key.value);
-                   const keyModel: KeyModelWithLanguages = new KeyModelWithLanguages(key.name, [languagesModel], viewsModels);
-                   result.push(keyModel);
-               } else {
-                    const currentKeyModel: KeyModelWithLanguages = result[isKeyExistIndex];
-                    const viewsModels: ViewModelWithKey[] = key.views.map((x) => {
-                       return new ViewModelWithKey(x);
-                    });
-                    const languagesModel: LanguagesModelWithKey = new LanguagesModelWithKey(language.name, language.path, key.value);
+        const keyModelMap: Map<string, KeyModelWithLanguages> = new Map<string, KeyModelWithLanguages>();
+
+        languagesKeys.forEach((language: LanguagesModel) => {
+            language.keys.forEach((key: KeyModel) => {
+                const viewsModels: ViewModelWithKey[] = key.views.map(x => new ViewModelWithKey(x));
+                const languagesModel: LanguagesModelWithKey = new LanguagesModelWithKey(language.name, language.path, key.value);
+
+                let currentKeyModel: KeyModelWithLanguages | undefined = keyModelMap.get(key.name);
+
+                if (!currentKeyModel) {
+                    currentKeyModel = new KeyModelWithLanguages(key.name, [languagesModel], viewsModels);
+                    keyModelMap.set(key.name, currentKeyModel);
+                } else {
                     currentKeyModel.languages.push(languagesModel);
                     currentKeyModel.views.push(...viewsModels);
-               }
-           });
+                }
+            });
         });
-        return result;
 
+        return Array.from(keyModelMap.values());
     }
 
     private runRegExp(
@@ -179,54 +168,49 @@ class NgxTranslateLint {
         rules: IRulesConfig = this.rules
     ): ResultErrorModel[] {
         const result: ResultErrorModel[] = [];
+
         if (rules.zombieKeys !== ErrorTypes.disable) {
             const ruleInstance: ZombieRule = new ZombieRule(this.rules.zombieKeys);
-            const ruleResult: ResultErrorModel[] = ruleInstance.check(views.keys, languagesKeys.keys);
-            result.push(...ruleResult);
+            result.push(...ruleInstance.check(views.keys, languagesKeys.keys));
         }
 
         if (rules.keysOnViews !== ErrorTypes.disable) {
             const ruleInstance: AbsentViewKeysRule = new AbsentViewKeysRule(this.rules.keysOnViews, languagesKeys.files);
-            const ruleResult: ResultErrorModel[] = ruleInstance.check(views.keys, languagesKeys.keys);
-            result.push(...ruleResult);
+            result.push(...ruleInstance.check(views.keys, languagesKeys.keys));
         }
 
         if (rules.misprintKeys !== ErrorTypes.disable) {
             const ruleInstance: MisprintRule = new MisprintRule(this.rules.misprintKeys, this.rules.misprintCoefficient, this.rules.ignoredMisprintKeys);
-            const ruleResult: ResultErrorModel[] = ruleInstance.check(result, languagesKeys.keys);
-            result.push(...ruleResult);
+            result.push(...ruleInstance.check(result, languagesKeys.keys));
         }
-
 
         if (rules.emptyKeys !== ErrorTypes.disable) {
             const ruleInstance: EmptyKeysRule = new EmptyKeysRule(this.rules.emptyKeys);
-            const ruleResult: ResultErrorModel[] = ruleInstance.check(languagesKeys.keys);
-            result.push(...ruleResult);
+            result.push(...ruleInstance.check(languagesKeys.keys));
         }
 
         if (!!this.fixZombiesKeys) {
-            const allZombiesKeys: ResultErrorModel[] = result.filter((error) => {
-                return error.errorFlow === ErrorFlow.zombieKeys;
+            const filesAndKeysMap: Map<string, FileLanguageModel> = new Map<string, FileLanguageModel>();
+
+            result.forEach((error) => {
+                if (error.errorFlow === ErrorFlow.zombieKeys) {
+                    let fileLanguage: FileLanguageModel | undefined = filesAndKeysMap.get(error.currentPath);
+                    if (!fileLanguage) {
+                        fileLanguage = new FileLanguageModel(error.currentPath, [], []);
+                        filesAndKeysMap.set(error.currentPath, fileLanguage);
+                    }
+                    fileLanguage.keys.push(new KeyModel(error.value));
+                }
             });
 
-            const filesAndKeys: FileLanguageModel[] = allZombiesKeys.reduce((acum: FileLanguageModel[], item: ResultErrorModel) => {
-                const existingFileLanguage: FileLanguageModel | undefined = acum.find((x) => x.path === item.currentPath) ;
-                if (!!existingFileLanguage) {
-                    existingFileLanguage.keys.push(new KeyModel(item.value));
-                }  else {
-                    const newFileLanguage: FileLanguageModel = new FileLanguageModel(item.currentPath, [], [new KeyModel(item.value)]);
-                    acum.push(newFileLanguage);
-                }
-                return acum;
-            }, []);
-
-            filesAndKeys.forEach((languageFile: FileLanguageModel) => {
-                // tslint:disable-next-line:no-any
+            filesAndKeysMap.forEach((languageFile: FileLanguageModel) => {
                 const jsonData: any = parseJsonFile(languageFile.path);
-                const keysArray: string[] = languageFile.keys.map((x) => x.name);
-                // tslint:disable-next-line:no-any
-                const resultData: any  = omit(jsonData, keysArray);
-                saveJsonFile(resultData, languageFile.path);
+
+                languageFile.keys.forEach((k) => {
+                    delete jsonData[k.name];
+                });
+
+                saveJsonFile(jsonData, languageFile.path);
             });
         }
 

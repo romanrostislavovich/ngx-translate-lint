@@ -13,12 +13,26 @@ class FileViewModel extends FileModel {
 
     public getKeys(regExp: RegExp): FileViewModel {
         this.files = this.getNormalizeFiles();
+
         this.keys = this.parseKeys((fileData: string, filePath: string): KeyModel[] => {
-            const fileKeysNames: string[] = fileData.match(regExp) as string[];
-            return !fileKeysNames ? [] : fileKeysNames
-                .filter(x => !!x)
-                .map((key: string) => new KeyModel(key, [filePath], []));
+            const fileKeysNames:  RegExpMatchArray | null = fileData.match(regExp);
+
+            if (!fileKeysNames) {
+                return [];
+            }
+
+            const uniqueKeys: Set<string> = new Set(fileKeysNames);
+            const result: KeyModel[] = [];
+
+            for (const key of uniqueKeys) {
+                if (key) { // Заменяет старый .filter(x => !!x)
+                    result.push(new KeyModel(key, [filePath], []));
+                }
+            }
+
+            return result;
         });
+
         return this;
     }
 }

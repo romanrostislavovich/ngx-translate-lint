@@ -1,38 +1,61 @@
-import { chain, map, union } from 'lodash';
-
 import { KeyModel } from "./../models";
 import { ToggleRule } from './../enums';
 
 class KeysUtils {
     public static groupKeysByName(keys: KeyModel[]) : KeyModel[] {
-        return chain<KeyModel>(keys).groupBy("name").map((dictionary, key) => {
-            const views: string[] | undefined  = union(...map<KeyModel, keyof KeyModel>(dictionary, 'views'));
-            const languages: string[] | undefined = union(...map<KeyModel, keyof KeyModel>(dictionary, 'languages'));
-            const item: KeyModel = new KeyModel(key, views, languages);
-            return item;
-        }).value();
+        const grouped: Map<string, {
+            views: Set<string>
+            languages: Set<string>
+        }> = new Map<string, { views: Set<string>; languages: Set<string> }>();
+
+        for (const key of keys) {
+            let existing: {
+                views: Set<string>
+                languages: Set<string>
+            } | undefined = grouped.get(key.name);
+
+            if (!existing) {
+                existing = { views: new Set(), languages: new Set() };
+                grouped.set(key.name, existing);
+            }
+
+            for (const view of key.views) {
+                existing.views.add(view);
+            }
+            for (const language of key.languages) {
+                existing.languages.add(language);
+            }
+        }
+
+        const result: KeyModel[] = [];
+        for (const [name, data] of grouped.entries()) {
+            result.push(new KeyModel(name, Array.from(data.views), Array.from(data.languages)));
+        }
+
+        return result;
     }
 
-    public static findKeysList(keys: string[], customRegExp: string[] | RegExp[] = [], deepSearch: ToggleRule = ToggleRule.disable, toolsRegEx: string[] = []): RegExp {
-        let keysListRegExp: string = '';
-        if (deepSearch === ToggleRule.enable) {
-            keysListRegExp = keys.map((key: string) => {
-                const regExpForSingleKey: string = `(?<=[^\\w.-])${key.replace('.', '\\.')}(?=[^\\w.-])`;
-                return regExpForSingleKey;
+    public static findKeysList(
+        keys: string[],
+        customRegExp: Array<string | RegExp> = [],
+        deepSearch: ToggleRule = ToggleRule.disable,
+        toolsRegEx: string[] = []
+    ): RegExp {
+        const resultKeysRegExp: string[] = [...toolsRegEx];
+
+        if (deepSearch === ToggleRule.enable && keys.length > 0) {
+            const keysListRegExp: string = keys.map((key: string) => {
+                const escapedKey: string = key.replace(/\./g, '\\.');
+                return `(?<=[^\\w.-])${escapedKey}(?=[^\\w.-])`;
             }).join('|');
+
+            resultKeysRegExp.push(keysListRegExp);
         }
 
-        // @ts-ignore
-        const customRegExpList: string[] = customRegExp.map((regexp: string ) => {
-           return `${regexp}`;
-        });
-        const resultKeysRegExp: string[] = [
-            ...toolsRegEx,
-            ...customRegExpList
-        ];
-        if (deepSearch === ToggleRule.enable) {
-            resultKeysRegExp.unshift(keysListRegExp);
+        for (const regexp of customRegExp) {
+            resultKeysRegExp.push(typeof regexp === 'string' ? regexp : regexp.source);
         }
+
         return new RegExp(resultKeysRegExp.join('|'), 'gm');
     }
 }

@@ -13,16 +13,20 @@ class EmptyKeysRule implements IRule {
     }
 
     public check(languagesKeys: KeyModel[]): ResultErrorModel[] {
-        const emptyKeyList: KeyModel[] = languagesKeys.filter((x) => x.value === '' || x.value === undefined || x.value === null);
-        const resultErrorList: ResultErrorModel[] = emptyKeyList.reduce((result: ResultErrorModel[], key: KeyModel) => {
-            const resultErrors: ResultErrorModel[] = key.languages.map((languagePath: string) => {
-                const resultErrorModel: ResultErrorModel = new ResultErrorModel(key.name, this.flow, this.handler, languagePath);
-                return resultErrorModel;
-            });
-            result.push(...resultErrors);
-            return result;
-        }, []);
-        return resultErrorList;
+        return languagesKeys.flatMap((key: KeyModel) => {
+            if (key.value === '' || key.value === undefined || key.value === null) {
+                return key.languages.map((languagePath: string) => {
+                    return new ResultErrorModel(
+                        key.name,
+                        this.flow,
+                        this.handler,
+                        languagePath
+                    );
+                });
+            }
+
+            return [];
+        });
     }
 }
 

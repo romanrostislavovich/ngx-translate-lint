@@ -3,6 +3,7 @@ import * as fs from 'node:fs';
 import { KeyModel } from '../KeyModel';
 import { PathUtils, KeysUtils } from '../../utils';
 
+type ParseIdentity = (fileData: string, filePath: string) => KeyModel[];
 
 abstract class FileModel {
     public path: string;
@@ -32,25 +33,20 @@ abstract class FileModel {
         return resultFilesList;
     }
 
+    public parseKeys(identity: ParseIdentity): KeyModel[] {
+        const keysModels: KeyModel[] = this.files.flatMap((filePath: string) => {
+            const fileData: string = fs.readFileSync(filePath, 'utf8');
+            return identity(fileData, filePath);
+        });
 
-    public parseKeys(identity: Function): KeyModel[] {
-        const keysModels: KeyModel[] = this.files.reduce((acum: KeyModel[], filePath: string) => {
-            const fileData: string = fs.readFileSync(filePath).toString();
-            const models: KeyModel[] = identity(fileData, filePath);
-            acum.push(...models);
-            return acum;
-        }, []);
         return KeysUtils.groupKeysByName(keysModels);
     }
 
-    public parseKeysWithValues(identity: Function): KeyModel[] {
-        const keysModels: KeyModel[] = this.files.reduce((acum: KeyModel[], filePath: string) => {
-            const fileData: string = fs.readFileSync(filePath).toString();
-            const models: KeyModel[] = identity(fileData, filePath);
-            acum.push(...models);
-            return acum;
-        }, []);
-        return keysModels;
+    public parseKeysWithValues(identity: ParseIdentity): KeyModel[] {
+        return this.files.flatMap((filePath: string) => {
+            const fileData: string = fs.readFileSync(filePath, 'utf8');
+            return identity(fileData, filePath);
+        });
     }
 }
 

@@ -1,5 +1,4 @@
 import * as path from 'node:path';
-import { differenceBy } from 'lodash';
 
 import { IRule } from './../interface';
 import { KeysUtils } from './../utils';
@@ -24,19 +23,29 @@ class AbsentViewKeysRule implements IRule {
     }
 
     public check(viewsKeys: KeyModel[], languagesKeys: KeyModel[]): ResultErrorModel[] {
-        const keysList: KeyModel[] = KeysUtils.groupKeysByName([ ...viewsKeys, ...languagesKeys]);
-        const keysListError: KeyModel[] = keysList.filter((key: KeyModel) => !(key.languages.length === this.languagesCount()));
-        const resultErrorList: ResultErrorModel[] = keysListError.reduce((result: ResultErrorModel[], key: KeyModel) => {
-            const resultErrors: ResultErrorModel[] = key.views.map((viewPath: string) => {
-                const absentLanguagePath: string[] = differenceBy(this.languagesPathList, key.languages)
-                    .map((filePath: string) => path.basename(filePath));
-                const resultErrorModel: ResultErrorModel = new ResultErrorModel(key.name, this.flow, this.handler, viewPath, absentLanguagePath);
-                return resultErrorModel;
+        const keysList: KeyModel[] = KeysUtils.groupKeysByName([...viewsKeys, ...languagesKeys]);
+        const targetLanguagesCount: number = this.languagesCount();
+
+        return keysList.flatMap((key: KeyModel) => {
+            if (key.languages.length === targetLanguagesCount) {
+                return [];
+            }
+
+            const existingLanguages: Set<string> = new Set(key.languages);
+            const absentLanguagePath: string[] = this.languagesPathList
+                .filter((filePath: string) => !existingLanguages.has(filePath))
+                .map((filePath: string) => path.basename(filePath));
+
+            return key.views.map((viewPath: string) => {
+                return new ResultErrorModel(
+                    key.name,
+                    this.flow,
+                    this.handler,
+                    viewPath,
+                    absentLanguagePath
+                );
             });
-            result.push(...resultErrors);
-            return result;
-        }, []);
-        return resultErrorList;
+        });
     }
 }
 

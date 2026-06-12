@@ -21,22 +21,35 @@ class MisprintRule implements IRule {
     }
 
     public check(viewErrorsKeys: ResultErrorModel[], languagesKeys: KeyModel[]): ResultErrorModel[] {
+        const ignoredSet: Set<string> = new Set(this.ignoredMisprintKeys);
+
         const languagesKeysList: string[] = languagesKeys.map((key: KeyModel) => key.name);
-        const resultErrorList: ResultErrorModel[] = viewErrorsKeys.reduce((result: ResultErrorModel[], key: ResultErrorModel) => {
-            if (this.ignoredMisprintKeys.includes(key.value)) {
-                return result;
+
+        return viewErrorsKeys.flatMap((key: ResultErrorModel) => {
+            if (ignoredSet.has(key.value)) {
+                return [];
             }
+
             const bestMatchModel: BestMatch = stringSimilarity.findBestMatch(key.value, languagesKeysList);
-            const bestMatchIndex: number = bestMatchModel.bestMatch.rating >= this.maxCoefficient ? bestMatchModel.bestMatchIndex : -1;
-            if (bestMatchIndex !== -1 && languagesKeys[bestMatchIndex].name !== key.value) {
-                const error: ResultErrorModel = new ResultErrorModel(key.value, this.flow, this.handler, key.currentPath, key.absentedPath, [
-                    `${languagesKeys[bestMatchIndex].name}`
-                ]);
-                result.push(error);
+
+            if (bestMatchModel.bestMatch.rating >= this.maxCoefficient) {
+                const bestMatchIndex: number = bestMatchModel.bestMatchIndex;
+                const bestMatchName: string = languagesKeys[bestMatchIndex].name;
+
+                if (bestMatchName !== key.value) {
+                    return new ResultErrorModel(
+                        key.value,
+                        this.flow,
+                        this.handler,
+                        key.currentPath,
+                        key.absentedPath,
+                        [bestMatchName]
+                    );
+                }
             }
-            return result;
-        }, []);
-        return resultErrorList;
+
+            return [];
+        });
     }
 
 }
