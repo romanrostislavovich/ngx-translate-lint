@@ -154,7 +154,6 @@ const cliOptions: OptionModel[] = [
         type: ArgumentTypes.boolean,
         description: `Auto fix zombies keys on languages files`,
         additionalDescription: ``,
-        default: config.defaultValues.fixZombiesKeys?.toString() || 'false',
     }),
     /*
     new OptionModel({

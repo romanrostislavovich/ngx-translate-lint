@@ -11,6 +11,8 @@
 > for `react-i18next` use [`react-i18next-lint`](https://www.npmjs.com/package/react-i18next-lint)
 >
 > for `desktop` use  [`ngx-translate-editor`](https://github.com/svoboda-rabstvo/ngx-translate-editor) 
+> 
+> for all popular libraries use [`translate-lint`](https://github.com/translate-lint)
 
 ## Table of Contents
 

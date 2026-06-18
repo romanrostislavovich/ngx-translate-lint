@@ -41,10 +41,6 @@ class NgxTranslateLint {
             throw new Error(`Path to project or languages is incorrect`);
         }
 
-        if (!('zombieKeys' in this.rules)) {
-            throw new Error('Error config is incorrect');
-        }
-
         const languageIsURL: boolean = this.languagesPath.includes('http') || this.languagesPath.includes('https') || typeof this.fetchSettings?.get === 'function';
         let languagesKeys: FileLanguageModel;
 
@@ -67,8 +63,7 @@ class NgxTranslateLint {
             this.rules.zombieKeys !== ErrorTypes.disable ||
             this.rules.keysOnViews !== ErrorTypes.disable ||
             this.rules.misprintKeys !== ErrorTypes.disable ||
-            this.rules.emptyKeys !== ErrorTypes.disable ||
-            !!this.fixZombiesKeys
+            this.rules.emptyKeys !== ErrorTypes.disable
         ) {
             const regExpResult: ResultErrorModel[] = this.runRegExp(views, languagesKeys);
             errors.push(...regExpResult);
@@ -189,7 +184,7 @@ class NgxTranslateLint {
             result.push(...ruleInstance.check(languagesKeys.keys));
         }
 
-        if (!!this.fixZombiesKeys) {
+        if (String(this.fixZombiesKeys).toLowerCase() === 'true') {
             const filesAndKeysMap: Map<string, FileLanguageModel> = new Map<string, FileLanguageModel>();
 
             result.forEach((error) => {
