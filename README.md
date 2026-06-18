@@ -12,7 +12,7 @@
 >
 > for `desktop` use  [`ngx-translate-editor`](https://github.com/svoboda-rabstvo/ngx-translate-editor) 
 > 
-> for all popular libraries use [`translate-lint`](https://github.com/translate-lint)
+> for all popular libraries use [`translate-lint`](https://github.com/romanrostislavovich/translate-lint)
 
 ## Table of Contents
 
